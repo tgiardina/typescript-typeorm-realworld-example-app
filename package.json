@@ -1,0 +1,25 @@
+{
+  "name": "express-boilerplate",
+  "version": "1.0.0",
+  "description": "An Express/MySQL boilerplate",
+  "main": "app.ts",
+  "scripts": {
+    "build": "tsc",        
+    "start": "node --inspect=5858 -r ts-node/register ./src/app.ts",
+    "start:watch": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tommy Giardina",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.24",
+    "eslint": "^7.5.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
+  }
+}
