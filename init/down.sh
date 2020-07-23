@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Import .env variables.
-source ./config/.env
-export $(cut -d= -f1 ./config/.env)
+source .env
+export $(cut -d= -f1 .env)
 
 # Execute sql.
 mysql <<EOF
