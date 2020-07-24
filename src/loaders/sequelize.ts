@@ -3,20 +3,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 const Sequelize = require('sequelize');
-const sqlConfig = require('../../config/config.js')[process.env.NODE_ENV];
-const Op        = Sequelize.Op,      
-      database  = sqlConfig.database,
-      user      = sqlConfig.username,
-      password  = sqlConfig.password,
-      host      = sqlConfig.host;
+import config   = require('../../config/config.js')
+const dbConfig  = config[process.env.NODE_ENV], 
+      database  = dbConfig.database,
+      user      = dbConfig.username,
+      password  = dbConfig.password,
+      host      = dbConfig.host;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Module
 ////////////////////////////////////////////////////////////////////////////////
 
 export function init() {
-  return new Sequelize("boilerplate", "boilerplate", "boilerplate", {
-    host    : "db",
+  return new Sequelize(database, user, password, {
+    host    : host,
     dialect : 'mysql',
     logging : false,
     pool: {

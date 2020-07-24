@@ -3,13 +3,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // Packages
-const bodyParser = require('body-parser');
+import bodyParser = require('body-parser');
 import express   = require('express');
 
 // Local
-const controllers = require('./controllers');
-const loaders     = require('./loaders');
-const models      = require('./models');
+import controllers = require('./controllers');
+import loaders     = require('./loaders');
+import models      = require('./models');
 
 ////////////////////////////////////////////////////////////////////////////////
 // Module
