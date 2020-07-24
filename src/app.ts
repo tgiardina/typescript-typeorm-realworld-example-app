@@ -1,13 +1,27 @@
-import express = require('express');
+////////////////////////////////////////////////////////////////////////////////
+// Import
+////////////////////////////////////////////////////////////////////////////////
 
-const app: express.Application = express();
+// Packages
+const bodyParser = require('body-parser');
+import express   = require('express');
 
-app.get('/', function (req, res) {
-  res.send('Hello fren');
-});
+// Local
+const controllers = require('./controllers');
+const loaders     = require('./loaders');
+const models      = require('./models');
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-});
+////////////////////////////////////////////////////////////////////////////////
+// Module
+////////////////////////////////////////////////////////////////////////////////
 
-const db = require('./models');
+(async () => {
+  const app: express.Application = express();
+  app.use(bodyParser.json());
+  const load = loaders();
+  const db = models(load.sequelize);
+  controllers(app, db)
+  app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+  });  
+})()

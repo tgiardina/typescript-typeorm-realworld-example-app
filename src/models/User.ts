@@ -9,22 +9,22 @@ const Sequelize = require('sequelize');
 ////////////////////////////////////////////////////////////////////////////////
 
 class User extends Sequelize.Model {
-  static init(sequelize, DataTypes) {
+  static init(sequelize) {
     return super.init(
       {
         joined: {
           allowNull    : false,              
-          defaultValue : DataTypes.NOW,
-          type         : DataTypes.DATE,              
+          defaultValue : Sequelize.NOW,
+          type         : Sequelize.DATE,              
         },
-        last_login: {
+        lastLogin: {
           allowNull    : false,              
-          defaultValue : DataTypes.NOW,
-          type         : DataTypes.DATE,              
+          defaultValue : Sequelize.NOW,
+          type         : Sequelize.DATE,              
         },
         username: {
           allowNull : false,              
-          type      : DataTypes.STRING,
+          type      : Sequelize.STRING,
           unique    : true,
         },                    
       },

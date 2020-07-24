@@ -14,14 +14,16 @@ const Sequelize = require('sequelize'),
 // Module
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = new Sequelize(database, user, password, {
-  host    : process.env.SQL_HOST,
-  dialect : 'mysql',
-  logging : false,
-  pool: {
-    max:     5,
-    min:     0,
-    acquire: 30000,
-    idle:    10000,
-  }
-});
+module.exports = function() {
+  return new Sequelize(database, user, password, {
+    host    : host,
+    dialect : 'mysql',
+    logging : false,
+    pool: {
+      max:     5,
+      min:     0,
+      acquire: 30000,
+      idle:    10000,
+    }
+  });
+}
