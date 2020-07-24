@@ -26,4 +26,4 @@ function connectControllers(server, db) {
 // Export
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = connectControllers
+export function init(server, db) { connectControllers(server, db) }

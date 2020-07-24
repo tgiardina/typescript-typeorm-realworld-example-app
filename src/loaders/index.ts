@@ -8,8 +8,8 @@ const sequelizeLoader = require('./sequelize');
 // Module
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = function() {
+export function init() {
   return {
-    sequelize : sequelizeLoader(),
+    sequelize : sequelizeLoader.init(),
   };
 }

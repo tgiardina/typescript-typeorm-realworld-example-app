@@ -18,9 +18,9 @@ const models      = require('./models');
 (async () => {
   const app: express.Application = express();
   app.use(bodyParser.json());
-  const load = loaders();
-  const db = models(load.sequelize);
-  controllers(app, db)
+  const load = loaders.init();
+  const db = models.init(load.sequelize);
+  controllers.init(app, db);
   app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
   });  

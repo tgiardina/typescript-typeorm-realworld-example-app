@@ -23,21 +23,21 @@ function getModels(sequelize) {
   }, {});
 }
 
-/** 
- * Associates all the models as appropriate.
- */
-function associateModels(models) {
-  Object.values(models).forEach(model => {
-    if(model.associate) model.associate(models);
-  });  
-}
+// /** 
+//  * Associates all the models as appropriate.
+//  */
+// function associateModels(models) {
+//   Object.values(models).forEach(model => {
+//     model.associate(models);
+//   });  
+// }
 
 ////////////////////////////////////////////////////////////////////////////////
 // Export
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = function(sequelize) {
+export function init(sequelize) {
   const models = getModels(sequelize);
-  associateModels(models);
+  // associateModels(models);
   return models;
 }
