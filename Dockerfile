@@ -5,6 +5,9 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 RUN npm install -g nodemon
+RUN npm install -g sequelize-cli
+ADD ./init/migrate.sh /
+RUN chmod +x /migrate.sh
 
 COPY package*.json ./
 
