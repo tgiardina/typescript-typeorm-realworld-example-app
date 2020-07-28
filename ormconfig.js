@@ -13,14 +13,14 @@ module.exports = {
       "src/models/**/*.ts"
    ],
    "migrations"  : [
-      "src/migration/**/*.ts"
+      "src/migrations/**/*.ts"
    ],
    "subscribers" : [
-      "src/subscriber/**/*.ts"
+      "src/subscribers/**/*.ts"
    ],
    "cli"         : {
       "entitiesDir"    : "src/models",
-      "migrationsDir"  : "src/migration",
-      "subscribersDir" : "src/subscriber"
+      "migrationsDir"  : "src/migrations",
+      "subscribersDir" : "src/subscribers"
    }
 }
