@@ -1,29 +1,13 @@
-const Sequelize = require('sequelize');
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-class User extends Sequelize.Model {
-  static init(sequelize) {
-    return super.init(
-      {
-        joined: {
-          allowNull    : false,              
-          defaultValue : Sequelize.NOW,
-          type         : Sequelize.DATE,              
-        },
-        lastLogin: {
-          allowNull    : false,              
-          defaultValue : Sequelize.NOW,
-          type         : Sequelize.DATE,              
-        },
-        username: {
-          allowNull : false,              
-          type      : Sequelize.STRING,
-          unique    : true,
-        },                    
-      },
-      { sequelize },
-    );
-  }
+@Entity()
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id?       : number;
+  @Column()
+  joined    : Date;
+  @Column()
+  lastLogin : Date;
+  @Column()
+  username  : string;
 }
-
-
-module.exports = User;

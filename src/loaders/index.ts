@@ -1,7 +1,11 @@
-const sequelizeLoader = require('./sequelize');
+import { Application } from 'express';
 
-export function init() {
-  return {
-    sequelize : sequelizeLoader.init(),
-  };
+import initDotenv  from './dotenv';
+import initParser  from './parser';
+import initTypeorm from './typeorm';
+
+export default async function init(app: Application): Promise<void> {
+  initDotenv();
+  initParser(app);
+  await initTypeorm();
 }
