@@ -4,12 +4,12 @@
   "description": "An Express/MySQL boilerplate",
   "main": "app.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --P config/ts.json",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "start": "nodemon ./src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "typeorm": "ts-node ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node -P config/ts.json ./node_modules/typeorm/cli.js"
   },
   "author": "Tommy Giardina",
   "license": "ISC",
