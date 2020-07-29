@@ -13,11 +13,7 @@ services:
     volumes:
       - ./:/usr/src/app
   db:
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+    env_file: config/.env    
     image: mysql:5.7
     ports:
       - "33060:3306"
