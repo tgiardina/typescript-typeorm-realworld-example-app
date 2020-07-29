@@ -4,17 +4,17 @@ FROM node:12
 WORKDIR /usr/src/app
 
 # Install app dependencies
-RUN npm install -g nodemon
 ADD ./scripts/migrate.sh /
 RUN chmod +x /migrate.sh
 
-COPY package*.json ./
+COPY ./package*.json ./
 
 RUN npm install
 # If you are building your code for production
 # RUN npm ci --only=production
 
 # Bundle app source
-COPY . .
+COPY ./config/ ./
+COPY ./scripts/ ./scripts/
 
 EXPOSE 3000

@@ -1,4 +1,4 @@
-require('dotenv').config({ path: `${__dirname}/config/.env` });
+require('dotenv').config({ path: `${__dirname}/.env` });
 
 module.exports = {
    "type"        : "mysql",
@@ -13,14 +13,14 @@ module.exports = {
       "src/models/**/*.ts"
    ],
    "migrations"  : [
-      "src/migrations/**/*.ts"
+      "migrations/**/*.ts"
    ],
    "subscribers" : [
       "src/subscribers/**/*.ts"
    ],
    "cli"         : {
       "entitiesDir"    : "src/models",
-      "migrationsDir"  : "src/migrations",
+      "migrationsDir"  : "migrations",
       "subscribersDir" : "src/subscribers"
    }
 }
