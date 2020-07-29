@@ -11,7 +11,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./:/usr/src/app
+      - ./src:/usr/src/app/src
   db:
     env_file: config/.env
     image: mysql:5.7
