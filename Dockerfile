@@ -5,6 +5,8 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 RUN npm install -g nodemon
+ADD ./scripts/migrate.sh /
+RUN chmod +x /migrate.sh
 
 COPY package*.json ./
 
