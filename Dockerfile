@@ -5,7 +5,6 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 RUN npm install -g nodemon
-RUN npm install -g typeorm
 ADD ./scripts/migrate.sh /
 RUN chmod +x /migrate.sh
 
