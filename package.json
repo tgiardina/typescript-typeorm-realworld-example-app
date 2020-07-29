@@ -7,7 +7,7 @@
     "build": "tsc --P config/ts.json",
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
-    "start": "nodemon ./src/app.ts",
+    "start": "nodemon --config config/nodemon.json ./src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "ts-node -P config/ts.json ./node_modules/typeorm/cli.js"
   },

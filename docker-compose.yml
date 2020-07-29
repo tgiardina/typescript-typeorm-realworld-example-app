@@ -3,7 +3,7 @@ version: "3.3"
 services:
   api:
     build: ./
-    command: bash -c "/migrate.sh; nodemon ./src/app.ts"
+    command: bash -c "/migrate.sh; npm start"
     depends_on:
       - "db"
     links:
