@@ -1,32 +1,39 @@
+/**
+ * @ref https://khalilstemmler.com/articles/enterprise-typescript-nodejs/handling-errors-result-class/
+ */
 export class Result<T> {
-  public isSuccess: boolean;
-  public isFailure: boolean
-  public error: string;
+  public isOk: boolean;
+  private _error: string;
   private _value: T;
 
-  private constructor (isSuccess: boolean, error?: string, value?: T) {
-    if (isSuccess && error) {
+  private constructor (isOk: boolean, error?: string, value?: T) {
+    if (isOk && error) {
       throw new Error(`InvalidOperation: A result cannot be 
         successful and contain an error`);
     }
-    if (!isSuccess && !error) {
+    if (!isOk && !error) {
       throw new Error(`InvalidOperation: A failing result 
         needs to contain an error message`);
     }
 
-    this.isSuccess = isSuccess;
-    this.isFailure = !isSuccess;
-    this.error = error;
+    this.isOk = isOk;
+    this._error = error;
     this._value = value;
     
     Object.freeze(this);
   }
 
-  public getValue () : T {
-    if (!this.isSuccess) {
-      throw new Error(`Cant retrieve the value from a failed result.`)
-    } 
+  public get error(): string {
+    if(this.isOk) {
+      throw new Error("Can't retrieve error from a successful result.");
+    }
+    return this._error;
+  }
 
+  public get value() : T {
+    if (!this.isOk) {
+      throw new Error("Can't retrieve value from a failed result.");
+    } 
     return this._value;
   }
 
@@ -36,12 +43,5 @@ export class Result<T> {
 
   public static fail<U> (error: string): Result<U> {
     return new Result<U>(false, error);
-  }
-
-  public static combine (results: Result<any>[]) : Result<any> {
-    for (let result of results) {
-      if (result.isFailure) return result;
-    }
-    return Result.ok<any>();
   }
 }
