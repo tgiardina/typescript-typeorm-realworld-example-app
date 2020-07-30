@@ -1,0 +1,22 @@
+version: "3.3"
+
+services:
+  test:
+    build:
+     context: .
+     dockerfile: Dockerfile.test
+    command: bash -c "/migrate.sh; npm start"
+    depends_on:
+      - "db_test"
+    links:
+      - db_test:db_test
+    volumes:
+      - ./src:/usr/src/app/src
+  db_test:
+    env_file: config/.env.test
+    image: mysql:5.7
+    restart: always          
+    volumes:
+      - db_test_data:/var/lib/mysql
+volumes:
+  db_test_data:
