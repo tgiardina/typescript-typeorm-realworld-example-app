@@ -2,7 +2,7 @@ import { assert, request } from 'chai';
 
 import initApp            from '../../../app';
 import initLoaders        from '../../loaders';
-import { initConnection } from '../../helpers';
+import { initConnection } from '../../utils';
 
 initLoaders();
 
