@@ -1,24 +1,19 @@
-import  chaiHttp = require('chai-http');
-import { assert, request, use } from 'chai';
-import * as dotenv              from 'dotenv';
-import { getConnection }        from 'typeorm';
+import { assert, request } from 'chai';
 
-import initApp  from '../../app';
+import initApp            from '../../../app';
+import initLoaders        from '../../loaders';
+import { initConnection } from '../../helpers';
 
-dotenv.config({ path: `${__dirname}/../../../.env.test` });
-use(chaiHttp);
+initLoaders();
 
 describe('/POST users', () => {
   let app;
   let connection;
-  const username = "duplicate";
+  const username = "duplicate";    
   
   before(async () => {
-    app = await initApp();
-    connection = await getConnection();
-    await Promise.all(connection.entityMetadatas.map(async (table) => {
-      await connection.manager.query(`DELETE FROM ${table.tableName}`);
-    }));
+    app        = await initApp();
+    connection = await initConnection();
     await connection.manager.query(
       `INSERT INTO user VALUES(\n\
         DEFAULT,\n\
@@ -26,8 +21,7 @@ describe('/POST users', () => {
         DEFAULT,\n\
         "${username}"\n\
        );`
-    );
-    
+    );    
   });
 
   after(async () => {
