@@ -1,6 +1,6 @@
 import { Application }   from 'express';
 
-import { createUser } from '../services';
+import { createUser }         from '../services';
 
 export default function init(server: Application): void {
   server.post("/users", async (req, res) => {
