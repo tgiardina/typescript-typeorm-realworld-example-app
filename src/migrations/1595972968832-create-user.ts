@@ -5,8 +5,8 @@ export class createUser1595972968832 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE user (\n\
            id        INT NOT NULL AUTO_INCREMENT,\n\
-           joined    DATE NOT NULL,\n\
-           lastLogin DATE NOT NULL,\n\
+           joined    DATETIME NOT NULL DEFAULT NOW(),\n\
+           lastLogin DATETIME NOT NULL DEFAULT NOW(),\n\
            username  VARCHAR(40) NOT NULL,\n\
            PRIMARY KEY(id),\n\
            UNIQUE(username)\n\

@@ -13,15 +13,20 @@ Once you have Docker set up, clone this repository:
 git clone https://github.com/tgiardina/express-boilerplate-2.git;
 cd express-boiler-plate-2;
 ```
-You will now need to set environment variables for the project. To start, init a `.env` file:
+You will now need to create your environment variables for the project. To start, init `.env` files for both your development and test environment:
 ```
-cp config/.env.example config/.env
+cp config/dev/.env.example config/dev/.env
+cp config/test/.env.example config/test/.env
 ```
-You can then edit config/.env if you so desire. Finally, spin up the project using:
+Edit these files if you so desire. You can now spin up the project using
 ```
-docker-compose up
+docker-compose -f scripts/dev/docker-compose.ytml up
 ```
-This project uses `nodemon`, so any changes you make to `.ts` files in `src` will automatically update the running API.
+and the tests using
+```
+docker-compose -f scripts/test/docker-compose.ytml up
+```
+Both use `nodemon`, so any changes you make in `src` will yield automatic updates.
 
 ### Style
 
