@@ -19,7 +19,9 @@ describe('/POST users', () => {
         DEFAULT,\n\
         DEFAULT,\n\
         DEFAULT,\n\
-        "${username}"\n\
+        "${username}",\n\
+        DEFAULT,\n\
+        DEFAULT\n\
        );`
     );    
   });
