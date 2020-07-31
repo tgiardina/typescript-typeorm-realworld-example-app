@@ -6,11 +6,8 @@ import { Result } from '../helpers';
 export async function createUser(username: string): Promise<Result<User>> {
   try {
     const user     = new User();
-    user.joined    = new Date();
-    user.lastLogin = user.joined;
     user.username  = username;
-    await getConnection().manager.save(user);
-    return Result.ok(user);
+    return Result.ok(await getConnection().manager.save(user));
   } catch(err) {
     return Result.fail(err.code);
   }
