@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/tgiardina/express-boilerplate-2/workflows/Node.js%20CI/badge.svg)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
