@@ -5,12 +5,14 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
+
+import { IUserModel } from '../interfaces';
 
 @Entity("user")
-export class UserModel extends BaseEntity {
+export class UserModel extends BaseEntity implements IUserModel {
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
   @Column()
   joined: Date;
   @Column()

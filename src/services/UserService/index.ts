@@ -1,12 +1,12 @@
 import { Result } from '../../helpers';
-import { UserModel } from '../../models';
+import { IUserData, IUserModel, IUserModelStatic } from '../../interfaces';
 
 export class UserService {
-  constructor(private Model: typeof UserModel) { }
+  constructor(private UserModelStatic: IUserModelStatic) { }
 
-  async create(username: string) {
+  async create(data: IUserData): Promise<Result<IUserModel>> {
     try {
-      const user = this.Model.create({ username });
+      const user = this.UserModelStatic.create(data);
       await user.save();
       return Result.ok(user);
     } catch (err) {
