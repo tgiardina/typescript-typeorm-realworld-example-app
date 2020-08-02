@@ -16,12 +16,12 @@ describe('UserService.create', () => {
     sandbox = createSandbox();
     const userModel = {
       ...data,
+    };
+    const userRepository = {
+      create: createStub = sandbox.stub().returns(userModel),
       save: saveStub = sandbox.stub(),
     };
-    const UserModel = {
-      create: createStub = sandbox.stub().returns(userModel),
-    };
-    userService = new UserService(UserModel);
+    userService = new UserService(userRepository);
   });
 
   after(async () => {
@@ -36,16 +36,19 @@ describe('UserService.create', () => {
     })
 
     it('should have called `create` with username', async () => {
-      const args = createStub.args[0];
       assert(createStub.calledOnce);
+      const args = createStub.args[0];
       assert.equal(args.length, 1);
-      assert.equal(args[0].username, data.username);
+      const user = args[0];
+      assert.equal(user.username, data.username);
     })
 
-    it('should have called `save`', async () => {
-      const args = saveStub.args[0];
+    it('should have called `save` with user', async () => {
       assert(saveStub.calledOnce);
-      assert.equal(args.length, 0);
+      const args = saveStub.args[0];
+      assert.equal(args.length, 1);
+      const user = args[0];
+      assert.equal(user.username, data.username);
     })
   });
 }) 

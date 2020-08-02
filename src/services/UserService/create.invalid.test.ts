@@ -12,14 +12,16 @@ describe('UserService.create', () => {
   const error = { code: "ER_NO_DEFAULT_FOR_FIELD" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
+  let saveStub: SinonStub;
   let userService: UserService;
 
   before(async () => {
     sandbox = createSandbox();
-    const UserModel = {
+    const userRepository = {
       create: createStub = sandbox.stub().throws(error),
+      save: saveStub = sandbox.stub(),
     };
-    userService = new UserService(UserModel);
+    userService = new UserService(userRepository);
   });
 
   after(async () => {
@@ -33,10 +35,16 @@ describe('UserService.create', () => {
       assert.equal(result.error, error.code);
     })
 
-    it('should have called `create` with nothing', async () => {
-      const args = createStub.args[0];
+    it('should have called `create` with empty object', async () => {
       assert(createStub.calledOnce);
+      const args = createStub.args[0];
       assert.equal(args.length, 1);
+      const user = args[0];
+      assert.equal(Object.keys(user).length, 0);
+    })
+
+    it('should not have called `save`', async () => {
+      assert(saveStub.notCalled);
     })
   });
 }) 

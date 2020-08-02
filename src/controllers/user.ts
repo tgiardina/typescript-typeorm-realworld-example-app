@@ -1,4 +1,5 @@
 import { Application, Request, Response } from 'express';
+import { getRepository } from 'typeorm';
 
 import { IUserData } from '../interfaces';
 import { UserModel } from '../models';
@@ -7,7 +8,7 @@ import { UserService } from '../services';
 export default function init(server: Application): void {
   server.post("/users", async (req: Request, res: Response) => {
     const data: IUserData = req.body;
-    const userService = new UserService(UserModel);
+    const userService = new UserService(getRepository(UserModel));
     const result = await userService.create(data);
     if (result.isOk) {
       res.status(201).json(result.value);

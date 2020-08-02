@@ -11,14 +11,16 @@ describe('UserService.create', () => {
   const error = { code: "ER_DUP_ENTRY" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
+  let saveStub: SinonStub;
   let userService: UserService;
 
   before(async () => {
     sandbox = createSandbox();
-    const UserModel = {
-      create: createStub = sandbox.stub().throws(error),
+    const userRepository = {
+      create: createStub = sandbox.stub().returns(data),
+      save: saveStub = sandbox.stub().throws(error),
     };
-    userService = new UserService(UserModel);
+    userService = new UserService(userRepository);
   });
 
   after(async () => {
@@ -33,10 +35,19 @@ describe('UserService.create', () => {
     })
 
     it('should have called `create` with username', async () => {
-      const args = createStub.args[0];
       assert(createStub.calledOnce);
+      const args = createStub.args[0];
       assert.equal(args.length, 1);
-      assert.equal(args[0].username, data.username);
+      const user = args[0];
+      assert.equal(user.username, data.username);
+    })
+
+    it('should have called `save` with user', async () => {
+      assert(saveStub.calledOnce);
+      const args = saveStub.args[0];
+      assert.equal(args.length, 1);
+      const user = args[0];
+      assert.equal(user.username, data.username);
     })
   });
 }) 
