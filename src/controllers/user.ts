@@ -1,11 +1,13 @@
 import { Application, Request, Response } from 'express';
 
-import { createUser } from '../services';
+import { UserModel } from '../models';
+import { UserService } from '../services';
 
 export default function init(server: Application): void {
   server.post("/users", async (req: Request, res: Response) => {
     const username = req.body.username;
-    const result = await createUser(username);
+    const userService = new UserService(UserModel);
+    const result = await userService.create(username);
     if (result.isOk) {
       res.status(201).json(result.value);
     } else if (result.error == "ER_NO_DEFAULT_FOR_FIELD") {
