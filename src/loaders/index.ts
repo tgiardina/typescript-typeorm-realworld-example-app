@@ -5,8 +5,11 @@ import loadDotenv from './dotenv';
 import loadParser from './parser';
 import loadTypeorm from './typeorm';
 
-export async function load(app: Application): Promise<void> {
+export async function loadConfig(): Promise<void> {
   loadDotenv();
-  loadParser(app);
   await loadTypeorm();
+}
+
+export function loadMiddleware(app: Application): void {
+  loadParser(app);
 }

@@ -1,5 +1,4 @@
 import { inject, injectable } from 'inversify';
-import 'reflect-metadata';
 
 import { Result } from '../../helpers';
 import { IUser, IUserRepository } from '../../interfaces';
@@ -7,6 +6,7 @@ import { TYPES } from '../../constants';
 
 @injectable()
 export class UserService {
+
   constructor(
     @inject(TYPES.UserRepository) private userRepository: IUserRepository
   ) { }

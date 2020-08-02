@@ -1,14 +1,15 @@
-import * as express from 'express';
+import 'reflect-metadata';
+import { Application } from 'express';
+import { InversifyExpressServer } from 'inversify-express-utils';
 
-import { load, loadContainer } from './loaders';
-import initControllers from './controllers';
+import { loadConfig, loadContainer, loadMiddleware } from './loaders';
 
-export default async function init(): Promise<express.Application> {
-  const app: express.Application = express();
-  await load(app);
+export default async function init(): Promise<Application> {
+  await loadConfig();
   const container = loadContainer();
-  initControllers(app, container);
-  return app;
+  const app = new InversifyExpressServer(container);
+  app.setConfig(loadMiddleware);
+  return app.build();
 }
 
 (async () => {

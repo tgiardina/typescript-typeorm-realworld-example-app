@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';

@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 import { getRepository } from 'typeorm';
 
 import { TYPES } from '../constants';
+import '../controllers/user';
 import { IUserRepository, IUserService } from '../interfaces';
 import { UserModel } from '../models';
 import { UserService } from '../services';
