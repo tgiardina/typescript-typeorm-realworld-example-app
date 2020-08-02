@@ -1,7 +1,16 @@
 import { Container } from 'inversify';
+import { getRepository } from 'typeorm';
 
-import { IUserModel } from '../interfaces';
+import { TYPES } from '../constants';
+import { IUserRepository, IUserService } from '../interfaces';
 import { UserModel } from '../models';
+import { UserService } from '../services';
 
-const container = new Container();
-container.bind<IUserModel>("").to(UserModel);
+export default function load(): Container {
+  const container = new Container();
+  container.bind<IUserRepository>(TYPES.UserRepository).toDynamicValue(() => {
+    return getRepository(UserModel);
+  });
+  container.bind<IUserService>(TYPES.UserService).to(UserService);
+  return container;
+}

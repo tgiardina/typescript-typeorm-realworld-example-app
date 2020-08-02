@@ -1,15 +1,14 @@
 import { Application, Request, Response } from 'express';
-import { getRepository } from 'typeorm';
 
-import { IUserData } from '../interfaces';
+import { IUser, IUserService } from '../interfaces';
 import { UserModel } from '../models';
 import { UserService } from '../services';
+import { TYPES } from '../constants/';
 
-export default function init(server: Application): void {
+export default function init(server: Application, service: IUserService): void {
   server.post("/users", async (req: Request, res: Response) => {
-    const data: IUserData = req.body;
-    const userService = new UserService(getRepository(UserModel));
-    const result = await userService.create(data);
+    const data: IUser = req.body;
+    const result = await service.create(data);
     if (result.isOk) {
       res.status(201).json(result.value);
     } else if (result.error == "ER_NO_DEFAULT_FOR_FIELD") {
@@ -17,6 +16,7 @@ export default function init(server: Application): void {
     } else if (result.error == "ER_DUP_ENTRY") {
       res.status(409).json(`409 - User "${data.username}" already exists.`);
     } else {
+      console.log(result);
       res.status(500).json("500 - Server error");
     }
   });

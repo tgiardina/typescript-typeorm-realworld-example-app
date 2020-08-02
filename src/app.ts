@@ -1,12 +1,13 @@
 import * as express from 'express';
 
-import initLoaders from './loaders';
+import { load, loadContainer } from './loaders';
 import initControllers from './controllers';
 
 export default async function init(): Promise<express.Application> {
   const app: express.Application = express();
-  await initLoaders(app);
-  initControllers(app);
+  await load(app);
+  const container = loadContainer();
+  initControllers(app, container);
   return app;
 }
 

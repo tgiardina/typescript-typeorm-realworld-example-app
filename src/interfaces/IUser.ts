@@ -1,4 +1,4 @@
-export interface IUserData {
+export interface IUser {
   id?: number;
   joined?: Date;
   lastLogin?: Date;

@@ -4,11 +4,11 @@ import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 import { QueryFailedError } from 'typeorm';
 
 import { UserService } from './';
-import { IUserData } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
 describe('UserService.create', () => {
   // @ts-ignore
-  const data: IUserData = {};
+  const data: IUser = {};
   const error = { code: "ER_NO_DEFAULT_FOR_FIELD" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;

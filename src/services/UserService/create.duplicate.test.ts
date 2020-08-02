@@ -4,10 +4,10 @@ import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 import { QueryFailedError } from 'typeorm';
 
 import { UserService } from './';
-import { IUserData } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
 describe('UserService.create', () => {
-  const data: IUserData = { username: "duplicate" };
+  const data: IUser = { username: "duplicate" };
   const error = { code: "ER_DUP_ENTRY" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;

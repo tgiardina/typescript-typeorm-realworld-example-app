@@ -1,11 +1,12 @@
 import { Application } from 'express';
 
-import initDotenv  from './dotenv';
-import initParser  from './parser';
-import initTypeorm from './typeorm';
+export { default as loadContainer } from './container';
+import loadDotenv from './dotenv';
+import loadParser from './parser';
+import loadTypeorm from './typeorm';
 
-export default async function init(app: Application): Promise<void> {
-  initDotenv();
-  initParser(app);
-  await initTypeorm();
+export async function load(app: Application): Promise<void> {
+  loadDotenv();
+  loadParser(app);
+  await loadTypeorm();
 }

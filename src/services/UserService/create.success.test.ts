@@ -3,10 +3,10 @@ import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from './';
-import { IUserData } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
 describe('UserService.create', () => {
-  const data: IUserData = { username: "username" };
+  const data: IUser = { username: "username" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
