@@ -1,10 +1,8 @@
-import { Application, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, interfaces, httpPost } from 'inversify-express-utils';
 
 import { IUser, IUserService } from '../interfaces';
-import { UserModel } from '../models';
-import { UserService } from '../services';
 import { TYPES } from '../constants/';
 
 @controller("/users")

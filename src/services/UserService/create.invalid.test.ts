@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
-import { QueryFailedError } from 'typeorm';
 
 import { UserService } from './';
 import { IUser } from '../../interfaces';
