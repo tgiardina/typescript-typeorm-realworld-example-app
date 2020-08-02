@@ -27,7 +27,7 @@ describe('UserService.create', () => {
   });
 
   describe('is passed empty data username', () => {
-    it('should return an ok Result', async () => {
+    it('should throw an "invalid" error', async () => {
       const result = await userService.create(data);
       assert(!result.isOk);
       assert.equal(result.error, error.code);

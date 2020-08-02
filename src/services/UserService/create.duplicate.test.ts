@@ -26,7 +26,7 @@ describe('UserService.create', () => {
   });
 
   describe('is passed a duplicate username', () => {
-    it('should return throw a duplicate error', async () => {
+    it('should throw a "duplicate" error', async () => {
       const result = await userService.create(data);
       assert(!result.isOk);
       assert.equal(result.error, error.code);
