@@ -4,9 +4,8 @@ FROM node:12
 WORKDIR /usr/src/app
 
 # Install app dependencies
-ADD ./scripts/general/migrate.sh /scripts/
-RUN chmod +x /scripts/migrate.sh
-
+ADD ./scripts/general/migrate.sh ./scripts/
+RUN chmod +x ./scripts/migrate.sh
 COPY ./package*.json ./
 
 RUN npm install
@@ -16,5 +15,6 @@ RUN npm install
 # Bundle app source
 COPY ./config/general ./
 COPY ./config/dev ./
+COPY ./migrations ./migrations
 
 EXPOSE 3000
