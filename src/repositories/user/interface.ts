@@ -1,6 +1,6 @@
-import { IUser } from './';
+import { IUserModel } from '../../models';
 
 export interface IUserRepository {
-  create: (data: IUser) => IUserModel;
+  create: (data: IUserModel) => IUserModel;
   save: (user: IUserModel) => Promise<IUserModel>;
 }

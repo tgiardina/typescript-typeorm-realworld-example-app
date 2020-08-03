@@ -3,8 +3,8 @@ import { getRepository } from 'typeorm';
 
 import '../controllers';
 import { TYPES } from '../constants';
-import { IUserRepository } from '../interfaces';
 import { UserModel } from '../models';
+import { IUserRepository } from '../repositories';
 import { UserService, IUserService } from '../services';
 
 export function loadContainer(): Container {

@@ -22,7 +22,6 @@ export class UserController implements interfaces.Controller {
     } else if (result.error == "ER_DUP_ENTRY") {
       res.status(409).json(`409 - User "${data.username}" already exists.`);
     } else {
-      console.log(result);
       res.status(500).json("500 - Server error");
     }
   }
