@@ -1,2 +1,2 @@
-export { UserService } from './UserService';
+export { UserService, IUserService } from './user';
 

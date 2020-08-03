@@ -6,7 +6,8 @@
     "target": "es6",
     "module": "commonjs",
     "outDir": "dist",
-    "sourceMap": true
+    "sourceMap": true,
+    "types": ["mocha", "node", "reflect-metadata"]
   },
   "include": ["../**/*.ts"],
   "exclude": ["node_modules", ".vscode"]

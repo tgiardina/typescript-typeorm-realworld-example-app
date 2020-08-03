@@ -16,5 +16,6 @@ RUN npm install
 # Bundle app source
 COPY ./config/general ./
 COPY ./config/test ./
+COPY ./tests ./tests
 
 EXPOSE 3000

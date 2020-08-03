@@ -1,7 +1,7 @@
 import { assert, request } from 'chai';
 
-import initApp            from '../../../app';
-import initLoaders        from '../../loaders';
+import initApp from '../../../src/app';
+import initLoaders from '../../loaders';
 import { initConnection } from '../../utils';
 
 initLoaders();
@@ -9,10 +9,10 @@ initLoaders();
 describe('/POST users', () => {
   let app;
   let connection;
-  const username = "duplicate";    
-  
+  const username = "duplicate";
+
   before(async () => {
-    app        = await initApp();
+    app = await initApp();
     connection = await initConnection();
     await connection.manager.query(
       `INSERT INTO user VALUES(\n\
@@ -23,13 +23,13 @@ describe('/POST users', () => {
         DEFAULT,\n\
         DEFAULT\n\
        );`
-    );    
+    );
   });
 
   after(async () => {
     await connection.close();
   });
-  
+
   it('should return 409 error.', (done) => {
     request(app)
       .post('/users')

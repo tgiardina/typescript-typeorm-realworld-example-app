@@ -1,21 +1,28 @@
-import { Application, Request, Response } from 'express';
+import { Request, Response } from 'express';
+import { inject } from 'inversify';
+import { controller, interfaces, httpPost } from 'inversify-express-utils';
 
-import { UserModel } from '../models';
-import { UserService } from '../services';
+import { TYPES } from '../constants/';
+import { IUserModel } from '../models';
+import { IUserService } from '../services';
 
-export default function init(server: Application): void {
-  server.post("/users", async (req: Request, res: Response) => {
-    const username = req.body.username;
-    const userService = new UserService(UserModel);
-    const result = await userService.create(username);
+@controller("/users")
+export class UserController implements interfaces.Controller {
+
+  constructor(@inject(TYPES.UserService) private service: IUserService) { }
+
+  @httpPost("/")
+  private async create(req: Request, res: Response) {
+    const data: IUserModel = req.body;
+    const result = await this.service.create(data);
     if (result.isOk) {
       res.status(201).json(result.value);
     } else if (result.error == "ER_NO_DEFAULT_FOR_FIELD") {
-      res.status(400).json(`400 - Username "${username}" is invalid.`);
+      res.status(400).json(`400 - Username "${data.username}" is invalid.`);
     } else if (result.error == "ER_DUP_ENTRY") {
-      res.status(409).json(`409 - User "${username}" already exists.`);
+      res.status(409).json(`409 - User "${data.username}" already exists.`);
     } else {
       res.status(500).json("500 - Server error");
     }
-  });
+  }
 }

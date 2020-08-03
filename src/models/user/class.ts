@@ -5,12 +5,12 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from "typeorm";
+} from 'typeorm';
 
 @Entity("user")
 export class UserModel extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id?: number;
+  id: number;
   @Column()
   joined: Date;
   @Column()
