@@ -7,7 +7,7 @@ import { IUserRepository, IUserService } from '../interfaces';
 import { UserModel } from '../models';
 import { UserService } from '../services';
 
-export default function load(): Container {
+export function loadContainer(): Container {
   const container = new Container();
   container.bind<IUserRepository>(TYPES.UserRepository).toDynamicValue(() => {
     return getRepository(UserModel);

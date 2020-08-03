@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv";
 
-export default function load(): void {
+export function loadDotenv(): void {
   dotenv.config();
 }

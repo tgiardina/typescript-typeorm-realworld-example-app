@@ -2,10 +2,10 @@ import 'reflect-metadata';
 import { Application } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
-import { loadConfig, loadContainer, loadMiddleware } from './loaders';
+import { loadContainer, loadMiddleware, loadPreContainer } from './loaders';
 
 export default async function init(): Promise<Application> {
-  await loadConfig();
+  await loadPreContainer();
   const container = loadContainer();
   const app = new InversifyExpressServer(container);
   app.setConfig(loadMiddleware);
