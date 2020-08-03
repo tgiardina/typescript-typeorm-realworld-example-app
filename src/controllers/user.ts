@@ -2,8 +2,9 @@ import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import { controller, interfaces, httpPost } from 'inversify-express-utils';
 
-import { IUser, IUserService } from '../interfaces';
 import { TYPES } from '../constants/';
+import { IUser } from '../interfaces';
+import { IUserService } from '../services';
 
 @controller("/users")
 export class UserController implements interfaces.Controller {

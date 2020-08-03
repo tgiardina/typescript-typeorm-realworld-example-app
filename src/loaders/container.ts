@@ -3,9 +3,9 @@ import { getRepository } from 'typeorm';
 
 import '../controllers';
 import { TYPES } from '../constants';
-import { IUserRepository, IUserService } from '../interfaces';
+import { IUserRepository } from '../interfaces';
 import { UserModel } from '../models';
-import { UserService } from '../services';
+import { UserService, IUserService } from '../services';
 
 export function loadContainer(): Container {
   const container = new Container();
