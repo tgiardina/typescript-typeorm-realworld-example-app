@@ -10,8 +10,8 @@ This project uses Docker. If you haven't already, install [Docker](https://docs.
 
 Once you have Docker set up, clone this repository:
 ```
-git clone https://github.com/tgiardina/express-boilerplate-2.git;
-cd express-boilerplate-2;
+git clone https://github.com/tgiardina/typescript-typeorm-realworld-example-app.git;
+cd typescript-typeorm-realworld-example-app;
 ```
 You will now need to create your environment variables for the project. To start, init `.env` files for both your development and test environment:
 ```
