@@ -3,7 +3,7 @@ import { inject } from 'inversify';
 import { controller, interfaces, httpPost } from 'inversify-express-utils';
 
 import { TYPES } from '../constants/';
-import { IUser } from '../interfaces';
+import { IUserModel } from '../models';
 import { IUserService } from '../services';
 
 @controller("/users")
@@ -13,7 +13,7 @@ export class UserController implements interfaces.Controller {
 
   @httpPost("/")
   private async create(req: Request, res: Response) {
-    const data: IUser = req.body;
+    const data: IUserModel = req.body;
     const result = await this.service.create(data);
     if (result.isOk) {
       res.status(201).json(result.value);

@@ -4,10 +4,10 @@ import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from './';
-import { IUser } from '../../interfaces';
+import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
-  const data: IUser = { username: "username" };
+  const data: IUserModel = { username: "username" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;

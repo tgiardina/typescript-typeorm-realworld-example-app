@@ -1,4 +1,4 @@
-import { IUser, IUserModel } from './';
+import { IUser } from './';
 
 export interface IUserRepository {
   create: (data: IUser) => IUserModel;

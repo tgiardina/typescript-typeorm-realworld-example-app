@@ -1,8 +1,9 @@
 import { inject, injectable } from 'inversify';
 
-import { Result } from '../../helpers';
-import { IUser, IUserRepository } from '../../interfaces';
+import { IUserRepository } from '../../interfaces';
 import { TYPES } from '../../constants';
+import { Result } from '../../helpers';
+import { IUserModel } from '../../models';
 
 @injectable()
 export class UserService {
@@ -10,7 +11,7 @@ export class UserService {
     @inject(TYPES.UserRepository) private userRepository: IUserRepository
   ) { }
 
-  async create(data: IUser): Promise<Result<IUser>> {
+  async create(data: IUserModel): Promise<Result<IUserModel>> {
     try {
       const user = this.userRepository.create(data);
       await this.userRepository.save(user)

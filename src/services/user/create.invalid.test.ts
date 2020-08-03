@@ -4,7 +4,7 @@ import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from './';
-import { IUser } from '../../interfaces';
+import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
   // @ts-ignore
