@@ -28,6 +28,24 @@ docker-compose -f scripts/test/docker-compose.yml up
 ```
 Both use `nodemon`, so any changes you make in `src` will yield automatic updates.
 
+### Goals
+
+This template shows off
+
+- TypeScript
+- Express
+- Inversify
+- TypeOrm
+
+and how they all fit together. It aims to
+
+1. Conform to the [RealWorld API specs](https://github.com/gothinkster/realworld/tree/master/api#realworld-api-spec).
+2. Follow industry best practices -- REST, OOP, MVC, and database normalization.
+3. Remain as minimal as possible.
+4. Provide users with the resources necessary to
+  a. know when to use a similar setup,
+  b. know how to build a similar setup.
+
 ### Style
 
 This project is based loosely off the structure described [here](https://softwareontheroad.com/ideal-nodejs-project-structure/). Please use `npm run lint` or `npm run lint-and-fix` to ensure you are adhering to TypeScript best practices.
