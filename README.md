@@ -43,8 +43,8 @@ and how they all fit together. It aims to
 2. Follow industry best practices -- REST, OOP, MVC, and database normalization.
 3. Remain as minimal as possible.
 4. Provide users with the resources necessary to
-  a. know when to use a similar setup,
-  b. know how to build a similar setup.
+    1. know when to use a similar setup,
+    2. know how to build a similar setup.
 
 ### Style
 
