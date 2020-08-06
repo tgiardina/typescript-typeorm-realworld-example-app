@@ -1,4 +1,5 @@
 import { assert, request } from 'chai';
+import { Application } from 'express';
 import { Connection } from 'typeorm';
 
 import initApp from '../../../src/app';
@@ -8,7 +9,7 @@ import { initConnection } from '../../utils';
 initLoaders();
 
 describe('/POST users', () => {
-  let app;
+  let app: Application;
   let connection: Connection;
   const username = "duplicate";
 
