@@ -1,4 +1,5 @@
 import { assert, request } from 'chai';
+import { Connection } from 'typeorm';
 
 import initApp from '../../../src/app';
 import initLoaders from '../../loaders';
@@ -8,7 +9,7 @@ initLoaders();
 
 describe('/POST users', () => {
   let app;
-  let connection;
+  let connection: Connection;
 
   before(async () => {
     app = await initApp();
