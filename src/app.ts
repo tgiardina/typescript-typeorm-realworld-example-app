@@ -11,12 +11,3 @@ export default async function init(): Promise<Application> {
   app.setConfig(loadMiddleware);
   return app.build();
 }
-
-(async () => {
-  if (process.env.NODE_ENV !== "test") {
-    const app = await init();
-    app.listen(process.env.PORT, function() {
-      console.log(`Example app listening on port ${process.env.PORT}!`);
-    });
-  }
-})()
