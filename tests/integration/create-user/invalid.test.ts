@@ -26,7 +26,7 @@ describe('/POST users', () => {
       .post('/users')
       .type('json')
       .send({})
-      .end((err, res) => {
+      .end((_err, res) => {
         assert.equal(res.status, 400);
         done();
       });

@@ -39,7 +39,7 @@ describe('/POST users', () => {
       .send({
         username
       })
-      .end((err, res) => {
+      .end((_err, res) => {
         assert.equal(res.status, 409);
         done();
       });
