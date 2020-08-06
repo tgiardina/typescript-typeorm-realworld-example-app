@@ -12,6 +12,7 @@ services:
       - db_test:db_test
     volumes:
       - ../../src:/usr/src/app/src
+      - ../../tests:/usr/src/app/tests
   db_test:
     env_file: ../../config/test/.env
     image: mysql:5.7
