@@ -40,12 +40,18 @@ This template shows off
 and how they all fit together. It aims to
 
 1. Conform to the [RealWorld API specs](https://github.com/gothinkster/realworld/tree/master/api#realworld-api-spec).
-2. Follow industry best practices -- REST, OOP, MVC, and database normalization.
+2. Follow industry best practices -- REST, MVC, OOP, DI, and database normalization.
 3. Remain as minimal as possible.
 4. Provide users with the resources necessary to
-    1. know when to use a similar setup,
-    2. know how to build a similar setup.
+    1. know **when** to use a similar setup,
+    2. know **how** to build a similar setup.
 
-### Style
+### Learning Resources
 
-This project is based loosely off the structure described [here](https://softwareontheroad.com/ideal-nodejs-project-structure/). Please use `npm run lint` or `npm run lint-and-fix` to ensure you are adhering to TypeScript best practices.
+1. ["Bulletproof node.js project architecture"](https://softwareontheroad.com/ideal-nodejs-project-structure/) 
+    1. **(+)** This article will explain both **how** and **why** to set up a robust MVC API like ours.
+    2. **(-)** This article does a bad job of explaining **when** to build your API similarly. Indeed, if this project wasn't a demo, it would be very over-engineered.
+2. [Martin Fowler's canonical "Inversion of Control Containers and the Dependency Injection Pattern"](https://www.martinfowler.com/articles/injection.html#InversionOfControl) 
+    1. **(+)** This is *the* article to read if you don't yet know about Inversion of Control (IoC) and Dependency Injection (DI). 
+    2. **(-)** The article uses Java rather than TypeScript, but the discussion is mostly theoretical.
+    3. **(-)** It provides a lot of context that you may not be interested in. But if you only want a basic understanding of DI, you can just read the first few paragraphs, up until ["Using a Service Locator"](https://www.martinfowler.com/articles/injection.html#UsingAServiceLocator)
