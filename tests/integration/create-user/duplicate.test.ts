@@ -1,4 +1,6 @@
 import { assert, request } from 'chai';
+import { Application } from 'express';
+import { Connection } from 'typeorm';
 
 import initApp from '../../../src/app';
 import initLoaders from '../../loaders';
@@ -7,8 +9,8 @@ import { initConnection } from '../../utils';
 initLoaders();
 
 describe('/POST users', () => {
-  let app;
-  let connection;
+  let app: Application;
+  let connection: Connection;
   const username = "duplicate";
 
   before(async () => {
@@ -37,7 +39,7 @@ describe('/POST users', () => {
       .send({
         username
       })
-      .end((err, res) => {
+      .end((_err, res) => {
         assert.equal(res.status, 409);
         done();
       });

@@ -1,10 +1,10 @@
 import { Connection, createConnection, getConnection } from 'typeorm';
 
 export async function initConnection(): Promise<Connection> {
-  let connection;
+  let connection: Connection;
   try {
-    connection = await getConnection();
-  } catch(err) {
+    connection = getConnection();
+  } catch (err) {
     connection = await createConnection();
   }
   await Promise.all(connection.entityMetadatas.map(async (table) => {
