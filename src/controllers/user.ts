@@ -12,7 +12,7 @@ export class UserController implements interfaces.Controller {
   constructor(@inject(TYPES.UserService) private service: IUserService) { }
 
   @httpPost("/")
-  private async create(req: Request, res: Response) {
+  public async create(req: Request, res: Response) {
     const data: IUserModel = req.body;
     const result = await this.service.create(data);
     if (result.isOk) {
