@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint -c config/general/.eslintrc . --ext .ts",
-    "lint-and-fix": "eslint -c config/general/.eslintrc. --ext .ts --fix",
+    "lint-and-fix": "eslint -c config/general/.eslintrc . --ext .ts --fix",
     "start": "nodemon",
     "test": "NODE_ENV=test mocha -r ts-node/register ",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js"
