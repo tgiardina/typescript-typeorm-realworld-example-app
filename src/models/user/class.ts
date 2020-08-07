@@ -7,6 +7,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { IUserDto } from './';
+
 @Entity("user")
 export class UserModel extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -21,4 +23,16 @@ export class UserModel extends BaseEntity {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+
+  constructor(data: IUserDto) {
+    super();
+    Object.assign(this, data);
+  }
+
+  toDto(): IUserDto {
+    return {
+      username: "",
+      token: "",
+    };
+  }
 }

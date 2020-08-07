@@ -7,7 +7,7 @@ import { UserService } from './';
 import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
-  const data: IUserModel = { username: "username" };
+  const data = { username: "username" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;

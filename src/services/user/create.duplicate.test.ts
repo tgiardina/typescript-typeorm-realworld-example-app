@@ -7,7 +7,7 @@ import { UserService } from './';
 import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
-  const data: IUserModel = { username: "duplicate" };
+  const data = { username: "duplicate" };
   const error = { code: "ER_DUP_ENTRY" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;

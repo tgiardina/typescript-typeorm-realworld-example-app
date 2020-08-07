@@ -1,2 +1,2 @@
 export { UserModel } from './class';
-export { IUserModel } from './interface';
+export { IUserDto, IUserModel } from './interface';
