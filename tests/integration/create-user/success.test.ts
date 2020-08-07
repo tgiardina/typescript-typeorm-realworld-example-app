@@ -15,7 +15,7 @@ describe('/POST users', () => {
   };
   let app: Application;
   let connection: Connection;
-  let user: { [key: string]: any };
+  let user: { [key: string]: number | string };
 
   before(async () => {
     app = await initApp();
@@ -30,9 +30,7 @@ describe('/POST users', () => {
     request(app)
       .post('/users')
       .type('json')
-      .send({
-        username: "new",
-      })
+      .send(data)
       .end((_err, res) => {
         assert.equal(res.status, 201);
         user = res.body;

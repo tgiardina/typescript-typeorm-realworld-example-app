@@ -4,7 +4,6 @@ import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from './';
-import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
   const data = { username: "duplicate" };
