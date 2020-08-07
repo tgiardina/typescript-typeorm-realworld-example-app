@@ -1,5 +1,6 @@
 import { assert, request } from 'chai';
 import { Application } from 'express';
+import { verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
 import initApp from '../../../src/app';
@@ -9,8 +10,12 @@ import { initConnection } from '../../utils';
 initLoaders();
 
 describe('/POST users', () => {
+  const data = {
+    username: "username",
+  };
   let app: Application;
   let connection: Connection;
+  let user: { [key: string]: number | string };
 
   before(async () => {
     app = await initApp();
@@ -21,16 +26,21 @@ describe('/POST users', () => {
     await connection.close();
   });
 
-  it('should create new user.', (done) => {
+  it('should return 201 status.', (done) => {
     request(app)
       .post('/users')
       .type('json')
-      .send({
-        username: "new",
-      })
+      .send(data)
       .end((_err, res) => {
         assert.equal(res.status, 201);
+        user = res.body;
         done();
       });
   });
+
+  it('should include token in body', () => {
+    const decodedToken = verify(user.token, process.env.JWT_SECRET);
+    assert.equal(user.id, decodedToken.id);
+    assert.equal(user.username, decodedToken.username);
+  })
 })  

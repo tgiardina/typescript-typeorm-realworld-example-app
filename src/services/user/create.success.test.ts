@@ -4,10 +4,12 @@ import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from './';
-import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
-  const data: IUserModel = { username: "username" };
+  const data = {
+    username: "username",
+    token: "token",
+  };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
@@ -17,6 +19,11 @@ describe('UserService.create', () => {
     sandbox = createSandbox();
     const userModel = {
       ...data,
+      toDto: () => {
+        return {
+          ...data,
+        };
+      }
     };
     const userRepository = {
       create: createStub = sandbox.stub().returns(userModel),
@@ -30,10 +37,11 @@ describe('UserService.create', () => {
   });
 
   describe('is passed a valid username', () => {
-    it('should return an ok Result', async () => {
+    it('should return a correct result', async () => {
       const result = await userService.create(data);
       assert(result.isOk);
       assert.equal(result.value.username, data.username);
+      assert.equal(result.value.token, data.token);
     })
 
     it('should have called `create` with username', async () => {
