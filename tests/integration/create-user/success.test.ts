@@ -11,6 +11,8 @@ initLoaders();
 describe('/POST users', () => {
   let app: Application;
   let connection: Connection;
+  // @ts-ignore
+  let user;
 
   before(async () => {
     app = await initApp();
@@ -21,7 +23,7 @@ describe('/POST users', () => {
     await connection.close();
   });
 
-  it('should create new user.', (done) => {
+  it('should return 201 status.', (done) => {
     request(app)
       .post('/users')
       .type('json')
@@ -30,7 +32,12 @@ describe('/POST users', () => {
       })
       .end((_err, res) => {
         assert.equal(res.status, 201);
+        user = res.body;
         done();
       });
   });
+
+  it('should include token in body', () => {
+    assert.equal(user, "TODO");
+  })
 })  
