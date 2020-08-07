@@ -1,3 +1,4 @@
+import { sign } from 'jsonwebtoken';
 import {
   BaseEntity,
   Column,
@@ -31,8 +32,9 @@ export class UserModel extends BaseEntity {
 
   toDto(): IUserDto {
     return {
-      username: "",
-      token: "",
+      id: this.id,
+      username: this.username,
+      token: sign({ id: this.id }, process.env.JWT_SECRET),
     };
   }
 }
