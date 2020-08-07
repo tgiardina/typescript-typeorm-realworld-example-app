@@ -30,10 +30,11 @@ describe('UserService.create', () => {
   });
 
   describe('is passed a valid username', () => {
-    it('should return an ok Result', async () => {
+    it('should return a correct result', async () => {
       const result = await userService.create(data);
       assert(result.isOk);
       assert.equal(result.value.username, data.username);
+      assert.equal(result.value.token, "TODO");
     })
 
     it('should have called `create` with username', async () => {
