@@ -5,7 +5,7 @@ export interface IUserDto {
   username: string;
   createdAt?: Date;
   updatedAt?: Date;
-  token?: string;
+  token: string;
 }
 
 export interface IUserModel {

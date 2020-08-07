@@ -6,7 +6,10 @@ import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 import { UserService } from './';
 
 describe('UserService.create', () => {
-  const data = { username: "duplicate" };
+  const data = {
+    username: "duplicate",
+    token: "token",
+  };
   const error = { code: "ER_DUP_ENTRY" };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;

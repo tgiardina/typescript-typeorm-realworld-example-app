@@ -6,8 +6,10 @@ import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 import { UserService } from './';
 
 describe('UserService.create', () => {
-  const data = { username: "username" };
-  const token = "token";
+  const data = {
+    username: "username",
+    token: "token",
+  };
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
@@ -20,7 +22,6 @@ describe('UserService.create', () => {
       toDto: () => {
         return {
           ...data,
-          token,
         };
       }
     };
@@ -40,7 +41,7 @@ describe('UserService.create', () => {
       const result = await userService.create(data);
       assert(result.isOk);
       assert.equal(result.value.username, data.username);
-      assert.equal(result.value.token, token);
+      assert.equal(result.value.token, data.token);
     })
 
     it('should have called `create` with username', async () => {
