@@ -31,10 +31,13 @@ export class UserModel extends BaseEntity {
   }
 
   toDto(): IUserDto {
-    return {
+    const baseDto = {
       id: this.id,
       username: this.username,
-      token: sign({ id: this.id }, process.env.JWT_SECRET),
+    };
+    return {
+      ...baseDto,
+      token: sign(baseDto, process.env.JWT_SECRET),
     };
   }
 }

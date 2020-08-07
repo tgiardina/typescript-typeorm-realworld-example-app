@@ -8,6 +8,7 @@ import { IUserModel } from '../../models';
 
 describe('UserService.create', () => {
   const data = { username: "username" };
+  const token = "token";
   let createStub: SinonStub;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
@@ -17,6 +18,12 @@ describe('UserService.create', () => {
     sandbox = createSandbox();
     const userModel = {
       ...data,
+      toDto: () => {
+        return {
+          ...data,
+          token,
+        };
+      }
     };
     const userRepository = {
       create: createStub = sandbox.stub().returns(userModel),
@@ -34,7 +41,7 @@ describe('UserService.create', () => {
       const result = await userService.create(data);
       assert(result.isOk);
       assert.equal(result.value.username, data.username);
-      assert.equal(result.value.token, "TODO");
+      assert.equal(result.value.token, token);
     })
 
     it('should have called `create` with username', async () => {
