@@ -4,6 +4,8 @@ import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from './';
+import { Result } from '../../helpers';
+import { IUserDto } from '../../models';
 
 describe('UserService.create', () => {
   const data = {
@@ -11,6 +13,7 @@ describe('UserService.create', () => {
     token: "token",
   };
   let createStub: SinonStub;
+  let result: Result<IUserDto>;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
   let userService: UserService;
@@ -37,12 +40,18 @@ describe('UserService.create', () => {
   });
 
   describe('is passed a valid username', () => {
-    it('should return a correct result', async () => {
-      const result = await userService.create(data);
+    it('should run without error', async () => {
+      result = await userService.create(data);
+    })
+
+    it('should return an ok result', async () => {
       assert(result.isOk);
+    });
+
+    it('should return the correct UserDto', async () => {
       assert.equal(result.value.username, data.username);
       assert.equal(result.value.token, data.token);
-    })
+    });
 
     it('should have called `create` with username', async () => {
       assert(createStub.calledOnce);
