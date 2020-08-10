@@ -1,3 +1,33 @@
+## Introduction
+
+### You
+
+You are familiar with REST APIs, MVC, and TypeScript, but maybe inexperienced with Object-Oriented Programming.
+
+You want to develop a robust object-oriented REST API that scales.
+
+### Us
+
+In 30 minutes, we will introduce you to "SOLID" object-oriented principles, Dependency Injection (DI), and how to organize your large TypeScript projects using:
+
+- Express,
+- Inversify,
+- Inversify Express Utils,
+- TypeOrm.
+
+### Prequisites
+
+Before cloning this repository, you should familiarize yourself with some concepts. First, reacquaint yourself with TypeScript and REST architechure. Then read these three articles: 
+
+1. ["Bulletproof node.js project architecture"](https://softwareontheroad.com/ideal-nodejs-project-structure/) 
+    - This article will explain how and why you should use our particular flavor of MVC.
+2. ["S.O.L.I.D: The First 5 Principles of Object Oriented Design"](https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design)
+    - This article will teach best practices for object-oriented programming.
+2. ["Inversion of Control Containers and the Dependency Injection Pattern"](https://www.martinfowler.com/articles/injection.html#InversionOfControl) up until the section ["Using a Service Locator"](https://www.martinfowler.com/articles/injection.html#UsingAServiceLocator)
+    - This article will teach you about Dependency Injection.
+
+You now understand the theory behind this project. Get the documentation for [inversify](http://inversify.io/), [inveresify-express-utils](https://github.com/inversify/inversify-express-utils#inversify-express-utils), and [typeorm](https://github.com/typeorm/typeorm#features), clone this repository, and hack away!
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -28,16 +58,7 @@ docker-compose -f scripts/test/docker-compose.yml up
 ```
 Both use `nodemon`, so they will automatically update  whenever you make changes in `src` or `tests`.
 
-### Goals
-
-This template shows off
-
-- TypeScript
-- Express
-- Inversify
-- TypeOrm
-
-and how they all fit together. It aims to
+## Goals
 
 1. Conform to the [RealWorld API specs](https://github.com/gothinkster/realworld/tree/master/api#realworld-api-spec).
 2. Follow industry best practices -- REST, MVC, OOP, DI, and database normalization.
@@ -45,13 +66,3 @@ and how they all fit together. It aims to
 4. Provide users with the resources necessary to
     1. know **when** to use a similar setup,
     2. know **how** to build a similar setup.
-
-### Learning Resources
-
-1. ["Bulletproof node.js project architecture"](https://softwareontheroad.com/ideal-nodejs-project-structure/) 
-    1. **(+)** This article will explain both **how** and **why** to set up a robust MVC API like ours.
-    2. **(-)** This article does a bad job of explaining **when** to build your API similarly. Indeed, if this project wasn't a demo, it would be very over-engineered.
-2. [Martin Fowler's canonical "Inversion of Control Containers and the Dependency Injection Pattern"](https://www.martinfowler.com/articles/injection.html#InversionOfControl) 
-    1. **(+)** This is *the* article to read if you don't yet know about Inversion of Control (IoC) and Dependency Injection (DI). 
-    2. **(-)** The article uses Java rather than TypeScript, but the discussion is mostly theoretical.
-    3. **(-)** It provides a lot of context that you may not be interested in. But if you only want a basic understanding of DI, you can just read the first few paragraphs, up until ["Using a Service Locator"](https://www.martinfowler.com/articles/injection.html#UsingAServiceLocator)
