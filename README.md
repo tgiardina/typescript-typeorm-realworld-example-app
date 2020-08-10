@@ -13,12 +13,12 @@ Once you have Docker set up, clone this repository:
 git clone https://github.com/tgiardina/typescript-typeorm-realworld-example-app.git;
 cd typescript-typeorm-realworld-example-app;
 ```
-You will now need to create your environment variables for the project. To start, init `.env` files for both your development and test environment:
+You will now need to create your environment variables for the project. To start, init `.env` files for both your development and test environments:
 ```
 cp config/dev/.env.example config/dev/.env
 cp config/test/.env.example config/test/.env
 ```
-Edit these files if you so desire. You can now spin up the project using
+Edit these files if you'd like. You can now spin up the project using
 ```
 docker-compose -f scripts/dev/docker-compose.yml up
 ```
@@ -26,7 +26,7 @@ and the tests using
 ```
 docker-compose -f scripts/test/docker-compose.yml up
 ```
-Both use `nodemon`, so any changes you make in `src` will yield automatic updates.
+Both use `nodemon`, so they will automatically update  whenever you make changes in `src` or `tests`.
 
 ### Goals
 
