@@ -1,6 +1,7 @@
-import { IUser } from './';
-import { Result } from '../helpers';
+import { IUserDto } from '../../models';
+import { Result } from '../../helpers';
 
 export interface IUserService {
-  create: (data: IUser) => Promise<Result<IUser>>;
+  create: (data: IUserDto) => Promise<Result<IUserDto>>;
+  findById: (id: number) => Promise<Result<IUserDto>>;
 }

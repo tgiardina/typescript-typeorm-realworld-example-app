@@ -8,7 +8,7 @@ export async function initConnection(): Promise<Connection> {
     connection = await createConnection();
   }
   await Promise.all(connection.entityMetadatas.map(async (table) => {
-    await connection.manager.query(`DELETE FROM ${table.tableName}`);
+    await connection.manager.query(`TRUNCATE ${table.tableName}`);
   }));
   return connection;
 }
