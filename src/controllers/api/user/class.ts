@@ -6,10 +6,10 @@ import {
   httpPost,
 } from 'inversify-express-utils';
 
-import { TYPES } from '../constants/';
-import { IBaseRequest, IBaseResponse } from './interfaces';
-import { IUserDto } from '../models';
-import { IUserService } from '../services';
+import { TYPES } from '../../../constants/';
+import { IBaseRequest, IBaseResponse } from '../../interfaces';
+import { IUserDto } from '../../../models';
+import { IUserService } from '../../../services';
 
 @controller("")
 export class UserController implements interfaces.Controller {
