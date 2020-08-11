@@ -1,5 +1,7 @@
-export interface IBaseRequest {
-  body: { [key: string]: any, };
-  headers: { [key: string]: any, };
-  locals: { [key: string]: any, };
+import { IUserDto } from '../../models';
+
+export interface IBaseRequest<T> {
+  body: { [key: string]: T, };
+  headers: { [key: string]: string | string[], };
+  locals: { [user: string]: IUserDto, };
 }

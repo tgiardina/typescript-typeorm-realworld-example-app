@@ -1,5 +1,4 @@
-export interface IBaseResponse {
-  json: (res: string | { [key: string]: any, }) => void;
-  locals: { [key: string]: any, };
-  status: (status: number) => IBaseResponse;
+export interface IBaseResponse<T> {
+  json: (res: T) => void;
+  status: (status: number) => IBaseResponse<T>;
 }

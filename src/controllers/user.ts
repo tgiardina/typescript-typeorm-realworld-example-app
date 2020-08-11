@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import {
   controller,
@@ -18,7 +17,10 @@ export class UserController implements interfaces.Controller {
   constructor(@inject(TYPES.UserService) private service: IUserService) { }
 
   @httpPost("/users")
-  public async create(req: IBaseRequest, res: IBaseResponse): Promise<void> {
+  public async create(
+    req: IBaseRequest<string>,
+    res: IBaseResponse<IUserDto | string>,
+  ): Promise<void> {
     const data: IUserDto = { username: req.body.username };
     const result = await this.service.create(data);
     if (result.isOk) {
@@ -33,11 +35,16 @@ export class UserController implements interfaces.Controller {
   }
 
   @httpGet("/user")
-  public async getByAuth(req: IBaseRequest, res: IBaseResponse): Promise<void> {
+  public async getByAuth(
+    req: IBaseRequest<void>,
+    res: IBaseResponse<IUserDto | string>,
+  ): Promise<void> {
     const data: IUserDto = req.locals.user;
     const result = await this.service.findById(data.id);
     if (result.isOk) {
       res.status(200).json(result.value);
+    } else if (result.error == "ER_NOT_FOUND") {
+      res.status(404).json(`404 - No user associated with token.`);
     } else {
       res.status(500).json("500 - Server error");
     }

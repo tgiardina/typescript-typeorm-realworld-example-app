@@ -22,11 +22,11 @@ export class UserService {
   }
 
   async findById(id: number): Promise<Result<IUserDto>> {
-    try {
-      const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne(id);
+    if (user) {
       return Result.ok(user.toDto());
-    } catch (err) {
-      return Result.fail(err.code);
+    } else {
+      return Result.fail("ER_NOT_FOUND");
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Application, NextFunction } from 'express';
+import { NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
 
 import { TYPES } from '../../../constants';
@@ -12,8 +12,8 @@ export class AuthMiddleware {
   ) { }
 
   parse(
-    req: IBaseRequest,
-    res: IBaseResponse,
+    req: IBaseRequest<string | number>,
+    _res: IBaseResponse<void>,
     next: NextFunction
   ): void {
     const token = this.getToken(req);
@@ -26,7 +26,7 @@ export class AuthMiddleware {
     next();
   }
 
-  private getToken(req: IBaseRequest): string {
+  private getToken(req: IBaseRequest<string | number>): string {
     const authorization = req.headers.authorization;
     if (!authorization) return;
     const authString = authorization.toString();

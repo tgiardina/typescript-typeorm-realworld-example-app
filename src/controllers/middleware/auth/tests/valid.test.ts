@@ -18,7 +18,7 @@ describe('AuthMiddleware.authenticate', () => {
   };
   let auth: IAuthMiddleware;
   let nextStub: SinonStub;
-  let res: IBaseResponse;
+  let res: IBaseResponse<void>;
   let sandbox: SinonSandbox;
 
   before(async () => {
@@ -26,7 +26,6 @@ describe('AuthMiddleware.authenticate', () => {
     nextStub = sandbox.stub();
     res = {
       json: sandbox.stub(),
-      locals: {},
       status: () => res,
     };
     const jwtParser = { verify: sandbox.stub().returns(user) };
