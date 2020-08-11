@@ -1,19 +1,25 @@
 import { Request, Response } from 'express';
 import { inject } from 'inversify';
-import { controller, interfaces, httpPost } from 'inversify-express-utils';
+import {
+  controller,
+  interfaces,
+  httpGet,
+  httpPost,
+} from 'inversify-express-utils';
 
 import { TYPES } from '../constants/';
-import { IUserModel } from '../models';
+import { IBaseRequest, IBaseResponse } from './interfaces';
+import { IUserDto } from '../models';
 import { IUserService } from '../services';
 
-@controller("/users")
+@controller("")
 export class UserController implements interfaces.Controller {
 
   constructor(@inject(TYPES.UserService) private service: IUserService) { }
 
-  @httpPost("/")
-  public async create(req: Request, res: Response): Promise<void> {
-    const data: IUserModel = req.body;
+  @httpPost("/users")
+  public async create(req: IBaseRequest, res: IBaseResponse): Promise<void> {
+    const data: IUserDto = { username: req.body.username };
     const result = await this.service.create(data);
     if (result.isOk) {
       res.status(201).json(result.value);
@@ -21,6 +27,17 @@ export class UserController implements interfaces.Controller {
       res.status(400).json(`400 - Username "${data.username}" is invalid.`);
     } else if (result.error == "ER_DUP_ENTRY") {
       res.status(409).json(`409 - User "${data.username}" already exists.`);
+    } else {
+      res.status(500).json("500 - Server error");
+    }
+  }
+
+  @httpGet("/user")
+  public async getByAuth(req: IBaseRequest, res: IBaseResponse): Promise<void> {
+    const data: IUserDto = req.locals.user;
+    const result = await this.service.findById(data.id);
+    if (result.isOk) {
+      res.status(200).json(result.value);
     } else {
       res.status(500).json("500 - Server error");
     }

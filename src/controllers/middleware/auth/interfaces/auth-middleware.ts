@@ -1,9 +1,12 @@
 import { NextFunction } from 'express';
 
+import { ITokenBearer } from './';
+import { IBaseResponse } from '../../../interfaces';
+
 export interface IAuthMiddleware {
-  authenticate: (
+  parse: (
     req: ITokenBearer,
-    res: IBasicResponse,
+    res: IBaseResponse,
     next: NextFunction
   ) => void;
 }

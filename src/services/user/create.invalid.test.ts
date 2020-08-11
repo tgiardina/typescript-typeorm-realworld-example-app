@@ -18,6 +18,7 @@ describe('UserService.create', () => {
     sandbox = createSandbox();
     const userRepository = {
       create: createStub = sandbox.stub().throws(error),
+      findOne: sandbox.stub(),
       save: saveStub = sandbox.stub(),
     };
     userService = new UserService(userRepository);

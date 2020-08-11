@@ -1,1 +1,1 @@
-export { AuthMiddleware } from './auth';
+export { AuthMiddleware, IAuthMiddleware, IJwtParser } from './auth';

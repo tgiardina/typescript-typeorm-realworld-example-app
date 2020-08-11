@@ -1,5 +1,6 @@
 import { Application } from 'express';
 
+export { loadAuthMiddleware } from './authenticator';
 export { loadContainer } from './container';
 import { loadDotenv } from './dotenv';
 import { loadParser } from './parser';

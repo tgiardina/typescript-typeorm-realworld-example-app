@@ -1,25 +1,41 @@
-import { NextFunction } from 'express';
+import { Application, NextFunction } from 'express';
+import { inject, injectable } from 'inversify';
 
-import { IUserDto } from '../../../models';
-import { IBasicResponse, ITokenBearer } from './';
+import { TYPES } from '../../../constants';
+import { IBaseRequest, IBaseResponse } from '../../interfaces';
+import { IJwtParser } from './interfaces';
 
+@injectable()
 export class AuthMiddleware {
   constructor(
-    private getToken: (req: ITokenBearer) => string,
-    private verify: (token: string) => IUserDto,
+    @inject(TYPES.JwtParser) private jwtParser: IJwtParser,
   ) { }
 
-  authenticate(
-    req: ITokenBearer,
-    res: IBasicResponse,
+  parse(
+    req: IBaseRequest,
+    res: IBaseResponse,
     next: NextFunction
   ): void {
     const token = this.getToken(req);
     try {
-      res.locals.user = this.verify(token);
-      next();
+      req.locals = req.locals || {};
+      req.locals.user = this.jwtParser.verify(token);
     } catch (err) {
-      res.status(401).json("401 - Request is unauthorized.");
+      // TOOD: Add logging
+    }
+    next();
+  }
+
+  private getToken(req: IBaseRequest): string {
+    const authorization = req.headers.authorization;
+    if (!authorization) return;
+    const authString = authorization.toString();
+    const isToken = authString.split(' ')[0] === 'Token';
+    const isBearer = authString.split(' ')[0] === 'Bearer';
+    if (isToken || isBearer) {
+      return authString.split(' ')[1];
+    } else {
+      return;
     }
   }
 }

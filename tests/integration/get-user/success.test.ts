@@ -39,7 +39,7 @@ describe('/GET user', () => {
   it('should run', (done) => {
     request(app)
       .get('/user')
-      .set('Authorization', token)
+      .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         status = res.status;
         body = res.body;

@@ -1,3 +1,2 @@
 export { AuthMiddleware } from './class';
-export { getToken } from './helpers';
-export { IAuthMiddleware, IBasicResponse, ITokenBearer } from './interfaces';
+export { IAuthMiddleware, IJwtParser } from './interfaces';
