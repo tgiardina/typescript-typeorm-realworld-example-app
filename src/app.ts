@@ -8,20 +8,20 @@ import { IAuthMiddleware } from './controllers';
 import {
   loadAuthMiddleware,
   loadContainer,
-  loadMiddleware,
-  loadPreContainer
+  loadDatabase,
+  loadParser,
 } from './loaders';
 
 export default async function init(): Promise<Application> {
-  await loadPreContainer();
+  await loadDatabase();
   const container = loadContainer();
-  const app = new InversifyExpressServer(container);
-  app.setConfig((app) => {
-    loadMiddleware(app);
+  const server = new InversifyExpressServer(container);
+  server.setConfig((app) => {
+    loadParser(app);
     loadAuthMiddleware(
       app,
       container.get<IAuthMiddleware>(TYPES.AuthMiddleware),
     );
   });
-  return app.build();
+  return server.build();
 }

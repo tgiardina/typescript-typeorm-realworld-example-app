@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 
-export async function loadTypeorm(): Promise<void> {
+export async function loadDatabase(): Promise<void> {
   await createConnection();
 }
