@@ -1,12 +1,4 @@
-export interface IUserDto {
-  id?: number;
-  joined?: Date;
-  lastLogin?: Date;
-  username: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  token?: string;
-}
+import { IUserDto } from './';
 
 export interface IUserModel {
   id?: number;
@@ -17,3 +9,4 @@ export interface IUserModel {
   updatedAt?: Date;
   toDto: () => IUserDto;
 }
+
