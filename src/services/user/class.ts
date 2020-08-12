@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 
-import { TYPES } from '../../constants';
+import { ServiceError, TYPES } from '../../constants';
 import { Result } from '../../helpers';
 import { IUserDto } from '../../models';
 import { IUserRepository } from '../../repositories';
@@ -26,7 +26,7 @@ export class UserService {
     if (user) {
       return Result.ok(user.toDto());
     } else {
-      return Result.fail("ER_NOT_FOUND");
+      return Result.fail(ServiceError.NotFound);
     }
   }
 }
