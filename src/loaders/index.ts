@@ -2,7 +2,6 @@ import { Application } from 'express';
 
 export { loadAuthMiddleware } from './authenticator';
 export { loadContainer } from './container';
-import { loadDotenv } from './dotenv';
 import { loadParser } from './parser';
 import { loadTypeorm } from './typeorm';
 
@@ -11,6 +10,5 @@ export function loadMiddleware(app: Application): void {
 }
 
 export async function loadPreContainer(): Promise<void> {
-  loadDotenv();
   await loadTypeorm();
 }

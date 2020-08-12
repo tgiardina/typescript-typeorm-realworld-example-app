@@ -1,3 +1,4 @@
+import 'dotenv';
 import 'reflect-metadata';
 import { Application } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
