@@ -6,7 +6,7 @@ import {
   httpPost,
 } from 'inversify-express-utils';
 
-import { TYPES } from '../../../constants/';
+import { ServiceError, TYPES } from '../../../constants/';
 import { IBaseRequest, IBaseResponse } from '../../interfaces';
 import { IUserDto } from '../../../models';
 import { IUserService } from '../../../services';
@@ -28,7 +28,7 @@ export class UserController implements interfaces.Controller {
     const result = await this.service.create({ username: req.body.username });
     if (result.isOk) {
       res.status(201).json(result.value);
-    } else if (result.error == "ER_DUP_ENTRY") {
+    } else if (result.error === ServiceError.Duplicate) {
       res.status(409).json(`409 - User "${username}" already exists.`);
     } else {
       res.status(500).json("500 - Server error");
@@ -45,7 +45,7 @@ export class UserController implements interfaces.Controller {
     const result = await this.service.findById(id);
     if (result.isOk) {
       res.status(200).json(result.value);
-    } else if (result.error == "ER_NOT_FOUND") {
+    } else if (result.error === ServiceError.NotFound) {
       res.status(404).json(`404 - No user associated with token.`);
     } else {
       res.status(500).json("500 - Server error");
