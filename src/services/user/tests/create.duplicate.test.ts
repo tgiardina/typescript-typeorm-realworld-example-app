@@ -3,9 +3,9 @@ import { assert } from 'chai';
 import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
-import { UserService } from './';
-import { Result } from '../../helpers';
-import { IUserDto } from '../../models';
+import { UserService } from '../';
+import { Result } from '../../../helpers';
+import { IUserDto } from '../../../models';
 
 describe('UserService.create', () => {
   const data = {
