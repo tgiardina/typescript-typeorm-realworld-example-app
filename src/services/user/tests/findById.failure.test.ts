@@ -4,6 +4,7 @@ import 'mocha';
 import { createSandbox, SinonSandbox } from 'sinon';
 
 import { UserService } from '../';
+import { ServiceError } from '../../../constants';
 import { Result } from '../../../helpers';
 import { IUserDto } from '../../../models';
 
@@ -41,7 +42,7 @@ describe('UserService.findById', () => {
     });
 
     it('should return the correct error code', async () => {
-      assert.equal(result.error, "ER_NOT_FOUND");
+      assert.equal(result.error, ServiceError.NotFound);
     });
   });
 }) 
