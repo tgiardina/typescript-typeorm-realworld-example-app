@@ -1,6 +1,5 @@
 import { assert, request } from 'chai';
 import { Application } from 'express';
-import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
 import initApp from '../../../src/app';

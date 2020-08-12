@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
-import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
+import { createSandbox, SinonSandbox } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
@@ -19,14 +19,6 @@ describe('UserService.findById', () => {
 
   before(async () => {
     sandbox = createSandbox();
-    const userModel = {
-      ...data,
-      toDto: () => {
-        return {
-          ...data,
-        };
-      }
-    };
     const userRepository = {
       create: sandbox.stub(),
       findOne: sandbox.stub(),
