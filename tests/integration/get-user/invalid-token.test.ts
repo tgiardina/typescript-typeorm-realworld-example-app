@@ -10,7 +10,6 @@ import { initConnection } from '../../utils';
 initLoaders();
 
 describe('/GET user', () => {
-  const token = sign({ id: 1, username: "username" }, process.env.JWT_SECRET);
   let app: Application;
   let connection: Connection;
   let status: number;
@@ -27,14 +26,13 @@ describe('/GET user', () => {
   it('should run', (done) => {
     request(app)
       .get('/user')
-      .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         status = res.status;
         done();
       });
   });
 
-  it('should have a 404 status', () => {
-    assert.equal(status, 404);
+  it('should have a 401 status', () => {
+    assert.equal(status, 401);
   });
 })  
