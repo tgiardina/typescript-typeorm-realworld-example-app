@@ -1,4 +1,8 @@
-## Introduction
+[![tgiardina](https://circleci.com/gh/tgiardina/typescript-typeorm-realworld-example-app.svg?style=shield)](https://circleci.com/gh/tgiardina/typescript-typeorm-realworld-example-app.svg?style=shield)
+
+If you want to skip right to hacking, jump to our [Getting Started section](https://github.com/tgiardina/typescript-typeorm-realworld-example-app#getting-started). Otherwise, keep on reading to learn how to set up a similar API.
+
+## Tutorial
 
 ### You
 
