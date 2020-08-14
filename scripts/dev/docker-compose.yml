@@ -5,5 +5,7 @@ services:
     build:
      dockerfile: ./scripts/dev/Dockerfile
     command: bash -c "./scripts/migrate.sh; npm start"
+    volumes:
+      - ../../src:/usr/src/app/src
   db:
     env_file: ../../config/dev/.env
