@@ -4,7 +4,7 @@ import { Application } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 import { TYPES } from './constants';
-import { IAuthMiddleware } from './controllers';
+import { AuthMiddleware } from './controllers';
 import {
   loadAuthMiddleware,
   loadContainer,
@@ -20,7 +20,7 @@ export default async function init(): Promise<Application> {
     loadParser(app);
     loadAuthMiddleware(
       app,
-      container.get<IAuthMiddleware>(TYPES.AuthMiddleware),
+      container.get<AuthMiddleware>(TYPES.AuthMiddleware),
     );
   });
   return server.build();

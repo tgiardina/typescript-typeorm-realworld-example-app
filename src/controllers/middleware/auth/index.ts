@@ -1,2 +1,2 @@
 export { AuthMiddleware } from './class';
-export { IAuthMiddleware, IJwtParser } from './interfaces';
+export { IJwtParser } from './interfaces';
