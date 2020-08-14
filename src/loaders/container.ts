@@ -4,10 +4,10 @@ import { verify } from 'jsonwebtoken';
 
 import '../controllers';
 import { TYPES } from '../constants';
-import { AuthMiddleware, IJwtParser } from '../controllers'
+import { AuthMiddleware, IJwtParser, IUserService } from '../controllers'
 import { UserModel } from '../models';
 import { IUserRepository } from '../repositories';
-import { UserService, IUserService } from '../services';
+import { UserService } from '../services';
 
 export function loadContainer(): Container {
   const container = new Container();

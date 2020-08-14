@@ -1,1 +1,1 @@
-export { UserController } from './user';
+export { UserController, IUserService } from './user';
