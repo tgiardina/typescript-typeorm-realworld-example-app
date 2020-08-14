@@ -6,8 +6,7 @@ import '../controllers';
 import { TYPES } from '../constants';
 import { AuthMiddleware, IJwtParser, IUserService } from '../controllers'
 import { UserModel } from '../models';
-import { IUserRepository } from '../repositories';
-import { UserService } from '../services';
+import { UserService, IUserRepository } from '../services';
 
 export function loadContainer(): Container {
   const container = new Container();

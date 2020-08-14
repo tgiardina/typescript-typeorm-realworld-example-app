@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '../../constants';
 import { Result } from '../../helpers';
 import { IUserDto } from '../../models';
-import { IUserRepository } from '../../repositories';
+import { IUserRepository } from './interfaces';
 
 @injectable()
 export class UserService {
