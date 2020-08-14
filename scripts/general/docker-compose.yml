@@ -12,6 +12,6 @@ services:
     image: mysql:5.7
     restart: always
     volumes:
-      - db_test_data:/var/lib/mysql    
+      - db_data:/var/lib/mysql    
 volumes:
   db_data:
