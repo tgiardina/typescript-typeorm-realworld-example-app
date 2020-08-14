@@ -30,4 +30,4 @@ jobs:
           name: Start container and verify it's working
           command: |
             set -x
-            docker-compose -f scripts/ci/docker-compose.yml up --abort-on-container-exit
+            docker-compose -f scripts/ci/docker-compose.yml -f scripts/general/docker-compose.yml up --abort-on-container-exit

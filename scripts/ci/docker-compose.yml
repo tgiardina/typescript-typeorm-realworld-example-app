@@ -1,20 +1,9 @@
 version: "3.3"
 
 services:
-  test:
+  api:
     build:
-     context: ../../
      dockerfile: ./scripts/ci/Dockerfile
     command: bash -c "./scripts/migrate.sh; npm test"
-    depends_on:
-      - "db_test"
-    links:
-      - db_test:db_test
-  db_test:
+  db:
     env_file: ../../config/test/.env
-    image: mysql:5.7
-    restart: always          
-    volumes:
-      - db_test_data:/var/lib/mysql
-volumes:
-  db_test_data:

@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+  api:
+    build:
+     context: ../../     
+    depends_on:
+      - "db"
+    links:
+      - db:db
+  db:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql    
+volumes:
+  db_data:
