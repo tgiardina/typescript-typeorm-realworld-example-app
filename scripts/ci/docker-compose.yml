@@ -4,6 +4,6 @@ services:
   api:
     build:
      dockerfile: ./scripts/ci/Dockerfile
-    command: bash -c "./scripts/migrate.sh; npm start"
+    command: bash -c "./scripts/migrate.sh; npm test"
   db:
     env_file: ../../config/test/.env
