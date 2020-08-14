@@ -54,11 +54,11 @@ cp config/test/.env.example config/test/.env
 ```
 Edit these files if you'd like. You can now spin up the project using
 ```
-docker-compose -f scripts/dev/docker-compose.yml up
+docker-compose -f scripts/dev/docker-compose.yml -f scripts/general/docker-compose.yml up
 ```
 and the tests using
 ```
-docker-compose -f scripts/test/docker-compose.yml up
+docker-compose -f scripts/test/docker-compose.yml -f scripts/general/docker-compose.yml up
 ```
 Both use `nodemon`, so they will automatically update  whenever you make changes in `src` or `tests`.
 
