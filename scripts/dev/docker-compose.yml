@@ -3,24 +3,7 @@ version: "3.3"
 services:
   api:
     build:
-     context: ../../
      dockerfile: ./scripts/dev/Dockerfile
     command: bash -c "./scripts/migrate.sh; npm start"
-    depends_on:
-      - "db"
-    links:
-      - db:db
-    ports:
-      - "3000:3000"
-    volumes:
-      - ../../src:/usr/src/app/src
   db:
     env_file: ../../config/dev/.env
-    image: mysql:5.7
-    ports:
-      - "33060:3306"
-    restart: always          
-    volumes:
-      - db_data:/var/lib/mysql
-volumes:
-  db_data:

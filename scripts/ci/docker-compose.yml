@@ -5,7 +5,7 @@ services:
     build:
      context: ../../
      dockerfile: ./scripts/ci/Dockerfile
-    command: bash -c "./scripts/migrate.sh; npm test"
+    command: bash -c "./scripts/migrate.sh; npm start"
     depends_on:
       - "db_test"
     links:

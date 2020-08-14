@@ -7,5 +7,3 @@ services:
     command: bash -c "./scripts/migrate.sh; npm start"
   db:
     env_file: ../../config/test/.env
-volumes:
-  db_data:
