@@ -12,8 +12,7 @@ import {
   IBaseRequest,
   IBodyResponse,
 } from '../../interfaces';
-import { IUserDto } from '../../../models';
-import { IUserService } from '../../../services';
+import { IUserDto, IUserService } from './interfaces';
 
 @controller("")
 export class UserController implements interfaces.Controller {
