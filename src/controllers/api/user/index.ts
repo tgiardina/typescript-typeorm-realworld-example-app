@@ -1,2 +1,2 @@
 export { UserController } from './class';
-export { IUserService } from './interfaces';
+export { IUserDto, IUserService } from './interfaces';

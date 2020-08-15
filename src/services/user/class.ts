@@ -6,12 +6,12 @@ import { IUserDto } from '../../models';
 import { IUserRepository } from './interfaces';
 
 @injectable()
-export class UserService {
+export class UserService<T> {
   constructor(
-    @inject(TYPES.UserRepository) private userRepository: IUserRepository,
+    @inject(TYPES.UserRepository) private userRepository: IUserRepository<T>,
   ) { }
 
-  async create(data: IUserDto): Promise<Result<IUserDto>> {
+  async create(data: T): Promise<Result<T>> {
     try {
       const user = this.userRepository.create(data);
       await this.userRepository.save(user)
@@ -21,7 +21,7 @@ export class UserService {
     }
   }
 
-  async findById(id: number): Promise<Result<IUserDto>> {
+  async findById(id: number): Promise<Result<T>> {
     const user = await this.userRepository.findOne(id);
     if (user) {
       return Result.ok(user.toDto());

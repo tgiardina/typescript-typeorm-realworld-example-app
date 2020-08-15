@@ -5,31 +5,21 @@ import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
-import { IUserDto } from '../../../models';
 
 describe('UserService.create', () => {
-  const data = {
-    username: "username",
-    token: "token",
-  };
+  const input = "input";
+  const output = "output";
+  const entity = { toDto: () => output }
   let createStub: SinonStub;
-  let result: Result<IUserDto>;
+  let result: Result<Object>;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
-  let userService: UserService;
+  let userService: UserService<string>;
 
   before(async () => {
     sandbox = createSandbox();
-    const userModel = {
-      ...data,
-      toDto: () => {
-        return {
-          ...data,
-        };
-      }
-    };
     const userRepository = {
-      create: createStub = sandbox.stub().returns(userModel),
+      create: createStub = sandbox.stub().returns(entity),
       findOne: sandbox.stub(),
       save: saveStub = sandbox.stub(),
     };
@@ -40,34 +30,33 @@ describe('UserService.create', () => {
     sandbox.restore();
   });
 
-  describe('is passed a valid username', () => {
+  describe('is passed valid data', () => {
     it('should run without error', async () => {
-      result = await userService.create(data);
+      result = await userService.create(input);
     })
 
     it('should return an ok result', async () => {
       assert(result.isOk);
     });
 
-    it('should return the correct UserDto', async () => {
-      assert.equal(result.value.username, data.username);
-      assert.equal(result.value.token, data.token);
+    it('should return the correct output', async () => {
+      assert.equal(result.value, output);
     });
 
-    it('should have called `create` with username', async () => {
+    it('should have called `create` with input', async () => {
       assert(createStub.calledOnce);
       const args = createStub.args[0];
       assert.equal(args.length, 1);
       const user = args[0];
-      assert.equal(user.username, data.username);
+      assert.equal(user, input);
     })
 
-    it('should have called `save` with user', async () => {
+    it('should have called `save` with entity', async () => {
       assert(saveStub.calledOnce);
       const args = saveStub.args[0];
       assert.equal(args.length, 1);
       const user = args[0];
-      assert.equal(user.username, data.username);
+      assert.equal(user, entity);
     })
   });
 }) 

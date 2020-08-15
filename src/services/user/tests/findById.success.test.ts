@@ -5,31 +5,20 @@ import { createSandbox, SinonSandbox } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
-import { IUserDto } from '../../../models';
 
 describe('UserService.findById', () => {
-  const data = {
-    id: 1,
-    username: "username",
-    token: "token",
-  };
-  let result: Result<IUserDto>;
+  const id = 1;
+  const output = "output";
+  const entity = { toDto: () => output };
+  let result: Result<string>;
   let sandbox: SinonSandbox;
-  let userService: UserService;
+  let userService: UserService<string>;
 
   before(async () => {
     sandbox = createSandbox();
-    const userModel = {
-      ...data,
-      toDto: () => {
-        return {
-          ...data,
-        };
-      }
-    };
     const userRepository = {
       create: sandbox.stub(),
-      findOne: sandbox.stub().returns(userModel),
+      findOne: sandbox.stub().returns(entity),
       save: sandbox.stub(),
     };
     userService = new UserService(userRepository);
@@ -41,17 +30,15 @@ describe('UserService.findById', () => {
 
   describe('is passed a valid id', () => {
     it('should run without error', async () => {
-      result = await userService.findById(data.id);
+      result = await userService.findById(id);
     })
 
     it('should return an ok result', async () => {
       assert(result.isOk);
     });
 
-    it('should return the correct UserDto', async () => {
-      assert.equal(result.value.id, data.id);
-      assert.equal(result.value.username, data.username);
-      assert.equal(result.value.token, data.token);
+    it('should return correct output', async () => {
+      assert.equal(result.value, output);
     });
   });
 }) 

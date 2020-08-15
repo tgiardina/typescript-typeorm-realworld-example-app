@@ -5,17 +5,12 @@ import { createSandbox, SinonSandbox } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
-import { IUserDto } from '../../../models';
 
 describe('UserService.findById', () => {
-  const data = {
-    id: 1,
-    username: "username",
-    token: "token",
-  };
-  let result: Result<IUserDto>;
+  const id = 1;
+  let result: Result<void>;
   let sandbox: SinonSandbox;
-  let userService: UserService;
+  let userService: UserService<void>;
 
   before(async () => {
     sandbox = createSandbox();
@@ -33,7 +28,7 @@ describe('UserService.findById', () => {
 
   describe('is passed an invalid id', () => {
     it('should run without error', async () => {
-      result = await userService.findById(data.id);
+      result = await userService.findById(id);
     })
 
     it('should return an ok result', async () => {

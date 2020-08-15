@@ -5,24 +5,21 @@ import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
-import { IUserDto } from '../../../models';
 
 describe('UserService.create', () => {
-  const data = {
-    username: "duplicate",
-    token: "token",
-  };
+  const input = "duplicate";
+  const entity = { toDto: () => { } };
   const error = { code: "ER_DUP_ENTRY" };
   let createStub: SinonStub;
-  let result: Result<IUserDto>;
+  let result: Result<Object>;
   let sandbox: SinonSandbox;
   let saveStub: SinonStub;
-  let userService: UserService;
+  let userService: UserService<string>;
 
   before(async () => {
     sandbox = createSandbox();
     const userRepository = {
-      create: createStub = sandbox.stub().returns(data),
+      create: createStub = sandbox.stub().returns(entity),
       findOne: sandbox.stub(),
       save: saveStub = sandbox.stub().throws(error),
     };
@@ -33,9 +30,9 @@ describe('UserService.create', () => {
     sandbox.restore();
   });
 
-  describe('is passed a duplicate username', () => {
+  describe('is passed duplicate data', () => {
     it('should run without error', async () => {
-      result = await userService.create(data);
+      result = await userService.create(input);
     })
 
     it('should return a failure result', async () => {
@@ -46,20 +43,20 @@ describe('UserService.create', () => {
       assert.equal(result.error, error.code);
     });
 
-    it('should have called `create` with username', async () => {
+    it('should have called `create` with input', async () => {
       assert(createStub.calledOnce);
       const args = createStub.args[0];
       assert.equal(args.length, 1);
       const user = args[0];
-      assert.equal(user.username, data.username);
+      assert.equal(user, input);
     })
 
-    it('should have called `save` with user', async () => {
+    it('should have called `save` with entity', async () => {
       assert(saveStub.calledOnce);
       const args = saveStub.args[0];
       assert.equal(args.length, 1);
       const user = args[0];
-      assert.equal(user.username, data.username);
+      assert.equal(user, entity);
     })
   });
 }) 

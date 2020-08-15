@@ -1,8 +1,8 @@
-import { IUserDto, IUserModel } from '../../../models';
+import { IUserEntity } from './';
 
-export interface IUserRepository {
-  create: (data: IUserDto) => IUserModel;
-  findOne: (id: number) => Promise<IUserModel>;
-  save: (user: IUserModel) => Promise<IUserModel>;
+export interface IUserRepository<T> {
+  create: (data: T) => IUserEntity;
+  findOne: (id: number) => Promise<IUserEntity>;
+  save: (user: IUserEntity) => Promise<IUserEntity>;
 }
 

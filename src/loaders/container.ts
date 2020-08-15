@@ -4,7 +4,12 @@ import { verify } from 'jsonwebtoken';
 
 import '../controllers';
 import { TYPES } from '../constants';
-import { AuthMiddleware, IJwtParser, IUserService } from '../controllers'
+import {
+  AuthMiddleware,
+  IJwtParser,
+  IUserDto,
+  IUserService,
+} from '../controllers'
 import { UserModel } from '../models';
 import { UserService, IUserRepository } from '../services';
 
@@ -19,7 +24,7 @@ export function loadContainer(): Container {
     });
   // Repositories
   container
-    .bind<IUserRepository>(TYPES.UserRepository)
+    .bind<IUserRepository<IUserDto>>(TYPES.UserRepository)
     .toConstantValue(getRepository(UserModel));
   // Services
   container.bind<IUserService>(TYPES.UserService).to(UserService);
