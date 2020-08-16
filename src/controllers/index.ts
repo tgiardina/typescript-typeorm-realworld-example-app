@@ -1,2 +1,3 @@
-export { UserController } from './api';
-export { AuthMiddleware, IAuthMiddleware, IJwtParser } from './middleware';
+export { UserController, IUserService } from './api';
+export { IUserCreateDto, IUserResponseDto } from './interfaces';
+export { AuthMiddleware, IJwtParser } from './middleware';

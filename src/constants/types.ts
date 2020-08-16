@@ -4,5 +4,6 @@ export const TYPES = {
   UserController: Symbol.for('UserController'),
   UserService: Symbol.for('UserService'),
   UserRepository: Symbol.for('UserRepository'),
+  JwtCipher: Symbol.for('JwtCipher'),
   JwtParser: Symbol.for('JwtParser'),
 }

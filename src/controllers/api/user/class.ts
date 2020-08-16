@@ -7,9 +7,14 @@ import {
 } from 'inversify-express-utils';
 
 import { TYPES } from '../../../constants/';
-import { IBaseRequest, IBaseResponse } from '../../interfaces';
-import { IUserDto } from '../../../models';
-import { IUserService } from '../../../services';
+import {
+  IBaseRequest,
+  IBodyRequest,
+  IBodyResponse,
+  IUserCreateDto,
+  IUserResponseDto,
+} from '../../interfaces';
+import { IUserService } from './interfaces';
 
 @controller("")
 export class UserController implements interfaces.Controller {
@@ -18,8 +23,8 @@ export class UserController implements interfaces.Controller {
 
   @httpPost("/users")
   public async create(
-    req: IBaseRequest<string>,
-    res: IBaseResponse<IUserDto | string>,
+    req: IBodyRequest<IUserCreateDto>,
+    res: IBodyResponse<IUserResponseDto | string>,
   ): Promise<void> {
     const username = req.body.username;
     if (!username) {
@@ -37,8 +42,8 @@ export class UserController implements interfaces.Controller {
 
   @httpGet("/user")
   public async getByAuth(
-    req: IBaseRequest<void>,
-    res: IBaseResponse<IUserDto | string>,
+    req: IBaseRequest,
+    res: IBodyResponse<IUserResponseDto | string>,
   ): Promise<void> {
     const id = req.locals && req.locals.user && req.locals.user.id;
     if (!id) res.status(401).json(`401 - Missing valid authorization.`);

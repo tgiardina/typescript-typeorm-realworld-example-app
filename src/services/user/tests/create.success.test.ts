@@ -1,73 +1,57 @@
 import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
-import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
+import { stub, SinonStub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
-import { IUserDto } from '../../../models';
+import { IUserTokenizable } from '../interfaces';
 
 describe('UserService.create', () => {
-  const data = {
+  const input = "input";
+  const entity = {
+    id: 1,
     username: "username",
-    token: "token",
   };
-  let createStub: SinonStub;
-  let result: Result<IUserDto>;
-  let sandbox: SinonSandbox;
+  const token = "token";
+  let result: Result<IUserTokenizable>;
   let saveStub: SinonStub;
-  let userService: UserService;
+  let userService: UserService<string>;
 
   before(async () => {
-    sandbox = createSandbox();
-    const userModel = {
-      ...data,
-      toDto: () => {
-        return {
-          ...data,
-        };
-      }
-    };
+    const cipher = { tokenize: stub().returns(token) };
     const userRepository = {
-      create: createStub = sandbox.stub().returns(userModel),
-      findOne: sandbox.stub(),
-      save: saveStub = sandbox.stub(),
+      create: stub().returns(entity),
+      findOne: null,
+      save: saveStub = stub(),
     };
-    userService = new UserService(userRepository);
+    userService = new UserService(userRepository, cipher);
   });
 
-  after(async () => {
-    sandbox.restore();
-  });
-
-  describe('is passed a valid username', () => {
+  describe('is passed valid data', () => {
     it('should run without error', async () => {
-      result = await userService.create(data);
+      result = await userService.create(input);
     })
 
     it('should return an ok result', async () => {
       assert(result.isOk);
     });
 
-    it('should return the correct UserDto', async () => {
-      assert.equal(result.value.username, data.username);
-      assert.equal(result.value.token, data.token);
+    it('should return correct username and id', async () => {
+      assert.equal(result.value.id, entity.id);
+      assert.equal(result.value.username, entity.username);
     });
 
-    it('should have called `create` with username', async () => {
-      assert(createStub.calledOnce);
-      const args = createStub.args[0];
-      assert.equal(args.length, 1);
-      const user = args[0];
-      assert.equal(user.username, data.username);
-    })
+    it('should return correct token', async () => {
+      assert.equal(result.value.token, token);
+    });
 
-    it('should have called `save` with user', async () => {
+    it('should have called `save` with entity', async () => {
       assert(saveStub.calledOnce);
       const args = saveStub.args[0];
       assert.equal(args.length, 1);
       const user = args[0];
-      assert.equal(user.username, data.username);
+      assert.equal(user, entity);
     })
   });
 }) 

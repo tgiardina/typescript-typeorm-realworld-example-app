@@ -1,10 +1,10 @@
 import { Application } from 'express';
 
-import { IAuthMiddleware } from '../controllers';
+import { AuthMiddleware } from '../controllers';
 
 export function loadAuthMiddleware(
   app: Application,
-  middleware: IAuthMiddleware,
+  middleware: AuthMiddleware,
 ): void {
   app.use(middleware.parse.bind(middleware));
 }

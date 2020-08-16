@@ -3,8 +3,7 @@ import { assert } from 'chai';
 import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
-import { AuthMiddleware, IAuthMiddleware } from '../';
-import { IBaseResponse } from '../../../interfaces';
+import { AuthMiddleware } from '../';
 
 describe('AuthMiddleware.authenticate', () => {
   const token = "token";
@@ -16,18 +15,13 @@ describe('AuthMiddleware.authenticate', () => {
     username: "username",
     token,
   };
-  let auth: IAuthMiddleware;
+  let auth: AuthMiddleware;
   let nextStub: SinonStub;
-  let res: IBaseResponse<void>;
   let sandbox: SinonSandbox;
 
   before(async () => {
     sandbox = createSandbox();
     nextStub = sandbox.stub();
-    res = {
-      json: sandbox.stub(),
-      status: () => res,
-    };
     const jwtParser = { verify: sandbox.stub().returns(user) };
     auth = new AuthMiddleware(jwtParser);
   });
@@ -38,7 +32,7 @@ describe('AuthMiddleware.authenticate', () => {
 
   describe('is passed a valid token', () => {
     it('should run without error', async () => {
-      auth.parse(req, res, nextStub);
+      auth.parse(req, {}, nextStub);
     })
 
     it('should append user to res.locals', async () => {

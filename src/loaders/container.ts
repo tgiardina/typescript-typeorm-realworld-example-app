@@ -1,29 +1,44 @@
 import { Container } from 'inversify';
 import { getRepository } from 'typeorm';
-import { verify } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 
 import '../controllers';
 import { TYPES } from '../constants';
-import { AuthMiddleware, IAuthMiddleware, IJwtParser } from '../controllers'
-import { UserModel } from '../models';
-import { IUserRepository } from '../repositories';
-import { UserService, IUserService } from '../services';
+import {
+  AuthMiddleware,
+  IJwtParser,
+  IUserCreateDto,
+  IUserResponseDto,
+  IUserService,
+} from '../controllers'
+import { UserEntity } from '../entities';
+import { UserService, IJwtCipher, IUserRepository } from '../services';
 
 export function loadContainer(): Container {
   const container = new Container();
   // Middleware
-  container.bind<IAuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
+  container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
+  // Repositories
+  container
+    .bind<IUserRepository<IUserCreateDto>>(TYPES.UserRepository)
+    .toConstantValue(getRepository(UserEntity));
+  // Services
+  container.bind<IUserService>(TYPES.UserService).to(UserService);
+  // Tokens
+  container
+    .bind<IJwtCipher>(TYPES.JwtCipher)
+    .toConstantValue({
+      tokenize: (data: Record<string, unknown>) => {
+        return sign(data, process.env.JWT_SECRET);
+      },
+    });
   container
     .bind<IJwtParser>(TYPES.JwtParser)
     .toConstantValue({
-      verify: (token: string) => verify(token, process.env.JWT_SECRET),
+      verify: (token: string) => {
+        return <IUserResponseDto>verify(token, process.env.JWT_SECRET);
+      }
     });
-  // Repositories
-  container
-    .bind<IUserRepository>(TYPES.UserRepository)
-    .toConstantValue(getRepository(UserModel));
-  // Services
-  container.bind<IUserService>(TYPES.UserService).to(UserService);
 
   return container;
 }

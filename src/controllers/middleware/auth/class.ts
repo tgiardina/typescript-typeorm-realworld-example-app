@@ -2,7 +2,7 @@ import { NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
 
 import { TYPES } from '../../../constants';
-import { IBaseRequest, IBaseResponse } from '../../interfaces';
+import { IBaseRequest } from '../../interfaces';
 import { IJwtParser } from './interfaces';
 
 @injectable()
@@ -12,8 +12,8 @@ export class AuthMiddleware {
   ) { }
 
   parse(
-    req: IBaseRequest<string | number>,
-    _res: IBaseResponse<void>,
+    req: IBaseRequest,
+    _res: unknown,
     next: NextFunction
   ): void {
     const token = this.getToken(req);
@@ -26,7 +26,7 @@ export class AuthMiddleware {
     next();
   }
 
-  private getToken(req: IBaseRequest<string | number>): string {
+  private getToken(req: IBaseRequest): string {
     const authorization = req.headers.authorization;
     if (!authorization) return;
     const authString = authorization.toString();

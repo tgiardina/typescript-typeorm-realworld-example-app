@@ -1,4 +1,3 @@
-export interface IBaseResponse<T> {
-  json: (res: T) => void;
-  status: (status: number) => IBaseResponse<T>;
+export interface IBaseResponse {
+  status: (status: number) => IBaseResponse;
 }

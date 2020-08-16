@@ -1,2 +1,2 @@
-export { UserService, IUserService } from './user';
+export { UserService, IJwtCipher, IUserRepository } from './user';
 

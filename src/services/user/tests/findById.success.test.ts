@@ -1,57 +1,49 @@
 import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
-import { createSandbox, SinonSandbox } from 'sinon';
+import { stub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
-import { IUserDto } from '../../../models';
+import { IUserTokenizable } from '../interfaces';
 
 describe('UserService.findById', () => {
-  const data = {
-    id: 1,
+  const id = 1;
+  const entity = {
+    id,
     username: "username",
-    token: "token",
+    token: null,
   };
-  let result: Result<IUserDto>;
-  let sandbox: SinonSandbox;
-  let userService: UserService;
+  const token = "token";
+  let result: Result<IUserTokenizable>;
+  let userService: UserService<string>;
 
   before(async () => {
-    sandbox = createSandbox();
-    const userModel = {
-      ...data,
-      toDto: () => {
-        return {
-          ...data,
-        };
-      }
-    };
+    const cipher = { tokenize: stub().returns(token) };
     const userRepository = {
-      create: sandbox.stub(),
-      findOne: sandbox.stub().returns(userModel),
-      save: sandbox.stub(),
+      create: null,
+      findOne: stub().returns(entity),
+      save: null,
     };
-    userService = new UserService(userRepository);
-  });
-
-  after(async () => {
-    sandbox.restore();
+    userService = new UserService(userRepository, cipher);
   });
 
   describe('is passed a valid id', () => {
     it('should run without error', async () => {
-      result = await userService.findById(data.id);
+      result = await userService.findById(id);
     })
 
     it('should return an ok result', async () => {
       assert(result.isOk);
     });
 
-    it('should return the correct UserDto', async () => {
-      assert.equal(result.value.id, data.id);
-      assert.equal(result.value.username, data.username);
-      assert.equal(result.value.token, data.token);
+    it('should return correct username and id', async () => {
+      assert.equal(result.value.id, entity.id);
+      assert.equal(result.value.username, entity.username);
+    });
+
+    it('should return user with correct token ', async () => {
+      assert.equal(result.value.token, token);
     });
   });
 }) 
