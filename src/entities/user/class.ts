@@ -21,9 +21,4 @@ export class UserEntity extends BaseEntity {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
-
-  constructor(data: { username: string }) {
-    super();
-    Object.assign(this, data);
-  }
 }
