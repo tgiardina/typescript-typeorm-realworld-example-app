@@ -10,7 +10,7 @@ import {
   IUserDto,
   IUserService,
 } from '../controllers'
-import { UserModel } from '../models';
+import { UserEntity } from '../entities';
 import { UserService, IJwtCipher, IUserRepository } from '../services';
 
 export function loadContainer(): Container {
@@ -20,21 +20,23 @@ export function loadContainer(): Container {
   // Repositories
   container
     .bind<IUserRepository<IUserDto>>(TYPES.UserRepository)
-    .toConstantValue(getRepository(UserModel));
+    .toConstantValue(getRepository(UserEntity));
   // Services
   container.bind<IUserService>(TYPES.UserService).to(UserService);
   // Tokens
   container
     .bind<IJwtCipher>(TYPES.JwtCipher)
     .toConstantValue({
-      tokenize: (data: unknown) => {
+      tokenize: (data: object) => {
         return sign(data, process.env.JWT_SECRET);
       },
     });
   container
     .bind<IJwtParser>(TYPES.JwtParser)
     .toConstantValue({
-      verify: (token: string) => verify(token, process.env.JWT_SECRET),
+      verify: (token: string) => {
+        return <IUserDto>verify(token, process.env.JWT_SECRET);
+      }
     });
 
   return container;

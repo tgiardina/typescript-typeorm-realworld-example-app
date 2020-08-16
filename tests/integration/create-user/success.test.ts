@@ -15,7 +15,11 @@ describe('/POST users', () => {
   };
   let app: Application;
   let connection: Connection;
-  let user: { [key: string]: number | string };
+  let user: {
+    id: number,
+    username: string,
+    token: string,
+  };
 
   before(async () => {
     app = await initApp();
@@ -39,7 +43,7 @@ describe('/POST users', () => {
   });
 
   it('should include token in body', () => {
-    const decodedToken = verify(user.token, process.env.JWT_SECRET);
+    const decodedToken = <any>verify(user.token, process.env.JWT_SECRET);
     assert.equal(user.id, decodedToken.id);
     assert.equal(user.username, decodedToken.username);
   })
