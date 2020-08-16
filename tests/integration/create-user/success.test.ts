@@ -43,7 +43,10 @@ describe('/POST users', () => {
   });
 
   it('should include token in body', () => {
-    const decodedToken = <any>verify(user.token, process.env.JWT_SECRET);
+    const decodedToken = <{ id: number, username: string }>verify(
+      user.token,
+      process.env.JWT_SECRET,
+    );
     assert.equal(user.id, decodedToken.id);
     assert.equal(user.username, decodedToken.username);
   })

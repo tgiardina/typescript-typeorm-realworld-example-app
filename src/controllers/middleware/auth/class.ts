@@ -13,7 +13,7 @@ export class AuthMiddleware {
 
   parse(
     req: IBaseRequest,
-    _res: {},
+    _res: unknown,
     next: NextFunction
   ): void {
     const token = this.getToken(req);

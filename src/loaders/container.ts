@@ -27,7 +27,7 @@ export function loadContainer(): Container {
   container
     .bind<IJwtCipher>(TYPES.JwtCipher)
     .toConstantValue({
-      tokenize: (data: object) => {
+      tokenize: (data: Record<string, unknown>) => {
         return sign(data, process.env.JWT_SECRET);
       },
     });

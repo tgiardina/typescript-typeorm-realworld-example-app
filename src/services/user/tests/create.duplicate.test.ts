@@ -8,7 +8,7 @@ import { Result } from '../../../helpers';
 
 describe('UserService.create', () => {
   const error = { code: "ER_DUP_ENTRY" };
-  let result: Result<Object>;
+  let result: Result<unknown>;
   let userService: UserService<void>;
 
   before(async () => {
