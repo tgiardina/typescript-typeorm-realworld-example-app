@@ -1,29 +1,25 @@
 import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
-import { createSandbox, SinonSandbox } from 'sinon';
+import { stub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
+import { IUserTokenizable } from '../interfaces';
 
 describe('UserService.findById', () => {
   const id = 1;
-  let result: Result<void>;
-  let sandbox: SinonSandbox;
+  let result: Result<IUserTokenizable>;
   let userService: UserService<void>;
 
   before(async () => {
-    sandbox = createSandbox();
+    const cipher = { tokenize: stub() };
     const userRepository = {
-      create: sandbox.stub(),
-      findOne: sandbox.stub(),
-      save: sandbox.stub(),
+      create: null,
+      findOne: stub(),
+      save: null,
     };
-    userService = new UserService(userRepository);
-  });
-
-  after(async () => {
-    sandbox.restore();
+    userService = new UserService(userRepository, cipher);
   });
 
   describe('is passed an invalid id', () => {

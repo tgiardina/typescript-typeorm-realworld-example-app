@@ -1,8 +1,8 @@
-import { IUserEntity } from './';
+import { IUserTokenizable } from './';
 
 export interface IUserRepository<T> {
-  create: (data: T) => IUserEntity;
-  findOne: (id: number) => Promise<IUserEntity>;
-  save: (user: IUserEntity) => Promise<IUserEntity>;
+  create: (data: T) => IUserTokenizable;
+  findOne: (id: number) => Promise<IUserTokenizable>;
+  save: (user: IUserTokenizable) => Promise<IUserTokenizable>;
 }
 

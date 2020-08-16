@@ -1,38 +1,29 @@
+import 'mocha';
 import 'reflect-metadata';
 import { assert } from 'chai';
-import 'mocha';
-import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
+import { stub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
 
 describe('UserService.create', () => {
-  const input = "duplicate";
-  const entity = { toDto: () => { } };
   const error = { code: "ER_DUP_ENTRY" };
-  let createStub: SinonStub;
   let result: Result<Object>;
-  let sandbox: SinonSandbox;
-  let saveStub: SinonStub;
-  let userService: UserService<string>;
+  let userService: UserService<void>;
 
   before(async () => {
-    sandbox = createSandbox();
+    const cipher = { tokenize: stub() };
     const userRepository = {
-      create: createStub = sandbox.stub().returns(entity),
-      findOne: sandbox.stub(),
-      save: saveStub = sandbox.stub().throws(error),
+      create: stub(),
+      findOne: null,
+      save: stub().throws(error),
     };
-    userService = new UserService(userRepository);
-  });
-
-  after(async () => {
-    sandbox.restore();
+    userService = new UserService(userRepository, cipher);
   });
 
   describe('is passed duplicate data', () => {
     it('should run without error', async () => {
-      result = await userService.create(input);
+      result = await userService.create();
     })
 
     it('should return a failure result', async () => {
@@ -42,21 +33,5 @@ describe('UserService.create', () => {
     it('should return the correct error code', async () => {
       assert.equal(result.error, error.code);
     });
-
-    it('should have called `create` with input', async () => {
-      assert(createStub.calledOnce);
-      const args = createStub.args[0];
-      assert.equal(args.length, 1);
-      const user = args[0];
-      assert.equal(user, input);
-    })
-
-    it('should have called `save` with entity', async () => {
-      assert(saveStub.calledOnce);
-      const args = saveStub.args[0];
-      assert.equal(args.length, 1);
-      const user = args[0];
-      assert.equal(user, entity);
-    })
   });
 }) 

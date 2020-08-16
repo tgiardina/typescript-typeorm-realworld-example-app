@@ -1,33 +1,31 @@
 import 'reflect-metadata';
 import { assert } from 'chai';
 import 'mocha';
-import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
+import { stub, SinonStub } from 'sinon';
 
 import { UserService } from '../';
 import { Result } from '../../../helpers';
+import { IUserTokenizable } from '../interfaces';
 
 describe('UserService.create', () => {
   const input = "input";
-  const output = "output";
-  const entity = { toDto: () => output }
-  let createStub: SinonStub;
-  let result: Result<Object>;
-  let sandbox: SinonSandbox;
+  const entity = {
+    id: 1,
+    username: "username",
+  };
+  const token = "token";
+  let result: Result<IUserTokenizable>;
   let saveStub: SinonStub;
   let userService: UserService<string>;
 
   before(async () => {
-    sandbox = createSandbox();
+    const cipher = { tokenize: stub().returns(token) };
     const userRepository = {
-      create: createStub = sandbox.stub().returns(entity),
-      findOne: sandbox.stub(),
-      save: saveStub = sandbox.stub(),
+      create: stub().returns(entity),
+      findOne: null,
+      save: saveStub = stub(),
     };
-    userService = new UserService(userRepository);
-  });
-
-  after(async () => {
-    sandbox.restore();
+    userService = new UserService(userRepository, cipher);
   });
 
   describe('is passed valid data', () => {
@@ -39,17 +37,14 @@ describe('UserService.create', () => {
       assert(result.isOk);
     });
 
-    it('should return the correct output', async () => {
-      assert.equal(result.value, output);
+    it('should return correct username and id', async () => {
+      assert.equal(result.value.id, entity.id);
+      assert.equal(result.value.username, entity.username);
     });
 
-    it('should have called `create` with input', async () => {
-      assert(createStub.calledOnce);
-      const args = createStub.args[0];
-      assert.equal(args.length, 1);
-      const user = args[0];
-      assert.equal(user, input);
-    })
+    it('should return correct token', async () => {
+      assert.equal(result.value.token, token);
+    });
 
     it('should have called `save` with entity', async () => {
       assert(saveStub.calledOnce);

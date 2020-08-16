@@ -8,11 +8,12 @@ import {
 
 import { TYPES } from '../../../constants/';
 import {
-  IBasePostRequest,
   IBaseRequest,
+  IBodyRequest,
   IBodyResponse,
+  IUserDto,
 } from '../../interfaces';
-import { IUserDto, IUserService } from './interfaces';
+import { IUserService } from './interfaces';
 
 @controller("")
 export class UserController implements interfaces.Controller {
@@ -21,7 +22,7 @@ export class UserController implements interfaces.Controller {
 
   @httpPost("/users")
   public async create(
-    req: IBasePostRequest<string>,
+    req: IBodyRequest,
     res: IBodyResponse<IUserDto | string>,
   ): Promise<void> {
     const username = req.body.username;

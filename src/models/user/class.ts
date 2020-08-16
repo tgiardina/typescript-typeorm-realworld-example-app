@@ -1,4 +1,3 @@
-import { sign } from 'jsonwebtoken';
 import {
   BaseEntity,
   Column,
@@ -7,8 +6,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
-import { IUserDto } from './';
 
 @Entity("user")
 export class UserModel extends BaseEntity {
@@ -25,19 +22,8 @@ export class UserModel extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  constructor(data: IUserDto) {
+  constructor(data: { username: string }) {
     super();
     Object.assign(this, data);
-  }
-
-  toDto(): IUserDto {
-    const baseDto = {
-      id: this.id,
-      username: this.username,
-    };
-    return {
-      ...baseDto,
-      token: sign(baseDto, process.env.JWT_SECRET),
-    };
   }
 }

@@ -1,2 +1,2 @@
 export { UserService } from './class';
-export { IUserRepository } from './interfaces';
+export { IJwtCipher, IUserRepository } from './interfaces';
