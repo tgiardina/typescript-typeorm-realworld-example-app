@@ -7,7 +7,8 @@ import { TYPES } from '../constants';
 import {
   AuthMiddleware,
   IJwtParser,
-  IUserDto,
+  IUserCreateDto,
+  IUserResponseDto,
   IUserService,
 } from '../controllers'
 import { UserEntity } from '../entities';
@@ -19,7 +20,7 @@ export function loadContainer(): Container {
   container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
   // Repositories
   container
-    .bind<IUserRepository<IUserDto>>(TYPES.UserRepository)
+    .bind<IUserRepository<IUserCreateDto>>(TYPES.UserRepository)
     .toConstantValue(getRepository(UserEntity));
   // Services
   container.bind<IUserService>(TYPES.UserService).to(UserService);
@@ -35,7 +36,7 @@ export function loadContainer(): Container {
     .bind<IJwtParser>(TYPES.JwtParser)
     .toConstantValue({
       verify: (token: string) => {
-        return <IUserDto>verify(token, process.env.JWT_SECRET);
+        return <IUserResponseDto>verify(token, process.env.JWT_SECRET);
       }
     });
 

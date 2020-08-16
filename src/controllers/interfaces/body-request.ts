@@ -1,7 +1,7 @@
-import { IUserDto } from './';
+import { IUserResponseDto } from './';
 
-export interface IBodyRequest {
-  body: { [key: string]: string | number, };
+export interface IBodyRequest<T> {
+  body: T;
   headers: { [key: string]: string | string[], };
-  locals: { [user: string]: IUserDto, };
+  locals: { [user: string]: IUserResponseDto, };
 }

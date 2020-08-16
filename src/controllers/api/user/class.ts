@@ -11,7 +11,8 @@ import {
   IBaseRequest,
   IBodyRequest,
   IBodyResponse,
-  IUserDto,
+  IUserCreateDto,
+  IUserResponseDto,
 } from '../../interfaces';
 import { IUserService } from './interfaces';
 
@@ -22,8 +23,8 @@ export class UserController implements interfaces.Controller {
 
   @httpPost("/users")
   public async create(
-    req: IBodyRequest,
-    res: IBodyResponse<IUserDto | string>,
+    req: IBodyRequest<IUserCreateDto>,
+    res: IBodyResponse<IUserResponseDto | string>,
   ): Promise<void> {
     const username = req.body.username;
     if (!username) {
@@ -42,7 +43,7 @@ export class UserController implements interfaces.Controller {
   @httpGet("/user")
   public async getByAuth(
     req: IBaseRequest,
-    res: IBodyResponse<IUserDto | string>,
+    res: IBodyResponse<IUserResponseDto | string>,
   ): Promise<void> {
     const id = req.locals && req.locals.user && req.locals.user.id;
     if (!id) res.status(401).json(`401 - Missing valid authorization.`);

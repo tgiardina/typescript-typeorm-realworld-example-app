@@ -1,4 +1,4 @@
-import { IUserDto } from './';
+import { IUserDto } from '../../../interfaces';
 import { Result } from '../../../../helpers';
 
 export interface IUserService {
