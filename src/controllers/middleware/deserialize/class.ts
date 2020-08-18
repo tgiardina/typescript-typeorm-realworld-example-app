@@ -11,7 +11,7 @@ export class DeserializeMiddleware {
     @inject(TYPES.JwtParser) private jwtParser: IJwtParser,
   ) { }
 
-  parse(
+  deserialize(
     req: IBaseRequest,
     _res: unknown,
     next: NextFunction
@@ -19,7 +19,7 @@ export class DeserializeMiddleware {
     const token = this.getToken(req);
     try {
       req.locals = req.locals || {};
-      req.locals.user = this.jwtParser.verify(token);
+      req.locals.user = this.jwtParser.deserialize(token);
     } catch (err) {
       // TOOD: Add logging
     }

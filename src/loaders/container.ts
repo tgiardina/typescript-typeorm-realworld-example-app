@@ -6,11 +6,11 @@ import { TYPES } from '../constants';
 import {
   DeserializeMiddleware,
   SerializeMiddleware,
+  IJwtCipher,
   IJwtParser,
   IUserRepository,
   IUserResponseDto,
 } from '../controllers'
-import { IJwtCipher } from '../entities';
 import { UserRepository } from '../repositories';
 
 export function loadContainer(): Container {
@@ -22,21 +22,20 @@ export function loadContainer(): Container {
   container
     .bind<SerializeMiddleware>(TYPES.SerializeMiddleware)
     .to(SerializeMiddleware);
-  // Repositories  
   // Repositories
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
   // Tokens
   container
     .bind<IJwtCipher>(TYPES.JwtCipher)
     .toConstantValue({
-      tokenize: (data: Record<string, unknown>) => {
+      serialize: (data: Record<string, unknown>) => {
         return sign(data, process.env.JWT_SECRET);
       },
     });
   container
     .bind<IJwtParser>(TYPES.JwtParser)
     .toConstantValue({
-      verify: (token: string) => {
+      deserialize: (token: string) => {
         return <IUserResponseDto>verify(token, process.env.JWT_SECRET);
       }
     });

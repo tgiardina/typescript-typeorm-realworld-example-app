@@ -1,5 +1,5 @@
-import { IUserDto } from '../../../interfaces';
+import { IUserResponseDto } from '../../../interfaces';
 
 export interface IJwtParser {
-  verify: (token: string) => IUserDto;
+  deserialize: (token: string) => IUserResponseDto;
 }

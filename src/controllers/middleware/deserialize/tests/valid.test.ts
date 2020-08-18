@@ -15,15 +15,15 @@ describe('AuthMiddleware.authenticate', () => {
     username: "username",
     token,
   };
-  let auth: DeserializeMiddleware;
+  let deserializer: DeserializeMiddleware;
   let nextStub: SinonStub;
   let sandbox: SinonSandbox;
 
   before(async () => {
     sandbox = createSandbox();
     nextStub = sandbox.stub();
-    const jwtParser = { verify: sandbox.stub().returns(user) };
-    auth = new DeserializeMiddleware(jwtParser);
+    const jwtParser = { deserialize: sandbox.stub().returns(user) };
+    deserializer = new DeserializeMiddleware(jwtParser);
   });
 
   after(async () => {
@@ -32,7 +32,7 @@ describe('AuthMiddleware.authenticate', () => {
 
   describe('is passed a valid token', () => {
     it('should run without error', async () => {
-      auth.parse(req, {}, nextStub);
+      deserializer.deserialize(req, {}, nextStub);
     })
 
     it('should append user to res.locals', async () => {

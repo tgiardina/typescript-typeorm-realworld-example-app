@@ -10,15 +10,15 @@ describe('AuthMiddleware.authenticate', () => {
     headers: { authorization: null },
     locals: {},
   };
-  let auth: DeserializeMiddleware;
+  let deserializer: DeserializeMiddleware;
   let nextStub: SinonStub;
   let sandbox: SinonSandbox;
 
   before(async () => {
     sandbox = createSandbox();
     nextStub = sandbox.stub();
-    const jwtParser = { verify: sandbox.stub().throws(new Error()) };
-    auth = new DeserializeMiddleware(jwtParser);
+    const jwtParser = { deserialize: sandbox.stub().throws(new Error()) };
+    deserializer = new DeserializeMiddleware(jwtParser);
   });
 
   after(async () => {
@@ -27,7 +27,7 @@ describe('AuthMiddleware.authenticate', () => {
 
   describe('is passed an invalid token', () => {
     it('should run without error', async () => {
-      auth.parse(req, {}, nextStub);
+      deserializer.deserialize(req, {}, nextStub);
     })
 
     it('should have called next once', async () => {
