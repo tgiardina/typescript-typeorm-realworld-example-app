@@ -20,17 +20,19 @@ export class UserController implements interfaces.Controller {
   @httpPost("/users")
   public async create(
     req: IBodyRequest<IUserCreateDto>,
-    res: IBodyResponse<any>, // IBodyResponse<IUserResponseDto | string>,
+    res: IBodyResponse<IUserResponseDto | string>,
   ): Promise<void> {
     const username = req.body.username;
     if (!username) {
       res.status(400).json(`400 - Username "${username}" is invalid.`);
     }
     try {
-      const result = await this.repository.create({ username: req.body.username });
-      res.status(201).json(result.toDto());
-    } catch (e) {
-      if (e === "ER_DUP_ENTRY") {
+      const result = await this.repository.createAndSaveDto({
+        username: req.body.username
+      });
+      res.status(201).json(result);
+    } catch (err) {
+      if (err.code === "ER_DUP_ENTRY") {
         res.status(409).json(`409 - User "${username}" already exists.`);
       } else {
         res.status(500).json("500 - Server error");
@@ -46,14 +48,14 @@ export class UserController implements interfaces.Controller {
     const id = req.locals && req.locals.user && req.locals.user.id;
     if (!id) res.status(401).json(`401 - Missing valid authorization.`);
     try {
-      const result = await this.repository.findOne(id);
-      res.status(200).json(result.toDto());
-    } catch (e) {
-      if (e == "ER_NOT_FOUND") {
-        res.status(404).json(`404 - No user associated with token.`);
+      const result = await this.repository.findOneDto(id);
+      if (result) {
+        res.status(200).json(result);
       } else {
-        res.status(500).json("500 - Server error");
+        res.status(404).json(`404 - No user associated with token.`);
       }
+    } catch (err) {
+      res.status(500).json("500 - Server error");
     }
   }
 }
