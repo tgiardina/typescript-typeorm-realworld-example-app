@@ -1,6 +1,6 @@
 import { assert, request } from 'chai';
 import { Application } from 'express';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
 import initApp from '../../../src/app';
@@ -53,5 +53,14 @@ describe('/GET user', () => {
 
   it('should have correct username in body', () => {
     assert.equal(body.username, username);
+  });
+
+  it('should have correct token in body', () => {
+    const deserialized = <{ [key: string]: unknown }>verify(
+      body.token,
+      process.env.JWT_SECRET,
+    );
+    assert.equal(deserialized.id, 1);
+    assert.equal(deserialized.username, username);
   });
 })  
