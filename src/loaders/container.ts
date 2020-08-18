@@ -1,5 +1,4 @@
 import { Container } from 'inversify';
-import { getRepository } from 'typeorm';
 import { sign, verify } from 'jsonwebtoken';
 
 import '../controllers';

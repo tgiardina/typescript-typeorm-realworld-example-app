@@ -1,3 +1,3 @@
 export interface IJwtCipher {
-  tokenize: (data: object) => string;
+  tokenize: (data: { [key: string]: string | number }) => string;
 }
