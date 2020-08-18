@@ -4,7 +4,7 @@ import { sign, verify } from 'jsonwebtoken';
 import '../controllers';
 import { TYPES } from '../constants';
 import {
-  AuthMiddleware,
+  DeserializeMiddleware,
   IJwtParser,
   IUserRepository,
   IUserResponseDto,
@@ -15,7 +15,9 @@ import { UserRepository } from '../repositories';
 export function loadContainer(): Container {
   const container = new Container();
   // Middleware
-  container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
+  container
+    .bind<DeserializeMiddleware>(TYPES.DeserializeMiddleware)
+    .to(DeserializeMiddleware);
   // Repositories
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
   // Tokens

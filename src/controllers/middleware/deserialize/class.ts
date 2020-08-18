@@ -6,7 +6,7 @@ import { IBaseRequest } from '../../interfaces';
 import { IJwtParser } from './interfaces';
 
 @injectable()
-export class AuthMiddleware {
+export class DeserializeMiddleware {
   constructor(
     @inject(TYPES.JwtParser) private jwtParser: IJwtParser,
   ) { }

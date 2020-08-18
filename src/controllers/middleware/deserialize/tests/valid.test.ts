@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import 'mocha';
 import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
 
-import { AuthMiddleware } from '../';
+import { DeserializeMiddleware } from '../';
 
 describe('AuthMiddleware.authenticate', () => {
   const token = "token";
@@ -15,7 +15,7 @@ describe('AuthMiddleware.authenticate', () => {
     username: "username",
     token,
   };
-  let auth: AuthMiddleware;
+  let auth: DeserializeMiddleware;
   let nextStub: SinonStub;
   let sandbox: SinonSandbox;
 
@@ -23,7 +23,7 @@ describe('AuthMiddleware.authenticate', () => {
     sandbox = createSandbox();
     nextStub = sandbox.stub();
     const jwtParser = { verify: sandbox.stub().returns(user) };
-    auth = new AuthMiddleware(jwtParser);
+    auth = new DeserializeMiddleware(jwtParser);
   });
 
   after(async () => {
