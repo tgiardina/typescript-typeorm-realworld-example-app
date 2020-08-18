@@ -8,11 +8,10 @@ import {
   AuthMiddleware,
   IJwtParser,
   IUserCreateDto,
+  IUserRepository,
   IUserResponseDto,
-  IUserService,
 } from '../controllers'
 import { UserEntity } from '../entities';
-import { UserService, IJwtCipher, IUserRepository } from '../services';
 
 export function loadContainer(): Container {
   const container = new Container();
@@ -20,18 +19,16 @@ export function loadContainer(): Container {
   container.bind<AuthMiddleware>(TYPES.AuthMiddleware).to(AuthMiddleware);
   // Repositories
   container
-    .bind<IUserRepository<IUserCreateDto>>(TYPES.UserRepository)
+    .bind<IUserRepository>(TYPES.UserRepository)
     .toConstantValue(getRepository(UserEntity));
-  // Services
-  container.bind<IUserService>(TYPES.UserService).to(UserService);
   // Tokens
-  container
-    .bind<IJwtCipher>(TYPES.JwtCipher)
-    .toConstantValue({
-      tokenize: (data: Record<string, unknown>) => {
-        return sign(data, process.env.JWT_SECRET);
-      },
-    });
+  // container
+  //   .bind<IJwtCipher>(TYPES.JwtCipher)
+  //   .toConstantValue({
+  //     tokenize: (data: Record<string, unknown>) => {
+  //       return sign(data, process.env.JWT_SECRET);
+  //     },
+  //   });
   container
     .bind<IJwtParser>(TYPES.JwtParser)
     .toConstantValue({

@@ -1,1 +1,1 @@
-export { IUserService } from './user-service';
+export { IUserRepository } from './user-repository';
