@@ -5,6 +5,7 @@ import '../controllers';
 import { TYPES } from '../constants';
 import {
   DeserializeMiddleware,
+  SerializeMiddleware,
   IJwtParser,
   IUserRepository,
   IUserResponseDto,
@@ -18,6 +19,10 @@ export function loadContainer(): Container {
   container
     .bind<DeserializeMiddleware>(TYPES.DeserializeMiddleware)
     .to(DeserializeMiddleware);
+  container
+    .bind<SerializeMiddleware>(TYPES.SerializeMiddleware)
+    .to(SerializeMiddleware);
+  // Repositories  
   // Repositories
   container.bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
   // Tokens

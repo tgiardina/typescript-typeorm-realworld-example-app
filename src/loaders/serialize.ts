@@ -1,10 +1,10 @@
 import { Application } from 'express';
 
-import { DeserializeMiddleware } from '../controllers';
+import { SerializeMiddleware } from '../controllers';
 
 export function loadSerializeMiddleware(
   app: Application,
-  middleware: DeserializeMiddleware,
+  middleware: SerializeMiddleware,
 ): void {
-  app.use(middleware.parse.bind(middleware));
+  app.use(middleware.serialize.bind(middleware));
 }

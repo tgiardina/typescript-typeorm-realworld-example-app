@@ -4,12 +4,13 @@ import { Application } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 import { TYPES } from './constants';
-import { DeserializeMiddleware } from './controllers';
+import { DeserializeMiddleware, SerializeMiddleware } from './controllers';
 import {
-  loadSerializeMiddleware,
   loadContainer,
   loadDatabase,
+  loadDeserializeMiddleware,
   loadParser,
+  loadSerializeMiddleware,
 } from './loaders';
 
 export default async function init(): Promise<Application> {
@@ -18,10 +19,15 @@ export default async function init(): Promise<Application> {
   const server = new InversifyExpressServer(container);
   server.setConfig((app) => {
     loadParser(app);
-    loadSerializeMiddleware(
+    loadDeserializeMiddleware(
       app,
       container.get<DeserializeMiddleware>(TYPES.DeserializeMiddleware),
     );
   });
-  return server.build();
+  const app = server.build();
+  loadSerializeMiddleware(
+    app,
+    container.get<SerializeMiddleware>(TYPES.SerializeMiddleware),
+  );
+  return app;
 }
