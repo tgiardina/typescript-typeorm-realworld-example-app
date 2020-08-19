@@ -9,7 +9,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/POST users 409', () => {
+describe('POST /api/users 409', () => {
   let app: Application;
   let body: IError;
   let connection: Connection;
@@ -35,7 +35,7 @@ describe('/POST users 409', () => {
     await connection.close();
   });
 
-  it('should return 409 error.', (done) => {
+  it('should run.', (done) => {
     request(app)
       .post('/users')
       .type('json')

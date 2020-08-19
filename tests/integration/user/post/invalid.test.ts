@@ -9,7 +9,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/POST users 400', () => {
+describe('POST /api/users 400', () => {
   let app: Application;
   let body: IError;
   let connection: Connection;

@@ -10,7 +10,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/GET user 200', () => {
+describe('GET /api/user 200', () => {
   const username = "username";
   const token = sign({ id: 1, username }, process.env.JWT_SECRET);
   let app: Application;

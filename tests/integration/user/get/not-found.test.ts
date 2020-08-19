@@ -10,7 +10,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/GET user 404', () => {
+describe('GET /api/user 404', () => {
   const token = sign({ id: 1, username: "username" }, process.env.JWT_SECRET);
   let app: Application;
   let body: IError;

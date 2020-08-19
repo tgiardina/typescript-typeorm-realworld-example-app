@@ -9,7 +9,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/GET user 401', () => {
+describe('GET /api/user 401', () => {
   let app: Application;
   let body: IError;
   let connection: Connection;
