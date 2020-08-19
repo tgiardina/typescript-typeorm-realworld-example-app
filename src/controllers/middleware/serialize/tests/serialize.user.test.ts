@@ -1,26 +1,23 @@
-import 'reflect-metadata';
 import 'mocha';
+import 'reflect-metadata';
 import { assert } from 'chai';
-import { stub, SinonStub } from 'sinon';
+import { stub } from 'sinon';
 
 import { SerializeMiddleware } from '../';
 import { IDto } from '../interfaces';
 
 describe('SerializeMiddleware.serialize', () => {
+  // Data
   const params: IDto = { user: { id: 1 } };
   const data = { ...params };
   const token = "token";
-  let jsonStub: SinonStub;
-  let serializer: SerializeMiddleware;
-
-  before(async () => {
-    jsonStub = stub();
-    const jwtCipher = { serialize: stub().returns(token) };
-    serializer = new SerializeMiddleware(jwtCipher);
-  });
+  // Stubs
+  const jsonStub = stub();
+  const jwtCipher = { serialize: stub().returns(token) };
 
   describe('is passed a body without a user', () => {
     it('should run without error', async () => {
+      const serializer = new SerializeMiddleware(jwtCipher);
       serializer["serialize"](jsonStub, data);
     })
 

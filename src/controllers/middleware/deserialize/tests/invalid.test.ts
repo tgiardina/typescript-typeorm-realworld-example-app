@@ -1,32 +1,23 @@
+import 'mocha';
 import 'reflect-metadata';
 import { assert } from 'chai';
-import 'mocha';
-import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
+import { stub } from 'sinon';
 
 import { DeserializeMiddleware } from '../';
 
-describe('AuthMiddleware.authenticate', () => {
+describe('DeserializeMiddleware.authenticate', () => {
+  // Data
   const req = {
     headers: { authorization: null },
     locals: {},
   };
-  let deserializer: DeserializeMiddleware;
-  let nextStub: SinonStub;
-  let sandbox: SinonSandbox;
-
-  before(async () => {
-    sandbox = createSandbox();
-    nextStub = sandbox.stub();
-    const jwtParser = { deserialize: sandbox.stub().throws(new Error()) };
-    deserializer = new DeserializeMiddleware(jwtParser);
-  });
-
-  after(async () => {
-    sandbox.restore();
-  });
+  // Stubs
+  const jwtParser = { deserialize: stub().throws(new Error()) };
+  const nextStub = stub();
 
   describe('is passed an invalid token', () => {
     it('should run without error', async () => {
+      const deserializer = new DeserializeMiddleware(jwtParser);
       deserializer.deserialize(req, {}, nextStub);
     })
 
