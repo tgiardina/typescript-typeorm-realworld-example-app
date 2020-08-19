@@ -6,5 +6,5 @@ export function loadSerializeMiddleware(
   app: Application,
   middleware: SerializeMiddleware,
 ): void {
-  app.use(middleware.serialize.bind(middleware));
+  app.use(middleware.setup.bind(middleware));
 }

@@ -14,7 +14,7 @@ describe('/GET user', () => {
   const token = sign({ id: 1, username }, process.env.JWT_SECRET);
   let app: Application;
   let connection: Connection;
-  let body: { [username: string]: string };
+  let user: { [username: string]: string };
   let status: number;
 
   before(async () => {
@@ -42,7 +42,7 @@ describe('/GET user', () => {
       .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         status = res.status;
-        body = res.body;
+        user = res.body.user;
         done();
       });
   });
@@ -52,12 +52,12 @@ describe('/GET user', () => {
   });
 
   it('should have correct username in body', () => {
-    assert.equal(body.username, username);
+    assert.equal(user.username, username);
   });
 
   it('should have correct token in body', () => {
     const deserialized = <{ [key: string]: unknown }>verify(
-      body.token,
+      user.token,
       process.env.JWT_SECRET,
     );
     assert.equal(deserialized.id, 1);

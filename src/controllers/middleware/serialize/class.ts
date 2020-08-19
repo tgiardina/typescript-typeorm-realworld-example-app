@@ -2,13 +2,27 @@ import { NextFunction } from 'express';
 import { inject, injectable } from 'inversify';
 
 import { TYPES } from '../../../constants';
-import { IResponse, IJwtCipher } from './interfaces';
+import { IDto, IJwtCipher, IResponse } from './interfaces';
 
 @injectable()
 export class SerializeMiddleware {
   constructor(
-    @inject(TYPES.JwtParser) private jwtParser: IJwtCipher,
+    @inject(TYPES.JwtCipher) private jwtCipher: IJwtCipher,
   ) { }
 
-  serialize(_req: unknown, res: IResponse, next: NextFunction): void { }
+  setup(_req: unknown, res: IResponse, next: NextFunction): void {
+    const oldJson = res.json.bind(res);
+    res.json = (data: IDto) => this.serialize(oldJson, data);
+    next();
+  }
+
+  private serialize(
+    jsonSerializer: (data: unknown) => void,
+    data: IDto,
+  ): void {
+    if (data.user) {
+      data.user.token = this.jwtCipher.serialize(data.user);
+    }
+    jsonSerializer(data);
+  }
 }

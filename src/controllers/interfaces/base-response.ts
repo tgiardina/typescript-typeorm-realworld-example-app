@@ -1,3 +1,3 @@
 export interface IBaseResponse {
-  status: (status: number) => IBaseResponse;
+  status: (n: number) => IBaseResponse,
 }

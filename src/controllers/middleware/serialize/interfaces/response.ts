@@ -1,4 +1,3 @@
 export interface IResponse {
-  body: unknown;
-  send: () => void;
+  json: (data: unknown) => void;
 }

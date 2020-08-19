@@ -23,11 +23,11 @@ export default async function init(): Promise<Application> {
       app,
       container.get<DeserializeMiddleware>(TYPES.DeserializeMiddleware),
     );
+    loadSerializeMiddleware(
+      app,
+      container.get<SerializeMiddleware>(TYPES.SerializeMiddleware),
+    );
   });
   const app = server.build();
-  loadSerializeMiddleware(
-    app,
-    container.get<SerializeMiddleware>(TYPES.SerializeMiddleware),
-  );
   return app;
 }
