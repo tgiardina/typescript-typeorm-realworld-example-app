@@ -1,11 +1,12 @@
+import 'mocha';
 import 'reflect-metadata';
 import { assert } from 'chai';
-import 'mocha';
-import { createSandbox, SinonSandbox, SinonStub } from 'sinon';
+import { stub } from 'sinon';
 
-import { AuthMiddleware } from '../';
+import { DeserializeMiddleware } from '../';
 
-describe('AuthMiddleware.authenticate', () => {
+describe('DeserializeMiddleware.authenticate', () => {
+  // Data
   const token = "token";
   const req = {
     headers: { authorization: token },
@@ -15,24 +16,14 @@ describe('AuthMiddleware.authenticate', () => {
     username: "username",
     token,
   };
-  let auth: AuthMiddleware;
-  let nextStub: SinonStub;
-  let sandbox: SinonSandbox;
-
-  before(async () => {
-    sandbox = createSandbox();
-    nextStub = sandbox.stub();
-    const jwtParser = { verify: sandbox.stub().returns(user) };
-    auth = new AuthMiddleware(jwtParser);
-  });
-
-  after(async () => {
-    sandbox.restore();
-  });
+  // Stubs
+  const jwtParser = { deserialize: stub().returns(user) };
+  const nextStub = stub();
 
   describe('is passed a valid token', () => {
     it('should run without error', async () => {
-      auth.parse(req, {}, nextStub);
+      const deserializer = new DeserializeMiddleware(jwtParser);
+      deserializer.deserialize(req, {}, nextStub);
     })
 
     it('should append user to res.locals', async () => {

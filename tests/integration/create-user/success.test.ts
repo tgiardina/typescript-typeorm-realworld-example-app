@@ -37,7 +37,7 @@ describe('/POST users', () => {
       .send(data)
       .end((_err, res) => {
         assert.equal(res.status, 201);
-        user = res.body;
+        user = res.body.user;
         done();
       });
   });
