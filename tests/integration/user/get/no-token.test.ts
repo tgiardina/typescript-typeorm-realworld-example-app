@@ -9,8 +9,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('GET /api/user - invalid token', () => {
-  const token = "invalid token";
+describe('GET /api/user - no token', () => {
   let app: Application;
   let body: IError;
   let connection: Connection;
@@ -28,7 +27,6 @@ describe('GET /api/user - invalid token', () => {
   it('should run', (done) => {
     request(app)
       .get('/user')
-      .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         body = res.body;
         status = res.status;
