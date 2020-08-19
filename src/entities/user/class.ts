@@ -11,13 +11,14 @@ import { IUserResponseDto } from '../../controllers';
 
 @Entity("user")
 export class UserEntity extends BaseEntity {
-  // Columns
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
-  joined: Date;
+  bio: string;
   @Column()
-  lastLogin: Date;
+  email: string;
+  @Column()
+  image: string;
   @Column()
   username: string;
   @CreateDateColumn()

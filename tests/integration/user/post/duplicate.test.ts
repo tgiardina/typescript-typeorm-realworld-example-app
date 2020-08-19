@@ -10,11 +10,15 @@ import { initConnection } from '../../../utils';
 initLoaders();
 
 describe('POST /api/users 409', () => {
+  const data = {
+    email: "username@example.com",
+    password: "password",
+    username: "username",
+  };
   let app: Application;
   let body: IError;
   let connection: Connection;
   let status: number;
-  const username = "duplicate";
 
   before(async () => {
     app = await initApp();
@@ -23,8 +27,10 @@ describe('POST /api/users 409', () => {
       `INSERT INTO user VALUES(\n\
         DEFAULT,\n\
         DEFAULT,\n\
+        "${data.email}",\n\
+        "differentPassword",\n\
         DEFAULT,\n\
-        "${username}",\n\
+        "differentUsername",\n\
         DEFAULT,\n\
         DEFAULT\n\
        );`
@@ -39,9 +45,7 @@ describe('POST /api/users 409', () => {
     request(app)
       .post('/users')
       .type('json')
-      .send({
-        username
-      })
+      .send(data)
       .end((_err, res) => {
         body = res.body;
         status = res.status;

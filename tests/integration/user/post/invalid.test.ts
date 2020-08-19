@@ -9,11 +9,16 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('POST /api/users 400', () => {
+describe('POST /api/users 422', () => {
+  const data = {
+    email: "username@example.com",
+    password: "password",
+    username: "username",
+  };
   let app: Application;
-  let body: IError;
+  let bodies: { [key: string]: IError };
   let connection: Connection;
-  let status: number;
+  let statuses: { [key: string]: number };
 
   before(async () => {
     app = await initApp();
@@ -24,23 +29,33 @@ describe('POST /api/users 400', () => {
     await connection.close();
   });
 
-  it('should run.', (done) => {
-    request(app)
-      .post('/users')
-      .type('json')
-      .send({})
-      .end((_err, res) => {
-        body = res.body;
-        status = res.status;
-        done();
+  it('should run.', async () => {
+    await Promise.all(Object.keys(data).map(key => {
+      const partialData = { ...data };
+      delete partialData[key];
+      return new Promise((done) => {
+        request(app)
+          .post('/users')
+          .type('json')
+          .send({})
+          .end((_err, res) => {
+            bodies[key] = res.body;
+            statuses[key] = res.status;
+            done();
+          });
       });
+    }));
   });
 
-  it('should have a 400 status.', () => {
-    assert.equal(status, 400);
+  it('should have a 422 status.', () => {
+    for (const status of Object.values(statuses)) {
+      assert.equal(status, 422);
+    }
   });
 
   it('should have an error body.', () => {
-    assert.equal(body.errors.body.length, 1);
+    for (const body of Object.values(bodies)) {
+      assert.equal(body.errors.body.length, 1);
+    }
   });
 })  
