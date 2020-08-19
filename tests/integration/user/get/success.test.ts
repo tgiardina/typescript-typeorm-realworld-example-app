@@ -3,18 +3,19 @@ import { Application } from 'express';
 import { sign, verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
-import initApp from '../../../src/app';
-import initLoaders from '../../loaders';
-import { initConnection } from '../../utils';
+import initApp from '../../../../src/app';
+import { IUser } from '../interfaces';
+import initLoaders from '../../../loaders';
+import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/GET user', () => {
+describe('/GET user 200', () => {
   const username = "username";
   const token = sign({ id: 1, username }, process.env.JWT_SECRET);
   let app: Application;
+  let body: IUser;
   let connection: Connection;
-  let user: { [username: string]: string };
   let status: number;
 
   before(async () => {
@@ -42,7 +43,7 @@ describe('/GET user', () => {
       .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         status = res.status;
-        user = res.body.user;
+        body = res.body.user;
         done();
       });
   });
@@ -52,12 +53,12 @@ describe('/GET user', () => {
   });
 
   it('should have correct username in body', () => {
-    assert.equal(user.username, username);
+    assert.equal(body.user.username, username);
   });
 
   it('should have correct token in body', () => {
     const deserialized = <{ [key: string]: unknown }>verify(
-      user.token,
+      body.user.token,
       process.env.JWT_SECRET,
     );
     assert.equal(deserialized.id, 1);

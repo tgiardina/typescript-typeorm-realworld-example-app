@@ -2,14 +2,16 @@ import { assert, request } from 'chai';
 import { Application } from 'express';
 import { Connection } from 'typeorm';
 
-import initApp from '../../../src/app';
-import initLoaders from '../../loaders';
-import { initConnection } from '../../utils';
+import initApp from '../../../../src/app';
+import { IError } from '../../interfaces';
+import initLoaders from '../../../loaders';
+import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/GET user', () => {
+describe('/GET user 401', () => {
   let app: Application;
+  let body: IError;
   let connection: Connection;
   let status: number;
 
@@ -26,6 +28,7 @@ describe('/GET user', () => {
     request(app)
       .get('/user')
       .end((_err, res) => {
+        body = res.body;
         status = res.status;
         done();
       });
@@ -33,5 +36,9 @@ describe('/GET user', () => {
 
   it('should have a 401 status', () => {
     assert.equal(status, 401);
+  });
+
+  it('should have an error body.', () => {
+    assert.equal(body.errors.body.length, 1);
   });
 })  

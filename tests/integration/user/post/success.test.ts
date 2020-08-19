@@ -3,23 +3,21 @@ import { Application } from 'express';
 import { verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
-import initApp from '../../../src/app';
-import initLoaders from '../../loaders';
-import { initConnection } from '../../utils';
+import initApp from '../../../../src/app';
+import { IUser } from '../interfaces';
+import initLoaders from '../../../loaders';
+import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/POST users', () => {
+describe('/POST users 201', () => {
   const data = {
     username: "username",
   };
   let app: Application;
+  let body: IUser;
   let connection: Connection;
-  let user: {
-    id: number,
-    username: string,
-    token: string,
-  };
+  let status: number;
 
   before(async () => {
     app = await initApp();
@@ -30,24 +28,28 @@ describe('/POST users', () => {
     await connection.close();
   });
 
-  it('should return 201 status.', (done) => {
+  it('should run.', (done) => {
     request(app)
       .post('/users')
       .type('json')
       .send(data)
       .end((_err, res) => {
-        assert.equal(res.status, 201);
-        user = res.body.user;
+        body = res.body;
+        status = res.status;
         done();
       });
   });
 
+  it('should have a 201 status', () => {
+    assert.equal(status, 201);
+  });
+
   it('should include token in body', () => {
     const decodedToken = <{ id: number, username: string }>verify(
-      user.token,
+      body.user.token,
       process.env.JWT_SECRET,
     );
-    assert.equal(user.id, decodedToken.id);
-    assert.equal(user.username, decodedToken.username);
+    assert.equal(decodedToken.id, 1);
+    assert.equal(decodedToken.username, body.user.username);
   })
 })  

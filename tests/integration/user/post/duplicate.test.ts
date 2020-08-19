@@ -2,15 +2,18 @@ import { assert, request } from 'chai';
 import { Application } from 'express';
 import { Connection } from 'typeorm';
 
-import initApp from '../../../src/app';
-import initLoaders from '../../loaders';
-import { initConnection } from '../../utils';
+import initApp from '../../../../src/app';
+import { IError } from '../../interfaces';
+import initLoaders from '../../../loaders';
+import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('/POST users', () => {
+describe('/POST users 409', () => {
   let app: Application;
+  let body: IError;
   let connection: Connection;
+  let status: number;
   const username = "duplicate";
 
   before(async () => {
@@ -40,8 +43,17 @@ describe('/POST users', () => {
         username
       })
       .end((_err, res) => {
-        assert.equal(res.status, 409);
+        body = res.body;
+        status = res.status;
         done();
       });
+  });
+
+  it('should have a 409 status', () => {
+    assert.equal(status, 409);
+  });
+
+  it('should have an error body.', () => {
+    assert.equal(body.errors.body.length, 1);
   });
 })  
