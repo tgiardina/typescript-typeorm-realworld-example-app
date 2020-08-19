@@ -10,7 +10,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('GET /api/user 200', () => {
+describe('GET /api/user - success', () => {
   const data = {
     email: "username@example.com",
     password: "password",

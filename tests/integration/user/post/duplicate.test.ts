@@ -9,7 +9,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('POST /api/users 409', () => {
+describe('POST /api/users - duplicate', () => {
   const data = {
     email: "username@example.com",
     password: "password",

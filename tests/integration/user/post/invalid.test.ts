@@ -9,7 +9,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('POST /api/users 422', () => {
+describe('POST /api/users - invalid data', () => {
   const data = {
     email: "username@example.com",
     password: "password",

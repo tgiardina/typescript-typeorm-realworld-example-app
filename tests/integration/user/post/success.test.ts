@@ -10,7 +10,7 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('POST /api/users 201', () => {
+describe('POST /api/users - success', () => {
   const data = {
     email: "username@example.com",
     password: "password",
