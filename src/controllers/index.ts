@@ -1,1 +1,1 @@
-export * from './interfaces/dependencies';
+export * from './interfaces/dep';

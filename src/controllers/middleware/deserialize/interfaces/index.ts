@@ -1,2 +1,2 @@
-export * from './dependencies';
-export * from './specifications';
+export * from './dep';
+export * from './spec';

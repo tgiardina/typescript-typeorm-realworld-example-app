@@ -1,1 +1,1 @@
-export { IVerifiedHttpReq } from './interfaces/dependencies';
+export { IVerifiedHttpReq } from './interfaces/dep';
