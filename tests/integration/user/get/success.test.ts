@@ -49,7 +49,7 @@ describe('GET /api/user - success', () => {
 
   it('should run', (done) => {
     request(app)
-      .get('/user')
+      .get('/api/user')
       .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         status = res.status;

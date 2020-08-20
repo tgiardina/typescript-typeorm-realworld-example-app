@@ -26,7 +26,7 @@ describe('GET /api/user - no token', () => {
 
   it('should run', (done) => {
     request(app)
-      .get('/user')
+      .get('/api/user')
       .end((_err, res) => {
         body = res.body;
         status = res.status;

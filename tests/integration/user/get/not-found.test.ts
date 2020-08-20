@@ -28,7 +28,7 @@ describe('GET /api/user - not found', () => {
 
   it('should run', (done) => {
     request(app)
-      .get('/user')
+      .get('/api/user')
       .set('Authorization', `Token ${token}`)
       .end((_err, res) => {
         body = res.body;

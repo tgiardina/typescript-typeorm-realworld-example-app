@@ -35,7 +35,7 @@ describe('POST /api/users - invalid data', () => {
       delete partialData[key];
       return new Promise((done) => {
         request(app)
-          .post('/users')
+          .post('/api/users')
           .type('json')
           .send({})
           .end((_err, res) => {

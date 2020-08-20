@@ -32,7 +32,7 @@ describe('POST /api/users - success', () => {
 
   it('should run.', (done) => {
     request(app)
-      .post('/users')
+      .post('/api/users')
       .type('json')
       .send(data)
       .end((_err, res) => {

@@ -43,7 +43,7 @@ describe('POST /api/users - duplicate', () => {
 
   it('should run.', (done) => {
     request(app)
-      .post('/users')
+      .post('/api/users')
       .type('json')
       .send(data)
       .end((_err, res) => {
