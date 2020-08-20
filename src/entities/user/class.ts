@@ -15,11 +15,13 @@ export class UserEntity extends BaseEntity {
   id: number;
   @Column()
   bio: string;
-  @Column()
+  @Column({ nullable: false, unique: true })
   email: string;
   @Column()
   image: string;
-  @Column()
+  @Column({ nullable: false })
+  password: string;
+  @Column({ nullable: false, unique: true })
   username: string;
   @CreateDateColumn()
   createdAt: Date;
