@@ -34,8 +34,8 @@ describe('GET /api/user - success', () => {
         DEFAULT,\n\
         DEFAULT,\n\
         "${data.email}",\n\
-        "${data.password}",\n\
         DEFAULT,\n\
+        "${data.password}",\n\
         "user",\n\
         DEFAULT,\n\
         DEFAULT\n\
@@ -64,6 +64,7 @@ describe('GET /api/user - success', () => {
 
   it('should have correct body', () => {
     assert.equal(body.user.email, data.email);
+    assert.equal(body.user.username, data.username);
   });
 
   it('should have correct token in body', () => {

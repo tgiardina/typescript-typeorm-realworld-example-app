@@ -1,20 +1,21 @@
 import 'dotenv';
 import 'reflect-metadata';
 import { Application } from 'express';
-import { InversifyExpressServer } from 'inversify-express-utils';
+const express = require('express');
+// import { InversifyExpressServer } from 'inversify-express-utils';
 
-import { TYPES } from './constants';
-import { DeserializeMiddleware, SerializeMiddleware } from './controllers';
+// import { TYPES } from './constants';
+// import { DeserializeMiddleware, SerializeMiddleware } from './controllers';
 import {
-  loadContainer,
+  // loadContainer,
   loadDatabase,
-  loadDeserializeMiddleware,
-  loadParser,
-  loadSerializeMiddleware,
+  // loadDeserializeMiddleware,
+  // loadParser,
+  // loadSerializeMiddleware,
 } from './loaders';
 
 export default async function init(): Promise<Application> {
-  // await loadDatabase();
+  await loadDatabase();
   // const container = loadContainer();
   // const server = new InversifyExpressServer(container);
   // server.setConfig((app) => {
@@ -30,5 +31,6 @@ export default async function init(): Promise<Application> {
   // });
   // const app = server.build();
   // return app;
-  return <Application>null;
+  const app = express();
+  return app;
 }

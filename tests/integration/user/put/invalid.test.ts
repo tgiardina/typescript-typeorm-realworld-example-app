@@ -22,9 +22,7 @@ describe('POST /api/users - invalid data', () => {
 
   before(async () => {
     app = await initApp();
-    bodies = {};
     connection = await initConnection();
-    statuses = {};
   });
 
   after(async () => {
@@ -37,7 +35,7 @@ describe('POST /api/users - invalid data', () => {
       delete partialData[key];
       return new Promise((done) => {
         request(app)
-          .post('/api/users')
+          .post('/users')
           .type('json')
           .send({})
           .end((_err, res) => {

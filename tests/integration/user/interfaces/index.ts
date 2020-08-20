@@ -1,2 +1,3 @@
-export { IToken } from './token';
-export { IUser } from './user';
+export { IToken } from './IToken';
+export { IUser } from './IUser';
+export { IUserDbSchema } from './IUserDbSchema';

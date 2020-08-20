@@ -28,8 +28,8 @@ describe('POST /api/users - duplicate', () => {
         DEFAULT,\n\
         DEFAULT,\n\
         "${data.email}",\n\
-        DEFAULT,\n\
         "differentPassword",\n\
+        DEFAULT,\n\
         "differentUsername",\n\
         DEFAULT,\n\
         DEFAULT\n\
@@ -43,7 +43,7 @@ describe('POST /api/users - duplicate', () => {
 
   it('should run.', (done) => {
     request(app)
-      .post('/api/users')
+      .post('/users')
       .type('json')
       .send(data)
       .end((_err, res) => {

@@ -10,9 +10,11 @@ import { initConnection } from '../../../utils';
 
 initLoaders();
 
-describe('POST /api/users - success', () => {
+describe('PUT /api/users - success', () => {
   const data = {
+    bio: "I was hatched.",
     email: "username@example.com",
+    image: "https://i.stack.imgur.com/xHWG8.jpg",
     password: "password",
     username: "username",
   };
@@ -32,7 +34,7 @@ describe('POST /api/users - success', () => {
 
   it('should run.', (done) => {
     request(app)
-      .post('/api/users')
+      .put('/api/user')
       .type('json')
       .send(data)
       .end((_err, res) => {
@@ -42,14 +44,14 @@ describe('POST /api/users - success', () => {
       });
   });
 
-  it('should have a 201 status', () => {
-    assert.equal(status, 201);
+  it('should have a 200 status', () => {
+    assert.equal(status, 200);
   });
 
   it('should include properties.', () => {
-    assert.equal(body.user.bio, null);
+    assert.equal(body.user.bio, data.bio);
     assert.equal(body.user.email, data.email);
-    assert.equal(body.user.image, null);
+    assert.equal(body.user.image, data.image);
     assert.equal(body.user.token.substring(0, 3), "eyJ");
     assert.equal(body.user.username, data.username);
   })
