@@ -1,5 +1,6 @@
-export { IJwtDeserializer } from './IUserDeserializer';
-export { IJwtSerializer } from './IUserSerializer';
-export { IUserCreateReq } from './IUserCreateReq';
-export { IUserRepository } from './IUserRepository";
+export { IDecodedToken } from './IDecodedToken';
+export { IJwtDeserializer } from './IJwtDeserializer';
+export { IJwtSerializer } from './IJwtSerializer';
+export { IUserRepository } from './IUserRepository';
 export { IUserRo } from './IUserRo';
+export { IUserServiceCreateReq } from './IUserServiceCreateReq';
