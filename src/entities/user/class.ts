@@ -7,8 +7,6 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { IUserResponseDto } from '../../controllers';
-
 @Entity("user")
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -27,11 +25,4 @@ export class UserEntity extends BaseEntity {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
-
-  toDto(): IUserResponseDto {
-    return {
-      id: this.id,
-      username: this.username,
-    }
-  }
 }

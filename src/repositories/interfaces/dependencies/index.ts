@@ -1,0 +1,1 @@
+export { IUserEntity } from './IUserEntity';
