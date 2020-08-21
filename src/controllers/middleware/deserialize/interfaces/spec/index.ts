@@ -1,1 +1,1 @@
-export { IDecodedToken, IJwtDeserializer } from '../../../../interfaces';
+export { IDecodedToken, IJwtDeserializer, IUserHttpGetReq } from '../../../../interfaces';
