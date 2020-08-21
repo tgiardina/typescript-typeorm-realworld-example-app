@@ -1,1 +1,5 @@
-export { IUserEntity, IUserRepository } from '../../../interfaces';
+export {
+  IUserEntity,
+  IUserRepository,
+  IUserServiceCreateReq,
+} from '../../../interfaces';
