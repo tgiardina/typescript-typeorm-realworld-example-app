@@ -6,7 +6,7 @@ import { stub } from 'sinon';
 import { DeserializeMiddleware } from '../';
 import { IVerifiedHttpReq, IUserHttpGetReq } from '../interfaces';
 
-describe('DeserializeMiddleware.authenticate', () => {
+describe('DeserializeMiddleware.setup - valid token', () => {
   // Data
   const token = "token";
   const req = {

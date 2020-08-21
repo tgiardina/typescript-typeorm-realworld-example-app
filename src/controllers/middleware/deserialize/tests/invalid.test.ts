@@ -5,7 +5,7 @@ import { stub } from 'sinon';
 
 import { DeserializeMiddleware } from '../';
 
-describe('DeserializeMiddleware.authenticate', () => {
+describe('DeserializeMiddleware.setup - invalid token', () => {
   // Data
   const req = {
     headers: { authorization: null },
