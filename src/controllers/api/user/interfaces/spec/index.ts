@@ -1,6 +1,7 @@
 export {
   IDecodedToken,
   IErrorHttpResBody,
+  IHttpResponse,
   IUserHttpPostReq,
   IUserHttpGetReq,
   IUserRepository,

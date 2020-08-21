@@ -9,6 +9,7 @@ import {
 import { TYPES } from '../../../constants/';
 import {
   IErrorHttpResBody,
+  IHttpResponse,
   IUserHttpPostReq,
   IUserRepository,
   IUserRo,
@@ -25,7 +26,7 @@ export class UserController implements interfaces.Controller {
   @httpPost("/users")
   public async create(
     req: IVerifiedHttpReq<IUserHttpPostReq>,
-    res: Response<IUserHttpUnserializedResBody | IErrorHttpResBody>,
+    res: IHttpResponse<IUserHttpUnserializedResBody | IErrorHttpResBody>,
   ): Promise<void> {
     // Validate.
     const email = req.body.email;

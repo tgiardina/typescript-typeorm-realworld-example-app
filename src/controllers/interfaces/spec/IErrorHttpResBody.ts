@@ -1,4 +1,4 @@
-export interface IErrorHttpResBody {
+export interface IErrorHttpResBodyBody {
   errors: {
     body: string[],
   },
