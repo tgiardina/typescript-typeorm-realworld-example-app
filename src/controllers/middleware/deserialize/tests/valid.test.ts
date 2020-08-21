@@ -25,7 +25,7 @@ describe('DeserializeMiddleware.authenticate', () => {
   describe('is passed a valid token', () => {
     it('should run without error', async () => {
       const deserializer = new DeserializeMiddleware(jwtParser);
-      deserializer.deserialize(req, null, nextStub);
+      deserializer.setup(req, null, nextStub);
       verifiedReq = req as IVerifiedHttpReq<IUserHttpGetReq>;
     })
 

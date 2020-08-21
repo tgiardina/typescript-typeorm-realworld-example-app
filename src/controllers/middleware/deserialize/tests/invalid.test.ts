@@ -17,7 +17,7 @@ describe('DeserializeMiddleware.authenticate', () => {
   describe('is passed an invalid token', () => {
     it('should run without error', async () => {
       const deserializer = new DeserializeMiddleware(jwtParser);
-      deserializer.deserialize(req, {}, nextStub);
+      deserializer.setup(req, {}, nextStub);
     })
 
     it('should have called next once', async () => {
