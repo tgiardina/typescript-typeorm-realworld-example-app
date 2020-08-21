@@ -1,3 +1,4 @@
-export { IUserHttpCreateReq } from './IUserHttpCreateReq';
+export { IErrorHttpResBody } from './IErrorHttpResBody';
+export { IUserHttpPostReq } from './IUserHttpPostReq';
 export { IUserHttpGetReq } from './IUserHttpGetReq';
-export { IUserHttpRes } from './IUserHttpRes';
+export { IUserHttpResBody } from './IUserHttpResBody';

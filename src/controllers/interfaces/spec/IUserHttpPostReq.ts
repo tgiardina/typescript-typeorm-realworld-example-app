@@ -1,4 +1,4 @@
-export interface IUserHttpCreateReq {
+export interface IUserHttpPostReq {
   body: {
     email: string;
     password: string;

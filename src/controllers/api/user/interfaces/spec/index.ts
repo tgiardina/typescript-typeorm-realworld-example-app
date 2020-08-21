@@ -1,9 +1,13 @@
 export {
   IDecodedToken,
-  IUserHttpCreateReq,
+  IErrorHttpResBody,
+  IUserHttpPostReq,
   IUserHttpGetReq,
   IUserRepository,
   IUserRo,
   IUserServiceCreateReq,
 } from '../../../../interfaces';
-export { IVerifiedHttpReq } from '../../../../middleware';
+export {
+  IUserHttpUnserializedResBody,
+  IVerifiedHttpReq,
+} from '../../../../middleware';

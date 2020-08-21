@@ -1,1 +1,7 @@
-export { IDecodedToken, IJwtSerializer, IUserHttpRes, IUserRo } from '../../../../interfaces';
+export {
+  IDecodedToken,
+  IErrorHttpResBody,
+  IJwtSerializer,
+  IUserHttpResBody,
+  IUserRo,
+} from '../../../../interfaces';
