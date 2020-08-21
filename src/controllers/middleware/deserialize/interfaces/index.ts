@@ -1,2 +1,2 @@
-export * from './dep';
+export * from './req';
 export * from './spec';
