@@ -18,7 +18,7 @@ import {
   IUserHttpUnserializedResBody,
   IVerifiedHttpReq,
 } from './interfaces';
-import { validate } from '../../middleware';
+import { auth, validate } from '../../middleware';
 
 @controller('')
 export class UserController implements interfaces.Controller {
@@ -32,28 +32,14 @@ export class UserController implements interfaces.Controller {
     body('password').isString(),
     body('username').isString(),
     validate,
+    auth.required,
   )
   public async create(req: Request, res: Response) {
-    // Validate.
-    const email = req.body.email;
-    const password = req.body.password;
-    const username = req.body.username;
-    if (!email || !password || !username) {
-      res.status(400).json({
-        errors: {
-          body: [
-            `400 - Username "${username}" is invalid.`
-          ],
-        }
-      });
-      return;
-    }
-    // Respond.
     try {
       const user: IUserRo = await this.repository.createAndSave({
-        email,
-        password,
-        username,
+        email: req.body.email,
+        password: req.body.password,
+        username: req.body.username,
       });
       res.status(201).json({ user });
     } catch (err) {
@@ -61,7 +47,7 @@ export class UserController implements interfaces.Controller {
         res.status(409).json({
           errors: {
             body: [
-              `409 - User "${username}" already exists.`,
+              `409 - User "${req.body.username}" already exists.`,
             ]
           }
         });

@@ -5,7 +5,6 @@ import { getCustomRepository } from 'typeorm';
 import '../controllers';
 import { TYPES } from '../constants';
 import {
-  DeserializeMiddleware,
   SerializeMiddleware,
   IDecodedToken,
   IJwtDeserializer,
@@ -17,9 +16,6 @@ import { UserRepository } from '../repositories';
 export function loadContainer(): Container {
   const container = new Container();
   // Middleware
-  container
-    .bind<DeserializeMiddleware>(TYPES.DeserializeMiddleware)
-    .to(DeserializeMiddleware);
   container
     .bind<SerializeMiddleware>(TYPES.SerializeMiddleware)
     .to(SerializeMiddleware);
