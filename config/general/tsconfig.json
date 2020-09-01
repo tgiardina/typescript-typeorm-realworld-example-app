@@ -9,7 +9,6 @@
     "outDir": "dist",
     "sourceMap": true,
     "typeRoots": ["./types"],
-    "types": ["mocha", "node", "reflect-metadata"]
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", ".vscode"]

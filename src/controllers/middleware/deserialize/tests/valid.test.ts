@@ -9,7 +9,7 @@ import { IVerifiedHttpReq, IUserHttpGetReq } from '../interfaces';
 describe('DeserializeMiddleware.setup - valid token', () => {
   // Data
   const token = "token";
-  const req = {
+  const req = <any>{
     headers: { authorization: token },
   };
   const user = {

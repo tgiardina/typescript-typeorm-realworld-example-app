@@ -7,7 +7,7 @@ import { DeserializeMiddleware } from '../';
 
 describe('DeserializeMiddleware.setup - invalid token', () => {
   // Data
-  const req = {
+  const req = <any>{
     headers: { authorization: null },
   };
   // Stubs

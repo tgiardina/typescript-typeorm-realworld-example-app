@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { body } from 'express-validator';
 import { inject } from 'inversify';
 import {
   controller,
@@ -16,22 +17,24 @@ import {
   IUserRo,
   IUserHttpUnserializedResBody,
   IVerifiedHttpReq,
-} from "./interfaces";
+} from './interfaces';
+import { validate } from '../../middleware';
 
-@controller("")
+@controller('')
 export class UserController implements interfaces.Controller {
   constructor(
     @inject(TYPES.UserRepository) private repository: IUserRepository,
   ) { }
 
-  @httpPost("/users")
-  public async create(
-    req: Request<null, string, any, null>,
-    res: IHttpResponse<IUserHttpUnserializedResBody | IErrorHttpResBody>,
-  ): Promise<void> {
+  @httpPost(
+    '/users',
+    body('email').isEmail(),
+    body('password').isString(),
+    body('username').isString(),
+    validate,
+  )
+  public async create(req: Request, res: Response) {
     // Validate.
-    req.locals = "hello";
-    console.log(req.locals);
     const email = req.body.email;
     const password = req.body.password;
     const username = req.body.username;

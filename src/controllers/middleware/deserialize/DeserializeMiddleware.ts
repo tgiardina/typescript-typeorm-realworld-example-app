@@ -1,8 +1,8 @@
-import { NextFunction } from 'express';
+import { NextFunction, Request } from 'express';
 import { inject, injectable } from 'inversify';
 
 import { TYPES } from '../../../constants';
-import { IJwtDeserializer, IUserHttpGetReq, IVerifiedHttpReq } from './interfaces';
+import { IJwtDeserializer } from './interfaces';
 
 @injectable()
 export class DeserializeMiddleware {
@@ -11,7 +11,7 @@ export class DeserializeMiddleware {
   ) { }
 
   setup(
-    req: IUserHttpGetReq,
+    req: Request,
     _res: unknown,
     next: NextFunction
   ): void {
@@ -19,28 +19,19 @@ export class DeserializeMiddleware {
     next();
   }
 
-  private deserialize(
-    serializedReq: IUserHttpGetReq,
-  ): IVerifiedHttpReq<IUserHttpGetReq> {
-    const token = this.getToken(serializedReq);
+  private deserialize(req: Request): Request {
+    const token = this.getToken(req);
     try {
-      return {
-        ...serializedReq,
-        locals: {
-          user: this.jwtParser.deserialize(token)
-        }
-      }
+      const decodedToken = this.jwtParser.deserialize(token);
+      req.locals = req.locals || {};
+      req.locals.user = decodedToken;
     } catch (_err) {
-      return {
-        ...serializedReq,
-        locals: {
-          user: null,
-        },
-      }
+      // Nothing to do.
     }
+    return req;
   }
 
-  private getToken(req: IUserHttpGetReq): string {
+  private getToken(req: Request): string {
     const authorization = req.headers.authorization;
     if (!authorization) return;
     const authString = authorization.toString();
