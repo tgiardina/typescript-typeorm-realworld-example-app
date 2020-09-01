@@ -1,1 +1,1 @@
-export { IHttpResponse } from "./IHttpResponse';
+export { IHttpResponse } from './IHttpResponse';

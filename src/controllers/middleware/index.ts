@@ -1,2 +1,2 @@
-export { IVerifiedHttpReq } from './deserialize';
-export { IUserHttpUnserializedResBody } from './serialize';
+export { IVerifiedHttpReq, DeserializeMiddleware } from './deserialize';
+export { IUserHttpUnserializedResBody, SerializeMiddleware } from './serialize';

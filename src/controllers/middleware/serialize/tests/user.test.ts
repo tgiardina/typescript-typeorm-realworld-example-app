@@ -8,7 +8,7 @@ import { } from '../interfaces';
 
 describe('SerializeMiddleware.setup - user', () => {
   // Data
-  const data = { user: { id: 1, token: null } };
+  const data = { user: { id: 1 } };
   const token = "token";
   // Stubs
   const jsonStub = stub();
@@ -16,8 +16,9 @@ describe('SerializeMiddleware.setup - user', () => {
   const nextStub = stub();
   // Composite
   const res = {
-    body: data,
+    body: null,
     json: jsonStub,
+    status: null,
   };
 
   describe('is passed a body with a user', () => {
@@ -27,16 +28,16 @@ describe('SerializeMiddleware.setup - user', () => {
       res.json(data);
     })
 
+    it('should have called json', async () => {
+      assert(jsonStub.calledOnce);
+    });
+
     it('should have kept original properties', async () => {
-      assert.equal(res.body.user.id, data.user.id);
+      assert.equal(jsonStub.getCall(0).args[0].user.id, data.user.id);
     });
 
     it('should have appended token', async () => {
-      assert.equal(res.body.user.token, token);
-    });
-
-    it('should have called json', async () => {
-      assert(jsonStub.calledOnce);
+      assert.equal(jsonStub.getCall(0).args[0].user.token, token);
     });
 
     it('should have called next', async () => {

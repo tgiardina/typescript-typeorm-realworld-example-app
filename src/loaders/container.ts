@@ -7,10 +7,10 @@ import { TYPES } from '../constants';
 import {
   DeserializeMiddleware,
   SerializeMiddleware,
-  IJwtCipher,
-  IJwtParser,
+  IDecodedToken,
+  IJwtDeserializer,
+  IJwtSerializer,
   IUserRepository,
-  IUserResponseDto,
 } from '../controllers'
 import { UserRepository } from '../repositories';
 
@@ -29,17 +29,17 @@ export function loadContainer(): Container {
     .toConstantValue(getCustomRepository(UserRepository));
   // Tokens
   container
-    .bind<IJwtCipher>(TYPES.JwtCipher)
+    .bind<IJwtSerializer>(TYPES.JwtCipher)
     .toConstantValue({
-      serialize: (data: Record<string, unknown>) => {
+      serialize: (data: string | object) => {
         return sign(data, process.env.JWT_SECRET);
       },
     });
   container
-    .bind<IJwtParser>(TYPES.JwtParser)
+    .bind<IJwtDeserializer>(TYPES.JwtParser)
     .toConstantValue({
       deserialize: (token: string) => {
-        return <IUserResponseDto>verify(token, process.env.JWT_SECRET);
+        return <IDecodedToken>verify(token, process.env.JWT_SECRET);
       }
     });
 

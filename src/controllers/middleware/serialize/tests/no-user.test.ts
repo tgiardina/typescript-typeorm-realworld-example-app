@@ -15,8 +15,9 @@ describe('SerializeMiddleware.setup - no user', () => {
   const nextStub = stub();
   // Composite
   const res = {
-    body: data,
-    json: jsonStub
+    body: null,
+    json: jsonStub,
+    status: null,
   };
 
   describe('is passed a body without a user', () => {
@@ -26,18 +27,12 @@ describe('SerializeMiddleware.setup - no user', () => {
       res.json(data);
     })
 
-    it('should have kept original properties', async () => {
-      assert.equal(res.body.errors.body[0], data.errors.body[0]);
-    });
-
-    it('should not have appended anything', async () => {
-      assert.equal(Object.keys(res.body).length, 1);
-      assert.equal(Object.keys(res.body.errors).length, 1);
-      assert.equal(res.body.errors.body.length, 1);
-    });
-
     it('should have called json', async () => {
       assert(jsonStub.calledOnce);
+    });
+
+    it('should have kept original properties', async () => {
+      assert.equal(jsonStub.getCall(0).args[0].errors, data.errors);
     });
 
     it('should have called next', async () => {

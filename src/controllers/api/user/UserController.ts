@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { inject } from 'inversify';
 import {
   controller,
@@ -25,7 +25,7 @@ export class UserController implements interfaces.Controller {
 
   @httpPost("/users")
   public async create(
-    req: IVerifiedHttpReq<IUserHttpPostReq>,
+    req: Request,
     res: IHttpResponse<IUserHttpUnserializedResBody | IErrorHttpResBody>,
   ): Promise<void> {
     // Validate.
