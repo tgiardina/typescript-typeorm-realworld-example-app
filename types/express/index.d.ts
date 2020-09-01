@@ -1,5 +1,5 @@
 declare namespace Express {
-  interface Request {
-    locals?: string;
+  interface Request<A = any, L = any, C = any, D = any> {
+    locals?: L;
   }
 }

@@ -8,6 +8,7 @@ import {
 
 import { TYPES } from '../../../constants/';
 import {
+  IDecodedToken,
   IErrorHttpResBody,
   IHttpResponse,
   IUserHttpPostReq,
@@ -25,10 +26,11 @@ export class UserController implements interfaces.Controller {
 
   @httpPost("/users")
   public async create(
-    req: Request,
+    req: Request<null, string, any, null>,
     res: IHttpResponse<IUserHttpUnserializedResBody | IErrorHttpResBody>,
   ): Promise<void> {
     // Validate.
+    req.locals = "hello";
     console.log(req.locals);
     const email = req.body.email;
     const password = req.body.password;
