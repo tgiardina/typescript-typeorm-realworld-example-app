@@ -1,4 +1,1 @@
-export {
-  IUserRepository,
-  IUserServiceCreateReq,
-} from '../../../controllers';
+export { IUserServiceCreateReq } from '../../../controllers';

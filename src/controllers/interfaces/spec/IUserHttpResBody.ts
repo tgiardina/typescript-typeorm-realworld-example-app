@@ -1,4 +1,4 @@
-export interface IUserHttpResBodyBody {
+export interface IUserHttpResBody {
   user: {
     bio: string;
     email: string;

@@ -29,6 +29,7 @@ export class UserController implements interfaces.Controller {
     res: IHttpResponse<IUserHttpUnserializedResBody | IErrorHttpResBody>,
   ): Promise<void> {
     // Validate.
+    console.log(req.locals);
     const email = req.body.email;
     const password = req.body.password;
     const username = req.body.username;

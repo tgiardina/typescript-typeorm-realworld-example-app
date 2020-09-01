@@ -2,7 +2,6 @@ import { EntityRepository, Repository } from "typeorm";
 
 import {
   IUserEntity,
-  IUserRepository,
   IUserServiceCreateReq,
 } from './interfaces';
 
