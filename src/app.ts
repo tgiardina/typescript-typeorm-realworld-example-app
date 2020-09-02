@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { Application } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
+import { handleError } from './controllers';
 import {
   loadContainer,
   loadDatabase,
@@ -15,6 +16,9 @@ export default async function init(): Promise<Application> {
   const server = new InversifyExpressServer(container);
   server.setConfig((app) => {
     loadParser(app);
+  });
+  server.setErrorConfig((app) => {
+    app.use(handleError);
   });
   const app = server.build();
   return app;

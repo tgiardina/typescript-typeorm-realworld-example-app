@@ -42,6 +42,7 @@ export class UserController implements interfaces.Controller {
       });
     } catch (err) {
       if (err.code === "ER_DUP_ENTRY") {
+        console.log(err);
         res.status(409).json({
           errors: {
             body: [
@@ -50,14 +51,7 @@ export class UserController implements interfaces.Controller {
           }
         });
       } else {
-        console.log(err);
-        res.status(500).json({
-          errors: {
-            body: [
-              "500 - Server error"
-            ],
-          },
-        });
+        throw err;
       }
     }
   }
