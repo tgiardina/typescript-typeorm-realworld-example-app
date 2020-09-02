@@ -65,9 +65,9 @@ describe('POST /api/users - success', () => {
   });
 
   it('should have saved in the database.', async () => {
-    const user = <IUserDbSchema>await connection.manager.query(
+    const user = <IUserDbSchema>(await connection.manager.query(
       'SELECT * FROM user;'
-    )[0];
+    ))[0];
     assert.equal(user.bio, null);
     assert.equal(user.email, data.email);
     assert.equal(user.image, null);

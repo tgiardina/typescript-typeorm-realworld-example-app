@@ -41,7 +41,7 @@ export class UserEntity extends BaseEntity {
     } else {
       return this.cipher.tokenize({
         id: this.id,
-        username: this.username,
+        email: this.email,
         password: this.password,
       });
     }

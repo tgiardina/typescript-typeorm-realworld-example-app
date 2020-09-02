@@ -39,7 +39,7 @@ describe('POST /api/users - invalid data', () => {
         request(app)
           .post('/api/users')
           .type('json')
-          .send({})
+          .send(partialData)
           .end((_err, res) => {
             bodies[key] = res.body;
             statuses[key] = res.status;

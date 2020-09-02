@@ -1,1 +1,1 @@
-export { UserEntity } from './user';
+export { IJwtCipher, UserEntity } from './user';

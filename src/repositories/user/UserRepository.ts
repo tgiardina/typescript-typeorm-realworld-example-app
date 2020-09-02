@@ -17,26 +17,13 @@ export class UserRepository {
     return this.repository.create(data);
   }
 
-  async createAndSave(data: UserEntity): Promise<UserEntity> {
-    const user = this.repository.create(data);
-    return this.repository.save(user);
-  }
-
-  async createAndSaveAuthorized(data: UserEntity): Promise<UserEntity> {
+  async createAndSaveAuth(data: UserEntity): Promise<UserEntity> {
     const user = this.repository.create(data);
     return this.authorize(await this.repository.save(user));
   }
 
-  async findOne(id: number): Promise<UserEntity> {
-    return this.repository.findOne(id);
-  }
-
-  async findOneAuthorized(id: number): Promise<UserEntity> {
+  async findOneAuth(id: number): Promise<UserEntity> {
     return this.authorize(await this.repository.findOne(id));
-  }
-
-  async save(user: UserEntity): Promise<UserEntity> {
-    return this.repository.save(user);
   }
 
   ////////////////////////////////////////////////////////////////////////////
