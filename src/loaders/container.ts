@@ -11,7 +11,8 @@ export function loadContainer(): Container {
   // Repositories
   container
     .bind<IUserRepository>(TYPES.UserRepository)
-    .to(UserRepository);
+    .to(UserRepository)
+    .inSingletonScope();
   // Tokens
   container
     .bind<IJwtCipher>(TYPES.JwtCipher)
