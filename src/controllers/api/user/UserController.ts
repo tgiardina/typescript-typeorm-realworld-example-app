@@ -8,11 +8,8 @@ import {
 } from 'inversify-express-utils';
 
 import { TYPES } from '../../../constants/';
-import {
-  IUserRepository,
-  IUserRo,
-} from './interfaces';
-import { auth, validate } from '../../middleware';
+import { IUserRepository } from './interfaces';
+import { validate } from '../../middleware';
 
 @controller('/api')
 export class UserController implements interfaces.Controller {
@@ -29,7 +26,7 @@ export class UserController implements interfaces.Controller {
   )
   public async create(req: Request, res: Response) {
     try {
-      const user: IUserRo = await this.repository.createAndSaveAuth({
+      const user = await this.repository.createAndSaveAuth({
         email: req.body.email,
         password: req.body.password,
         username: req.body.username,

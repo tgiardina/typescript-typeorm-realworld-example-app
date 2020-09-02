@@ -8,7 +8,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "sourceMap": true,
-    "typeRoots": ["./src/controllers/interfaces/internal"],
+    "typeRoots": ["./src/controllers/interfaces/overrides"],
     "types": ["mocha"]    
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],

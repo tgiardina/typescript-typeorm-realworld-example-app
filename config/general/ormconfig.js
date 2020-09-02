@@ -18,7 +18,7 @@ module.exports = {
   "subscribers"         : [
     "src/subscribers/**/*.ts"
   ],
-  "cli"                 : {
+  "cli"                 : { 
     "migrationsDir"  : "migrations",
   }
 }
