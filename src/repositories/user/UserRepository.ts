@@ -3,10 +3,10 @@ import { getRepository, Repository } from "typeorm";
 import { UserEntity } from "./UserEntity";
 
 import { TYPES } from '../../constants';
-import { IJwtCipher } from './interfaces';
+import { IJwtCipher, IUserRepository } from './interfaces';
 
 @injectable()
-export class UserRepository {
+export class UserRepository implements IUserRepository {
   private repository: Repository<UserEntity>;
 
   constructor(@inject(TYPES.JwtCipher) private cipher: IJwtCipher) {

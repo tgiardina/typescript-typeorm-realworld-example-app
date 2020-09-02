@@ -1,1 +1,0 @@
-export { IUserServiceCreateReq } from '../../../controllers';

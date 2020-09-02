@@ -7,10 +7,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { IJwtCipher } from './interfaces';
+import { IJwtCipher, IUserRo } from './interfaces';
 
 @Entity("user")
-export class UserEntity extends BaseEntity {
+export class UserEntity extends BaseEntity implements IUserRo {
   // Columns
   @PrimaryGeneratedColumn()
   id: number;
