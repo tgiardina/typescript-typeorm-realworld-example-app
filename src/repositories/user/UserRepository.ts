@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { getRepository, Repository } from "typeorm";
-import { UserEntity } from "../../entities";
+import { UserEntity } from "./UserEntity";
 
 import { TYPES } from '../../constants';
 import { IJwtCipher } from './interfaces';

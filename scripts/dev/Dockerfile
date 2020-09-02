@@ -16,6 +16,5 @@ RUN npm install
 COPY ./config/general ./
 COPY ./config/dev ./
 COPY ./migrations ./migrations
-COPY ./types ./types
 
 EXPOSE 3000

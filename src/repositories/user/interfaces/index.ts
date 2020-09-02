@@ -1,1 +1,1 @@
-export * from './spec';
+export { IJwtCipher } from './req';

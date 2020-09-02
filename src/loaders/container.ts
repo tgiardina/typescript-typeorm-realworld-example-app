@@ -4,8 +4,7 @@ import { sign } from 'jsonwebtoken';
 import '../controllers';
 import { TYPES } from '../constants';
 import { IUserRepository } from '../controllers'
-import { IJwtCipher } from '../entities';
-import { UserRepository } from '../repositories';
+import { IJwtCipher, UserRepository } from '../repositories';
 
 export function loadContainer(): Container {
   const container = new Container();
