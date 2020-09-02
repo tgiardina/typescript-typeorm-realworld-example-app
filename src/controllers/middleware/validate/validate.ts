@@ -23,7 +23,3 @@ export function validate(
     throw httpError;
   }
 }
-
-// I hate this error formatting. Is 422 really a better status than 400?
-//   Why make it so pointedly un-machine-readable? But it's specified by
-//   RealWorld: https://github.com/gothinkster/realworld/tree/master/api#errors-and-status-codes

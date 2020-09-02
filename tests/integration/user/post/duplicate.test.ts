@@ -53,8 +53,8 @@ describe('POST /api/users - duplicate', () => {
       });
   });
 
-  it('should have a 409 status', () => {
-    assert.equal(status, 409);
+  it('should have a 422 status', () => {
+    assert.equal(status, 422);
   });
 
   it('should have an error body.', () => {
