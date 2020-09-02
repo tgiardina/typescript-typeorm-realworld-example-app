@@ -1,11 +1,9 @@
 import { Container } from 'inversify';
 import { sign, verify } from 'jsonwebtoken';
-import { getCustomRepository } from 'typeorm';
 
 import '../controllers';
 import { TYPES } from '../constants';
 import {
-  SerializeMiddleware,
   IDecodedToken,
   IJwtDeserializer,
   IJwtSerializer,
@@ -15,14 +13,10 @@ import { UserRepository } from '../repositories';
 
 export function loadContainer(): Container {
   const container = new Container();
-  // Middleware
-  container
-    .bind<SerializeMiddleware>(TYPES.SerializeMiddleware)
-    .to(SerializeMiddleware);
   // Repositories
   container
     .bind<IUserRepository>(TYPES.UserRepository)
-    .toConstantValue(getCustomRepository(UserRepository));
+    .to(UserRepository);
   // Tokens
   container
     .bind<IJwtSerializer>(TYPES.JwtCipher)

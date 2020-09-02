@@ -32,16 +32,22 @@ export class UserController implements interfaces.Controller {
     body('password').isString(),
     body('username').isString(),
     validate,
-    auth.required,
   )
   public async create(req: Request, res: Response) {
     try {
+      console.log(req.locals.user.id);
       const user: IUserRo = await this.repository.createAndSave({
         email: req.body.email,
         password: req.body.password,
         username: req.body.username,
       });
-      res.status(201).json({ user });
+      res.status(201).json({
+        bio: user.bio,
+        email: user.email,
+        image: user.image,
+        token: user.token,
+        username: user.username,
+      });
     } catch (err) {
       if (err.code === "ER_DUP_ENTRY") {
         res.status(409).json({

@@ -7,8 +7,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { IJwtCipher } from './interfaces';
+
 @Entity("user")
 export class UserEntity extends BaseEntity {
+  // Columns
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
@@ -25,4 +28,22 @@ export class UserEntity extends BaseEntity {
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+  // Dependencies
+  private cipher: IJwtCipher
+
+  authorize(cipher: IJwtCipher) {
+    this.cipher = cipher;
+  }
+
+  get token(): string {
+    if (!this.cipher) {
+      return null;
+    } else {
+      return this.cipher.tokenize({
+        id: this.id,
+        username: this.username,
+        password: this.password,
+      });
+    }
+  }
 }

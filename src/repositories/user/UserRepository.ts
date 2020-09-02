@@ -1,14 +1,50 @@
-import { EntityRepository, Repository } from "typeorm";
+import { inject, injectable } from 'inversify';
+import { getRepository, Repository } from "typeorm";
+import { UserEntity } from "../../entities";
 
-import {
-  IUserEntity,
-  IUserServiceCreateReq,
-} from './interfaces';
+import { TYPES } from '../../constants';
+import { IJwtCipher } from './interfaces';
 
-@EntityRepository(IUserEntity)
-export class UserRepository extends Repository<IUserEntity> {
-  async createAndSave(data: IUserServiceCreateReq): Promise<IUserEntity> {
-    const user = this.create(data);
-    return this.save(user);
+@injectable()
+export class UserRepository {
+  private repository: Repository<UserEntity>;
+
+  constructor(@inject(TYPES.JwtCipher) private cipher: IJwtCipher) {
+    this.repository = getRepository(UserEntity);
+  }
+
+  create(data: UserEntity): UserEntity {
+    return this.repository.create(data);
+  }
+
+  async createAndSave(data: UserEntity): Promise<UserEntity> {
+    const user = this.repository.create(data);
+    return this.repository.save(user);
+  }
+
+  async createAndSaveAuthorized(data: UserEntity): Promise<UserEntity> {
+    const user = this.repository.create(data);
+    return this.authorize(await this.repository.save(user));
+  }
+
+  async findOne(id: number): Promise<UserEntity> {
+    return this.repository.findOne(id);
+  }
+
+  async findOneAuthorized(id: number): Promise<UserEntity> {
+    return this.authorize(await this.repository.findOne(id));
+  }
+
+  async save(user: UserEntity): Promise<UserEntity> {
+    return this.repository.save(user);
+  }
+
+  ////////////////////////////////////////////////////////////////////////////
+  // Private
+  ////////////////////////////////////////////////////////////////////////////
+
+  private authorize(user: UserEntity): UserEntity {
+    user.authorize(this.cipher);
+    return user;
   }
 }
