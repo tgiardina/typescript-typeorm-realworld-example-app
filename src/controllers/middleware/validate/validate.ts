@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';
 
-import { HttpError } from '../../errors';
+import { HttpValidationError } from '../../errors';
 
 export function validate(
   req: Request,
@@ -12,7 +12,7 @@ export function validate(
   if (errors.isEmpty()) {
     next();
   } else {
-    const httpError = new HttpError(422);
+    const httpError = new HttpValidationError();
     for (const error of errors.array()) {
       const value = req[error.location][error.param];
       httpError.append(

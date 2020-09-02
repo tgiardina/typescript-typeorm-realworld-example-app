@@ -1,6 +1,6 @@
 import { Response } from 'express';
 
-import { HttpError, HttpErrorLocation } from '../../errors';
+import { HttpError, HttpUncaughtError } from '../../errors';
 
 export function handleError(
   err: HttpError | Error,
@@ -12,8 +12,7 @@ export function handleError(
     res.status(err.status).json(err.toDto())
   } else {
     console.log(err);
-    const httpError = new HttpError(500);
-    httpError.append(HttpErrorLocation.Server, "Server Error");
+    const httpError = new HttpUncaughtError();
     res.status(httpError.status).json(httpError.toDto());
   }
 }
