@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
+import { HttpUnauthorizedError } from '../../errors';
+
 export const auth = {
   required: getMiddleware(true),
   optional: getMiddleware(false),
@@ -14,20 +16,15 @@ function getMiddleware(
   isRequired: boolean
 ): (req: Request, res: Response, next: NextFunction) => void {
   if (isRequired) {
-    return (req: Request, res: Response, next: NextFunction) => {
-      validateToken(req, (err) => {
-        console.log(err);
-        res.status(401).json({
-          errors: {
-            headers: `"authorization: ${req.headers.authorization}" is invalid.`
-          }
-        })
+    return (req: Request, _res: Response, next: NextFunction) => {
+      validateToken(req, (token) => {
+        throw new HttpUnauthorizedError(token);
       });
       next();
     }
   } else {
     return (req: Request, _res: Response, next: NextFunction) => {
-      validateToken(req, (err) => { });
+      validateToken(req, (_token) => { });
       next();
     }
   }
@@ -35,15 +32,15 @@ function getMiddleware(
 
 function validateToken(
   req: Request,
-  onError: (err: Error) => void,
+  onError: (token: string) => void,
 ): void {
+  const token = getToken(req);
   try {
-    const token = getToken(req);
     const decodedToken = <any>verify(token, process.env.JWT_SECRET);
     req.locals = req.locals || {};
     req.locals.user = decodedToken;
-  } catch (err) {
-    onError(err);
+  } catch (_err) {
+    onError(token);
   }
 }
 
