@@ -5,9 +5,9 @@ import { HttpUnauthorizedError } from '../../errors';
 
 export const auth = {
   /**
-   * Reads errors from express-validator package, throwing appropriate
-   *   HttpValidationError if there are erros and simply calling next if ther are
-   *   none.
+   * Verifies that the request header contains a valid token. If it does, 
+   *   appends decoded token to req.locals.user and calls next. If it does not,
+   *   throws an HttpUnauthorizedError.
    * @module auth
    * @function
    * @param {Object} req - Express request object
@@ -17,9 +17,8 @@ export const auth = {
    */
   required: getMiddleware(true),
   /**
-   * Reads errors from express-validator package, throwing appropriate
-   *   HttpValidationError if there are erros and simply calling next if ther are
-   *   none.
+   * Checks if the request header contains a valid token. If it does, appends 
+   *   token to req.locals.user then calls next. If not, calls next.
    * @module auth
    * @function
    * @param {Object} req - Express request object
