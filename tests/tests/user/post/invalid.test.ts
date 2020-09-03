@@ -2,12 +2,10 @@ import { assert, request } from 'chai';
 import { Application } from 'express';
 import { Connection } from 'typeorm';
 
+import '../../../loaders';
 import initApp from '../../../../src/app';
 import { IError } from '../../interfaces';
-import initLoaders from '../../../loaders';
 import { initConnection } from '../../../utils';
-
-initLoaders();
 
 describe('POST /api/users - invalid data', () => {
   const data = {

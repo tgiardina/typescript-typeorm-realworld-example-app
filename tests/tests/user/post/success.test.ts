@@ -3,12 +3,10 @@ import { Application } from 'express';
 import { verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
+import '../../../loaders';
 import initApp from '../../../../src/app';
 import { IToken, IUser, IUserDbSchema } from '../interfaces';
-import initLoaders from '../../../loaders';
 import { initConnection } from '../../../utils';
-
-initLoaders();
 
 describe('POST /api/users - success', () => {
   const data = {
