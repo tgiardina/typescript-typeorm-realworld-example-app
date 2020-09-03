@@ -4,7 +4,29 @@ import { verify } from 'jsonwebtoken';
 import { HttpUnauthorizedError } from '../../errors';
 
 export const auth = {
+  /**
+   * Reads errors from express-validator package, throwing appropriate
+   *   HttpValidationError if there are erros and simply calling next if ther are
+   *   none.
+   * @module auth
+   * @function
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   * @return {void}
+   */
   required: getMiddleware(true),
+  /**
+   * Reads errors from express-validator package, throwing appropriate
+   *   HttpValidationError if there are erros and simply calling next if ther are
+   *   none.
+   * @module auth
+   * @function
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @param {Function} next - Express next middleware function
+   * @return {void}
+   */
   optional: getMiddleware(false),
 };
 

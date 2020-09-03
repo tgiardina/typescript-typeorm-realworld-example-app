@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { QueryFailedError } from 'typeorm';
 
 import {
@@ -8,12 +8,23 @@ import {
   HttpUncaughtError,
 } from '../../errors';
 
+/**
+ * Catches all thrown errors, logs them if needed, and then sends the 
+ *   appropriate resopnse.
+ * @module handlError
+ * @function
+ * @param {Object} err - Express err object
+ * @param {Object} _req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} _next - Express next middleware function
+ * @return {void}
+ */
 export function handleError(
   err: Error,
-  _req: unknown,
+  _req: Request,
   res: Response,
-  _next: unknown
-) {
+  _next: NextFunction,
+): void {
   if (err instanceof HttpError) {
     res.status(err.status).json(err.toDto());
     // @ts-ignore
