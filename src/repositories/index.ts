@@ -1,1 +1,1 @@
-export { UserRepository } from './user';
+export { IJwtCipher, UserRepository } from './user';

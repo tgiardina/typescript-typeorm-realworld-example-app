@@ -1,2 +1,3 @@
-export { DeserializeMiddleware, IJwtParser } from './deserialize';
-export { SerializeMiddleware, IJwtCipher } from './serialize';
+export { auth } from './auth';
+export { handleError } from './handleError';
+export { validate } from './validate';

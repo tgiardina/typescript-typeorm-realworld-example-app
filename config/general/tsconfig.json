@@ -8,8 +8,9 @@
     "module": "commonjs",
     "outDir": "dist",
     "sourceMap": true,
-    "types": ["mocha", "node", "reflect-metadata"]
+    "typeRoots": ["./src/controllers/interfaces/overrides"],
+    "types": ["mocha"]    
   },
-  "include": ["../**/*.ts"],
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", ".vscode"]
 }

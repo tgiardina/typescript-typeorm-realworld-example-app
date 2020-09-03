@@ -10,7 +10,7 @@ module.exports = {
   "synchronize"         : false,
   "logging"             : false,
   "entities"            : [
-    "src/entities/**/*.ts"
+    "src/repositories/**/*Entity.ts"
   ],
   "migrations"          : [
     "migrations/**/*.ts"
@@ -18,9 +18,7 @@ module.exports = {
   "subscribers"         : [
     "src/subscribers/**/*.ts"
   ],
-  "cli"                 : {
-    "entitiesDir"    : "src/entities",
+  "cli"                 : { 
     "migrationsDir"  : "migrations",
-    "subscribersDir" : "src/subscribers"
   }
 }
