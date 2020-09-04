@@ -1,0 +1,1 @@
+export { ArticleEntity } from './ArticleEntity';
