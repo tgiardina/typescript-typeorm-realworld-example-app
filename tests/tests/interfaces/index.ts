@@ -1,1 +1,0 @@
-export { IError } from './error';
