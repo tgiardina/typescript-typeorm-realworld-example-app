@@ -27,7 +27,6 @@ export function validate(
     for (const error of errors.array()) {
       const value = req[error.location][error.param];
       httpError.append(
-        error.location,
         `"${error.param}: ${value}" throws ${error.msg.toLowerCase()}`,
       );
     }

@@ -4,7 +4,6 @@ import { QueryFailedError } from 'typeorm';
 import {
   HttpDuplicateError,
   HttpError,
-  HttpErrorLocation,
   HttpUncaughtError,
 } from '../../errors';
 
@@ -48,6 +47,6 @@ function parseDuplicateError(err: QueryFailedError): HttpError {
   const value = split[1];
   const message = `Instance with "${column}" = "${value}" already exists.`
   const httpError = new HttpDuplicateError();
-  httpError.append(HttpErrorLocation.Body, message);
+  httpError.append(message);
   return httpError;
 }

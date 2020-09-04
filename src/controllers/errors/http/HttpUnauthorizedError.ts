@@ -1,18 +1,12 @@
-import { HttpError, HttpErrorLocation } from './';
+import { HttpError } from './';
 
 export class HttpUnauthorizedError extends HttpError {
   constructor(token: string) {
     super(401);
     if (token) {
-      this.append(
-        HttpErrorLocation.Headers,
-        `Invalid token "${token}" provided`
-      );
+      this.append(`Invalid token "${token}" provided`);
     } else {
-      this.append(
-        HttpErrorLocation.Headers,
-        `No token provided.`
-      );
+      this.append(`No token provided.`);
     }
   }
 }

@@ -1,22 +1,21 @@
-import { HttpErrorLocation } from './';
-
 export class HttpError extends Error {
   readonly status: number;
-  private errors: Errors;
+  private body: string[];
 
   constructor(status: number) {
     super();
     this.status = status;
-    this.errors = {};
+    this.body = [];
   }
 
-  append(location: HttpErrorLocation | string, message: string) {
-    if (!this.errors[location]) this.errors[location] = [];
-    this.errors[location].push(message);
+  append(message: string) {
+    this.body.push(message);
   }
 
   toDto(): { errors: Errors } {
-    return { errors: this.errors };
+    // I don't like this error structure. It's almost pointedly
+    //   un-machine-readable. But it's specified by RealWorld: https://github.com/gothinkster/realworld/tree/master/api#errors-and-status-codes    
+    return { errors: { body: this.body } };
   }
 }
 

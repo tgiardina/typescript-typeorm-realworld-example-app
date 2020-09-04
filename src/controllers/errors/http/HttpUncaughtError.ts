@@ -1,8 +1,8 @@
-import { HttpError, HttpErrorLocation } from './';
+import { HttpError } from './';
 
 export class HttpUncaughtError extends HttpError {
   constructor() {
     super(500);
-    this.append(HttpErrorLocation.Server, "Server Error");
+    this.append("Server Error");
   }
 }
