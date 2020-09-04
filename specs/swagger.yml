@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: Conduit API
-  version: 1.0.0
+  version: "1.0.0"
   title: Conduit API
   contact: 
     name: RealWorld
@@ -9,9 +9,6 @@ info:
   license: 
     name: MIT License
     url: https://opensource.org/licenses/MIT
-schemes: [ https, http ]
-produces: [ application/json ]
-consumes: [ application/json ]
 paths:
   /users:
       post:
