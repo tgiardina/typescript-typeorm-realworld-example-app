@@ -1,0 +1,1 @@
+export { TagEntity } from './TagEntity';
