@@ -51,14 +51,18 @@ function getMiddleware(
   }
 }
 
+function initLocals(req: Request): void {
+  req.locals = req.locals || {};
+}
+
 function validateToken(
   req: Request,
   onError: (token: string) => void,
 ): void {
+  initLocals(req);
   const token = getToken(req);
   try {
     const decodedToken = <any>verify(token, process.env.JWT_SECRET);
-    req.locals = req.locals || {};
     req.locals.user = decodedToken;
   } catch (_err) {
     onError(token);
