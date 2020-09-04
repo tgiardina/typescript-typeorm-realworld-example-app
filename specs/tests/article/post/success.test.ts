@@ -1,28 +1,64 @@
 import { assert, request } from 'chai';
 import { Application } from 'express';
-import { verify } from 'jsonwebtoken';
+import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
 import '../../../loaders';
 import initApp from '../../../../src/app';
-import { IToken, IUser, IUserDbSchema } from '../interfaces';
+import {
+  IArticle,
+  IArticleDbSchema,
+  IArticleTagJoinDbSchema,
+  ITagDbSchema,
+} from '../interfaces';
 import { initConnection } from '../../../utils';
 
-describe('POST /api/users - success', () => {
+describe('POST /api/articless - success', () => {
   const user = {
+    id: 1,
     email: "username@example.com",
     password: "password",
     username: "username",
   };
-  const data = { user };
+  const profile = {
+    username: user.username,
+    bio: null,
+    image: null,
+    following: false,
+  };
+  const token = sign({
+    id: user.id,
+    email: user.email,
+    password: user.password,
+  }, process.env.JWT_SECRET);
+  const article = {
+    slug: "a-slug",
+    title: "A Title",
+    description: "This is an article.",
+    body: "A discussion about something.",
+    tagList: ["tag1", "tag2"],
+  };
+  const data = { article };
   let app: Application;
-  let body: IUser;
+  let body: IArticle;
   let connection: Connection;
   let status: number;
 
   before(async () => {
     app = await initApp();
     connection = await initConnection();
+    await connection.manager.query(
+      `INSERT INTO user VALUES(\n\
+        DEFAULT,\n\
+        DEFAULT,\n\
+        "${user.email}",\n\
+        DEFAULT,\n\
+        "differentPassword",\n\
+        "differentUsername",\n\
+        DEFAULT,\n\
+        DEFAULT\n\
+       );`
+    );
   });
 
   after(async () => {
@@ -32,6 +68,7 @@ describe('POST /api/users - success', () => {
   it('should run.', (done) => {
     request(app)
       .post('/api/users')
+      .set({ "Authorization": `Bearer ${token}` })
       .type('json')
       .send(data)
       .end((_err, res) => {
@@ -46,31 +83,49 @@ describe('POST /api/users - success', () => {
   });
 
   it('should include properties.', () => {
-    assert.equal(body.user.bio, null);
-    assert.equal(body.user.email, user.email);
-    assert.equal(body.user.image, null);
-    assert.equal(body.user.token.substring(0, 3), "eyJ");
-    assert.equal(body.user.username, user.username);
+    assert.equal(body.article.slug, article.slug);
+    assert.equal(body.article.title, article.title);
+    assert.equal(body.article.body, article.body);
+    assert.equal(body.article.tagList, article.tagList);
+    assert.equal(body.article.favorited, false);
+    assert.equal(body.article.favoritesCount, 0);
+    assert.equal(body.article.author, profile);
   })
 
-  it('should include valid token.', () => {
-    const decodedToken = <IToken>verify(
-      body.user.token,
-      process.env.JWT_SECRET,
-    );
-    assert.equal(decodedToken.id, 1);
-    assert.equal(decodedToken.email, user.email);
-    assert.equal(decodedToken.password, user.password);
+  it('should have saved article in the database.', async () => {
+    const dbArticle = <IArticleDbSchema>(await connection.manager.query(
+      'SELECT * FROM article;'
+    ))[0];
+    assert.equal(dbArticle.body, article.body);
+    assert.equal(dbArticle.description, article.description);
+    assert.equal(dbArticle.slug, article.slug);
+    assert.equal(dbArticle.title, article.title);
+    assert.equal(dbArticle.authorId, 1);
   });
 
-  it('should have saved in the database.', async () => {
-    const user = <IUserDbSchema>(await connection.manager.query(
-      'SELECT * FROM user;'
+  it('should have saved tags in the database.', async () => {
+    const dbTags = <ITagDbSchema[]>(await connection.manager.query(
+      'SELECT * FROM tag;'
     ))[0];
-    assert.equal(user.bio, null);
-    assert.equal(user.email, user.email);
-    assert.equal(user.image, null);
-    assert.equal(user.password, user.password);
-    assert.equal(user.username, user.username);
+    const dbTagNames = dbTags.map(dbTag => dbTag.tag).sort();
+    const tagNames = [...article.tagList].sort();
+    assert.equal(dbTagNames.length, tagNames.length);
+    while (dbTagNames.length === 0) {
+      assert.equal(dbTagNames.pop(), tagNames.pop());
+    }
   });
-})  
+
+  it('should have associated article with tags in database.', async () => {
+    const dbJoins = <IArticleTagJoinDbSchema[]>(await connection.manager.query(
+      'SELECT * FROM article_tags_tag;'
+    ))[0];
+    const dbTagIds = dbJoins.map(dbJoin => dbJoin.tagId).sort();
+    const tagIds = [1, 2];
+    assert.equal(dbJoins.length, tagIds.length);
+    while (dbJoins.length === 0) {
+      const currJoin = dbJoins.pop();
+      assert(tagIds.includes(currJoin.tagId));
+      assert.equal(dbTagIds.pop(), tagIds.pop());
+    }
+  });
+})

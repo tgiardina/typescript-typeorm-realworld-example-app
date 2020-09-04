@@ -64,13 +64,13 @@ describe('POST /api/users - success', () => {
   });
 
   it('should have saved in the database.', async () => {
-    const user = <IUserDbSchema>(await connection.manager.query(
+    const dbUser = <IUserDbSchema>(await connection.manager.query(
       'SELECT * FROM user;'
     ))[0];
-    assert.equal(user.bio, null);
-    assert.equal(user.email, user.email);
-    assert.equal(user.image, null);
-    assert.equal(user.password, user.password);
-    assert.equal(user.username, user.username);
+    assert.equal(dbUser.bio, null);
+    assert.equal(dbUser.email, user.email);
+    assert.equal(dbUser.image, null);
+    assert.equal(dbUser.password, user.password);
+    assert.equal(dbUser.username, user.username);
   });
 })  
