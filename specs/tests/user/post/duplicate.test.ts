@@ -8,11 +8,12 @@ import { IError } from '../../interfaces';
 import { initConnection } from '../../../utils';
 
 describe('POST /api/users - duplicate', () => {
-  const data = {
+  const user = {
     email: "username@example.com",
     password: "password",
     username: "username",
   };
+  const data = { user };
   let app: Application;
   let body: IError;
   let connection: Connection;
@@ -25,7 +26,7 @@ describe('POST /api/users - duplicate', () => {
       `INSERT INTO user VALUES(\n\
         DEFAULT,\n\
         DEFAULT,\n\
-        "${data.email}",\n\
+        "${user.email}",\n\
         DEFAULT,\n\
         "differentPassword",\n\
         "differentUsername",\n\

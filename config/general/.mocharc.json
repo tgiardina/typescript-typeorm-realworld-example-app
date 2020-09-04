@@ -1,6 +1,6 @@
 {
   "spec": [
     "src/**/*.test.ts",
-    "tests/**/*.test.ts"
+    "specs/**/*.test.ts"
   ]
 }

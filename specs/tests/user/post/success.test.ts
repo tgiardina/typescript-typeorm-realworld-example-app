@@ -9,11 +9,12 @@ import { IToken, IUser, IUserDbSchema } from '../interfaces';
 import { initConnection } from '../../../utils';
 
 describe('POST /api/users - success', () => {
-  const data = {
+  const user = {
     email: "username@example.com",
     password: "password",
     username: "username",
   };
+  const data = { user };
   let app: Application;
   let body: IUser;
   let connection: Connection;
@@ -46,10 +47,10 @@ describe('POST /api/users - success', () => {
 
   it('should include properties.', () => {
     assert.equal(body.user.bio, null);
-    assert.equal(body.user.email, data.email);
+    assert.equal(body.user.email, user.email);
     assert.equal(body.user.image, null);
     assert.equal(body.user.token.substring(0, 3), "eyJ");
-    assert.equal(body.user.username, data.username);
+    assert.equal(body.user.username, user.username);
   })
 
   it('should include valid token.', () => {
@@ -58,8 +59,8 @@ describe('POST /api/users - success', () => {
       process.env.JWT_SECRET,
     );
     assert.equal(decodedToken.id, 1);
-    assert.equal(decodedToken.email, data.email);
-    assert.equal(decodedToken.password, data.password);
+    assert.equal(decodedToken.email, user.email);
+    assert.equal(decodedToken.password, user.password);
   });
 
   it('should have saved in the database.', async () => {
@@ -67,9 +68,9 @@ describe('POST /api/users - success', () => {
       'SELECT * FROM user;'
     ))[0];
     assert.equal(user.bio, null);
-    assert.equal(user.email, data.email);
+    assert.equal(user.email, user.email);
     assert.equal(user.image, null);
-    assert.equal(user.password, data.password);
-    assert.equal(user.username, data.username);
+    assert.equal(user.password, user.password);
+    assert.equal(user.username, user.username);
   });
 })  

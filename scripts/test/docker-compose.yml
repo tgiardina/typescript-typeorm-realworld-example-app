@@ -7,6 +7,6 @@ services:
     command: bash -c "./scripts/migrate.sh; npm start"
     volumes:
       - ../../src:/usr/src/app/src
-      - ../../tests:/usr/src/app/tests          
+      - ../../specs:/usr/src/app/specs
   db:
     env_file: ../../config/test/.env

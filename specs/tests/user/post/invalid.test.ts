@@ -8,7 +8,7 @@ import { IError } from '../../interfaces';
 import { initConnection } from '../../../utils';
 
 describe('POST /api/users - invalid data', () => {
-  const data = {
+  const user = {
     email: "username@example.com",
     password: "password",
     username: "username",
@@ -30,14 +30,15 @@ describe('POST /api/users - invalid data', () => {
   });
 
   it('should run.', async () => {
-    await Promise.all(Object.keys(data).map(key => {
-      const partialData = { ...data };
-      delete partialData[key];
+    await Promise.all(Object.keys(user).map(key => {
+      const partialUser = { ...user };
+      delete partialUser[key];
+      const data = { user };
       return new Promise((done) => {
         request(app)
           .post('/api/users')
           .type('json')
-          .send(partialData)
+          .send(data)
           .end((_err, res) => {
             bodies[key] = res.body;
             statuses[key] = res.status;
