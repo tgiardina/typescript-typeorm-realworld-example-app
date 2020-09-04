@@ -19,16 +19,16 @@ export class UserController implements interfaces.Controller {
 
   @httpPost(
     '/users',
-    body('email').isEmail(),
-    body('password').isString(),
-    body('username').isString(),
+    body('user.email').isEmail(),
+    body('user.password').isString(),
+    body('user.username').isString(),
     validate,
   )
   public async create(req: Request, res: Response) {
     const user = await this.repository.createAndSaveAuth({
-      email: req.body.email,
-      password: req.body.password,
-      username: req.body.username,
+      email: req.body.user.email,
+      password: req.body.user.password,
+      username: req.body.user.username,
     });
     res.status(201).json({
       user: {

@@ -33,7 +33,7 @@ describe('POST /api/users - invalid data', () => {
     await Promise.all(Object.keys(user).map(key => {
       const partialUser = { ...user };
       delete partialUser[key];
-      const data = { user };
+      const data = { user: partialUser };
       return new Promise((done) => {
         request(app)
           .post('/api/users')
