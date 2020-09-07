@@ -1,4 +1,4 @@
-import { assert, request } from 'chai';
+import { assert, expect, request } from 'chai';
 import { Application } from 'express';
 import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
@@ -42,6 +42,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
   let app: Application;
   let body: IArticle;
   let connection: Connection;
+  let response: any;
   let status: number;
 
   before(async () => {
@@ -80,10 +81,15 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
       .type('json')
       .send(data)
       .end((_err, res) => {
+        response = res;
         body = res.body;
         status = res.status;
         done();
       });
+  });
+
+  it('should match OpenApi spec', () => {
+    expect(response).to.satisfyApiSpec;
   });
 
   it('should have a 201 status', () => {
