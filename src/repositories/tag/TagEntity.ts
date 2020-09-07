@@ -10,7 +10,7 @@ import {
 
 import { ArticleEntity } from '../article';
 
-@Entity("article")
+@Entity("tag")
 export class TagEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

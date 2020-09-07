@@ -36,6 +36,7 @@
     "@typescript-eslint/parser": "^3.7.0",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "chai-openapi-response-validator": "^0.9.4",
     "eslint": "^7.5.0",
     "eslint-plugin-import": "^2.22.0",
     "mocha": "^8.1.1",

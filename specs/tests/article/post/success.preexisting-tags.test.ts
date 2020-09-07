@@ -13,7 +13,7 @@ import {
 } from '../interfaces';
 import { initConnection } from '../../../utils';
 
-describe('POST /api/articles - success', () => {
+describe('POST /api/articles - success w/ preexisting tags', () => {
   const user = {
     id: 1,
     email: "username@example.com",
@@ -55,6 +55,14 @@ describe('POST /api/articles - success', () => {
         DEFAULT,\n\
         "differentPassword",\n\
         "differentUsername",\n\
+        DEFAULT,\n\
+        DEFAULT\n\
+       );`
+    );
+    await connection.manager.query(
+      `INSERT INTO tag VALUES(\n\
+        DEFAULT,\n\
+        "${article.tagList[0]}",\n\
         DEFAULT,\n\
         DEFAULT\n\
        );`
