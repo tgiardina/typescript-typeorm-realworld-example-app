@@ -39,7 +39,7 @@ function getMiddleware(
   if (isRequired) {
     return (req: Request, _res: Response, next: NextFunction) => {
       validateToken(req, (token) => {
-        throw new HttpUnauthorizedError(token);
+        throw new HttpUnauthorizedError();
       });
       next();
     }

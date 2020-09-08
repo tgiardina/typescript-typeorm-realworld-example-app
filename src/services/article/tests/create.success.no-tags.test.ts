@@ -6,7 +6,7 @@ import { stub } from 'sinon';
 import { ArticleService } from '../';
 import { IArticleRo } from '../interfaces';
 
-describe('ArticleService.create - success', () => {
+describe('ArticleService.create - success (no tags)', () => {
   // Data
   const profile = {
     username: "username",
@@ -23,12 +23,14 @@ describe('ArticleService.create - success', () => {
     title: "Title",
     description: "I talk.",
     body: "Hello, my name is John.",
+    tagList: [],
   };
   const articleSeedOut = {
     ...articleSeedIn,
-    tagList: null,
+    author: user,
     tags: [],
   };
+  delete articleSeedOut.tagList;
   const article = {
     ...articleSeedIn,
     createdAt: new Date(),
@@ -36,7 +38,6 @@ describe('ArticleService.create - success', () => {
     favorited: false,
     favoritesCount: 0,
     author: user,
-    tagList: [],
   };
   let result: IArticleRo;
   // Stubs
@@ -68,7 +69,7 @@ describe('ArticleService.create - success', () => {
     });
 
     it('should have called articleRepo.createAndSave correctly', async () => {
-      assert.equal(articleStub.getCall(0).args[0], articleSeedOut);
+      assert.deepEqual(articleStub.getCall(0).args[0], articleSeedOut);
     });
 
     it('should have correct result', async () => {

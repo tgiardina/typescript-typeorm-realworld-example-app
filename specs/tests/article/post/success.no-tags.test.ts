@@ -13,7 +13,7 @@ import {
 } from '../interfaces';
 import { initConnection } from '../../../utils';
 
-describe('POST /api/articles - success', () => {
+describe('POST /api/articles - success (no tags)', () => {
   const user = {
     id: 1,
     email: "username@example.com",
@@ -53,8 +53,8 @@ describe('POST /api/articles - success', () => {
         DEFAULT,\n\
         "${user.email}",\n\
         DEFAULT,\n\
-        "differentPassword",\n\
-        "differentUsername",\n\
+        "$(user.password}",\n\
+        "${user.username}",\n\
         DEFAULT,\n\
         DEFAULT\n\
        );`
@@ -91,10 +91,10 @@ describe('POST /api/articles - success', () => {
     assert.equal(body.article.slug, article.slug);
     assert.equal(body.article.title, article.title);
     assert.equal(body.article.body, article.body);
-    assert.equal(body.article.tagList, []);
+    assert.deepEqual(body.article.tagList, []);
     assert.equal(body.article.favorited, false);
     assert.equal(body.article.favoritesCount, 0);
-    assert.equal(body.article.author, profile);
+    assert.deepEqual(body.article.author, profile);
   })
 
   it('should have saved article in the database.', async () => {
@@ -106,19 +106,5 @@ describe('POST /api/articles - success', () => {
     assert.equal(dbArticle.slug, article.slug);
     assert.equal(dbArticle.title, article.title);
     assert.equal(dbArticle.authorId, 1);
-  });
-
-  it('should have associated article with tags in database.', async () => {
-    const dbJoins = <IArticleTagJoinDbSchema[]>(await connection.manager.query(
-      'SELECT * FROM article_tags_tag;'
-    ))[0];
-    const dbTagIds = dbJoins.map(dbJoin => dbJoin.tagId).sort();
-    const tagIds = [1, 2];
-    assert.equal(dbJoins.length, tagIds.length);
-    while (dbJoins.length === 0) {
-      const currJoin = dbJoins.pop()!;
-      assert(tagIds.includes(currJoin.tagId));
-      assert.equal(dbTagIds.pop(), tagIds.pop());
-    }
   });
 })

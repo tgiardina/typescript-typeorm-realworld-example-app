@@ -9,17 +9,11 @@ import { IError } from '../../interfaces';
 import { initConnection } from '../../../utils';
 
 describe('POST /api/articles - invalid data', () => {
-  const articles = {
-    email: "username@example.com",
-    password: "password",
-    username: "username",
-  };
   let app: Application;
   let bodies: { [key: string]: IError } = {}
   let connection: Connection;
   let responses = {}
   let statuses: { [key: string]: number } = {};
-
   const user = {
     id: 1,
     email: "username@example.com",
@@ -36,24 +30,11 @@ describe('POST /api/articles - invalid data', () => {
     title: "A Title",
     description: "This is an article.",
     body: "A discussion about something.",
-    tagList: ["tag1", "tag2"],
   };
 
   before(async () => {
     app = await initApp();
     connection = await initConnection();
-    await connection.manager.query(
-      `INSERT INTO user VALUES(\n\
-        DEFAULT,\n\
-        DEFAULT,\n\
-        "${user.email}",\n\
-        DEFAULT,\n\
-        "differentPassword",\n\
-        "differentUsername",\n\
-        DEFAULT,\n\
-        DEFAULT\n\
-       );`
-    );
   });
 
   after(async () => {
@@ -64,7 +45,7 @@ describe('POST /api/articles - invalid data', () => {
     await Promise.all(Object.keys(article).map(key => {
       const partialArticle = { ...article };
       delete partialArticle[key];
-      const data = { user: partialArticle };
+      const data = { article: partialArticle };
       return new Promise((done) => {
         request(app)
           .post('/api/articles')

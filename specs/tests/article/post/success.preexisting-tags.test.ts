@@ -54,8 +54,8 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
         DEFAULT,\n\
         "${user.email}",\n\
         DEFAULT,\n\
-        "differentPassword",\n\
-        "differentUsername",\n\
+        "${user.password}",\n\
+        "${user.username}",\n\
         DEFAULT,\n\
         DEFAULT\n\
        );`
@@ -100,10 +100,10 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
     assert.equal(body.article.slug, article.slug);
     assert.equal(body.article.title, article.title);
     assert.equal(body.article.body, article.body);
-    assert.equal(body.article.tagList, article.tagList);
+    assert.deepEqual(body.article.tagList, article.tagList);
     assert.equal(body.article.favorited, false);
     assert.equal(body.article.favoritesCount, 0);
-    assert.equal(body.article.author, profile);
+    assert.deepEqual(body.article.author, profile);
   })
 
   it('should have saved article in the database.', async () => {
@@ -120,7 +120,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
   it('should have saved tags in the database.', async () => {
     const dbTags = <ITagDbSchema[]>(await connection.manager.query(
       'SELECT * FROM tag;'
-    ))[0];
+    ));
     const dbTagNames = dbTags.map(dbTag => dbTag.tag).sort();
     const tagNames = [...article.tagList].sort();
     assert.equal(dbTagNames.length, tagNames.length);
@@ -132,7 +132,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
   it('should have associated article with tags in database.', async () => {
     const dbJoins = <IArticleTagJoinDbSchema[]>(await connection.manager.query(
       'SELECT * FROM article_tags_tag;'
-    ))[0];
+    ));
     const dbTagIds = dbJoins.map(dbJoin => dbJoin.tagId).sort();
     const tagIds = [1, 2];
     assert.equal(dbJoins.length, tagIds.length);

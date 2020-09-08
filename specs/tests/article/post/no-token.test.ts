@@ -51,8 +51,4 @@ describe('POST /api/articles - no token', () => {
   it('should have a 401 status', () => {
     assert.equal(status, 401);
   });
-
-  it('should have an error body.', () => {
-    assert.equal(body.errors.body.length, 1);
-  });
 })

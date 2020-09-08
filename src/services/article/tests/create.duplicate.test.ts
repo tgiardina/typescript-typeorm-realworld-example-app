@@ -5,7 +5,7 @@ import { stub } from 'sinon';
 
 import { ArticleService } from '../';
 
-describe('ArticleService.create - success', () => {
+describe('ArticleService.create - duplicate', () => {
   // Data
   const profile = {
     username: "username",
@@ -50,10 +50,10 @@ describe('ArticleService.create - success', () => {
   };
   const service = new ArticleService(articleRepo, tagRepo, userRepo);
 
-  describe('is passed an article seed', () => {
+  describe('is passed a duplicate article seed', () => {
     it('should error', async () => {
       try {
-        service.createAndSave(user.id, articleSeedIn);
+        await service.createAndSave(user.id, articleSeedIn);
         assert(false);
       } catch (err) {
         result = err;
@@ -65,8 +65,8 @@ describe('ArticleService.create - success', () => {
     });
 
     it('should have called tagRepo.findOrCreate correctly', async () => {
-      assert.equal(tagStub.getCall(0).args[0], tag1);
-      assert.equal(tagStub.getCall(1).args[0], tag2);
+      assert.deepEqual(tagStub.getCall(0).args[0], { tag: tag1.tag });
+      assert.deepEqual(tagStub.getCall(1).args[0], { tag: tag2.tag });
     });
 
     it('should have correct result', async () => {

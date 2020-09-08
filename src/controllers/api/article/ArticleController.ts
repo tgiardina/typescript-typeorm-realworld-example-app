@@ -9,7 +9,7 @@ import {
 
 import { TYPES } from '../../../constants/';
 import { IArticleService } from './interfaces';
-import { validate } from '../../middleware';
+import { auth, validate } from '../../middleware';
 
 @controller('/api/articles')
 export class ArticleController implements interfaces.Controller {
@@ -19,6 +19,7 @@ export class ArticleController implements interfaces.Controller {
 
   @httpPost(
     '',
+    auth.required,
     body('article.slug').matches("[a-z\-]+"),
     body('article.title').isString(),
     body('article.description').isString(),
@@ -40,12 +41,17 @@ export class ArticleController implements interfaces.Controller {
         title: article.title,
         description: article.description,
         body: article.body,
-        tagList: article.tagList,
+        tagList: article.tags.map(tag => tag.tag),
         createdAt: article.createdAt,
         updatedAt: article.updatedAt,
-        favorited: article.favorited,
-        favoritesCount: article.favoritesCount,
-        author: article.author,
+        favorited: false,
+        favoritesCount: 0,
+        author: {
+          bio: article.author.bio || "",
+          following: false,
+          image: article.author.image || "",
+          username: article.author.username,
+        }
       },
     });
   }

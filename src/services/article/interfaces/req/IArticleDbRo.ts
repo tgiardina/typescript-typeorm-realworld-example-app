@@ -5,7 +5,7 @@ export interface IArticleDbRo {
   title: string;
   description: string;
   body: string;
-  tags: ITagRo[]
+  tags: ITagRo[];
   createdAt: Date;
   updatedAt: Date;
   favoritesCount: number;

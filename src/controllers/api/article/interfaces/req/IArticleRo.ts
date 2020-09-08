@@ -5,7 +5,7 @@ export interface IArticleRo {
   title: string;
   description: string;
   body: string;
-  tagList: string[];
+  tags: { tag: string }[];
   createdAt: Date;
   updatedAt: Date;
   favorited: boolean;

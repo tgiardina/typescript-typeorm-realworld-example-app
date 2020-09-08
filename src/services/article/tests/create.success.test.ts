@@ -35,9 +35,10 @@ describe('ArticleService.create - success', () => {
   };
   const articleSeedOut = {
     ...articleSeedIn,
-    tagList: null,
-    tags: [tag1.id, tag2.id],
+    author: user,
+    tags: [tag1, tag2],
   };
+  delete articleSeedOut.tagList;
   const article = {
     ...articleSeedIn,
     createdAt: new Date(),
@@ -74,12 +75,12 @@ describe('ArticleService.create - success', () => {
     });
 
     it('should have called tagRepo.findOrCreate correctly', async () => {
-      assert.equal(tagStub.getCall(0).args[0], tag1);
-      assert.equal(tagStub.getCall(1).args[0], tag2);
+      assert.deepEqual(tagStub.getCall(0).args[0], { tag: tag1.tag });
+      assert.deepEqual(tagStub.getCall(1).args[0], { tag: tag2.tag });
     });
 
     it('should have called articleRepo.createAndSave correctly', async () => {
-      assert.equal(articleStub.getCall(0).args[0], articleSeedOut);
+      assert.deepEqual(articleStub.getCall(0).args[0], articleSeedOut);
     });
 
     it('should have correct result', async () => {

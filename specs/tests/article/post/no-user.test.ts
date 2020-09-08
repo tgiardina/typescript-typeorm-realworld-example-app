@@ -23,7 +23,6 @@ describe('POST /api/articles - no user', () => {
   }, <string>process.env.JWT_SECRET);
   const data = { article };
   let app: Application;
-  let body: IError;
   let connection: Connection;
   let response: any;
   let status: number;
@@ -45,7 +44,6 @@ describe('POST /api/articles - no user', () => {
       .send(data)
       .end((_err, res) => {
         response = res;
-        body = res.body;
         status = res.status;
         done();
       });
@@ -57,9 +55,5 @@ describe('POST /api/articles - no user', () => {
 
   it('should have a 401 status', () => {
     assert.equal(status, 401);
-  });
-
-  it('should have an error body.', () => {
-    assert.equal(body.errors.body.length, 1);
   });
 })

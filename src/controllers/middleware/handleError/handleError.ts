@@ -4,8 +4,10 @@ import { QueryFailedError } from 'typeorm';
 import {
   HttpDuplicateError,
   HttpError,
+  HttpUnauthorizedError,
   HttpUncaughtError,
 } from '../../errors';
+import { ServiceError } from '../../../services';
 
 /**
  * Catches all thrown errors, logs them if needed, and then sends the 
@@ -30,10 +32,18 @@ export function handleError(
   } else if (err instanceof QueryFailedError && err.code === "ER_DUP_ENTRY") {
     const httpError = parseDuplicateError(err);
     res.status(httpError.status).json(httpError.toDto());
+  } else if (err instanceof ServiceError && err.code === "ER_INVALID_TOKEN") {
+    const httpError = new HttpUnauthorizedError();
+    res.status(httpError.status).json(httpError.toDto());
   } else {
     console.log(err);
     const httpError = new HttpUncaughtError();
-    res.status(httpError.status).json(httpError.toDto());
+    const dto = httpError.toDto();
+    if (dto) {
+      res.status(httpError.status).json(dto);
+    } else {
+      res.status(httpError.status).send();
+    }
   }
 }
 
