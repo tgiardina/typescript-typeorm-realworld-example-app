@@ -1,0 +1,1 @@
+export { IProfile } from './spec';
