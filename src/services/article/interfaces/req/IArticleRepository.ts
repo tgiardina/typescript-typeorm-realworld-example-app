@@ -1,5 +1,5 @@
-import { IArticleRo, IArticleSeed } from '../spec';
+import { IArticleDbRo, IArticleDbSeed } from './';
 
 export interface IArticleRepository {
-  createAndSave(seed: IArticleSeed): IArticleRo;
+  createAndSave(seed: IArticleDbSeed): Promise<IArticleDbRo>;
 }

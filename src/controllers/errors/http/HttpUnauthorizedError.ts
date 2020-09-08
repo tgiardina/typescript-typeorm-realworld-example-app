@@ -1,7 +1,7 @@
 import { HttpError } from './';
 
 export class HttpUnauthorizedError extends HttpError {
-  constructor(token: string) {
+  constructor(token: string | null) {
     super(401);
     if (token) {
       this.append(`Invalid token "${token}" provided`);

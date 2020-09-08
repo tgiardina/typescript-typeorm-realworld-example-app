@@ -1,20 +1,48 @@
+import { inject, injectable } from 'inversify';
+
+import { TYPES } from '../../constants';
 import {
   IArticleRepository,
   IArticleRo,
   IArticleSeed,
+  IArticleService,
+  IProfileRo,
   ITagRepository,
+  ITagRo,
   IUserRepository,
 } from './interfaces';
 
-export class ArticleService {
+@injectable()
+export class ArticleService implements IArticleService {
   constructor(
-    articleRepository: IArticleRepository,
-    tagRepository: ITagRepository,
-    userRepository: IUserRepository,
+    @inject(TYPES.ArticleRepository) private articleRepository:
+      IArticleRepository,
+    @inject(TYPES.TagRepository) private tagRepository:
+      ITagRepository,
+    @inject(TYPES.UserRepository) private userRepository:
+      IUserRepository,
   ) {
   }
 
-  create(seed: IArticleSeed): IArticleRo {
-    return
+  async createAndSave(
+    userId: number,
+    articleSeed: IArticleSeed,
+  ): Promise<IArticleRo> {
+    const [author, tags] = await Promise.all([
+      <Promise<IProfileRo>>this.userRepository.findOne(userId),
+      this.getTags(articleSeed.tagList),
+    ]);
+    return this.articleRepository.createAndSave({
+      ...articleSeed,
+      author,
+      tags,
+    });
+  }
+
+  private async getTags(tags?: string[]): Promise<ITagRo[]> {
+    if (!tags) return [];
+    return Promise.all(tags.map(tag => this.tagRepository.findOrCreate({
+      tag
+    })));
   }
 }

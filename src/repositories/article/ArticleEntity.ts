@@ -10,11 +10,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { IArticleRo } from './interfaces';
 import { TagEntity } from '../tag';
 import { UserEntity } from '../user';
 
 @Entity("article")
-export class ArticleEntity extends BaseEntity {
+export class ArticleEntity extends BaseEntity implements IArticleRo {
+  // Columns
   @PrimaryGeneratedColumn()
   id: number;
   @Column({ nullable: false })
@@ -27,11 +29,16 @@ export class ArticleEntity extends BaseEntity {
   title: string;
   @ManyToOne(_type => UserEntity, user => user.articles)
   author: UserEntity;
+  @ManyToMany(_type => UserEntity, user => user.favorites)
+  fans: UserEntity[];
   @ManyToMany(_type => TagEntity, tag => tag.articles)
   @JoinTable()
-  tags: ArticleEntity[];
+  tags: TagEntity[];
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
   updatedAt: Date;
+  // Additional Properties
+  favorited: boolean;
+  favoritesCount: number;
 }

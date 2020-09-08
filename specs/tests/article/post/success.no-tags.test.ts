@@ -22,15 +22,15 @@ describe('POST /api/articles - success', () => {
   };
   const profile = {
     username: user.username,
-    bio: null,
-    image: null,
+    bio: "",
+    image: "",
     following: false,
   };
   const token = sign({
     id: user.id,
     email: user.email,
     password: user.password,
-  }, process.env.JWT_SECRET);
+  }, <string>process.env.JWT_SECRET);
   const article = {
     slug: "a-slug",
     title: "A Title",
@@ -116,7 +116,7 @@ describe('POST /api/articles - success', () => {
     const tagIds = [1, 2];
     assert.equal(dbJoins.length, tagIds.length);
     while (dbJoins.length === 0) {
-      const currJoin = dbJoins.pop();
+      const currJoin = dbJoins.pop()!;
       assert(tagIds.includes(currJoin.tagId));
       assert.equal(dbTagIds.pop(), tagIds.pop());
     }

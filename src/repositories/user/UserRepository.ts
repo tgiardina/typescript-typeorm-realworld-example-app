@@ -11,7 +11,7 @@ import {
 
 @injectable()
 export class UserRepository
-  implements IUserRepoViaUserCont {
+  implements IUserRepoViaArticleServ, IUserRepoViaUserCont {
   private repository: Repository<UserEntity>;
 
   constructor(@inject(TYPES.JwtCipher) private cipher: IJwtCipher) {
@@ -27,8 +27,18 @@ export class UserRepository
     return this.authorize(await this.repository.save(user));
   }
 
-  async findOneAuth(id: number): Promise<UserEntity> {
-    return this.authorize(await this.repository.findOne(id));
+  async findOne(id: number): Promise<UserEntity | undefined> {
+    return this.repository.findOne(id);
+  }
+
+  async findOneAuth(id: number): Promise<UserEntity | undefined> {
+    const user = await this.repository.findOne(id);
+    if (user) {
+      return this.authorize(user);
+    } else {
+      return user;
+    }
+
   }
 
   ////////////////////////////////////////////////////////////////////////////

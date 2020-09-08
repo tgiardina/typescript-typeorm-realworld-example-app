@@ -1,6 +1,5 @@
-import { IArticlePostBody } from '../spec';
-import { IArticleRo } from './';
+import { IArticleRo, IArticleSeed } from './';
 
 export interface IArticleService {
-  createAndSave(article: IArticlePostBody): Promise<IArticleRo>;
+  createAndSave(userId: number, article: IArticleSeed): Promise<IArticleRo>;
 }

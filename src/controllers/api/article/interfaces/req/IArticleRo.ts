@@ -1,4 +1,4 @@
-import { IProfile } from '../../../interfaces';
+import { IProfileRo } from '../../../interfaces';
 
 export interface IArticleRo {
   slug: string;
@@ -10,5 +10,5 @@ export interface IArticleRo {
   updatedAt: Date;
   favorited: boolean;
   favoritesCount: number;
-  author: IProfile;
+  author: IProfileRo;
 }

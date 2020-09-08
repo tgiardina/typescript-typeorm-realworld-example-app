@@ -30,7 +30,7 @@ describe('POST /api/articles - invalid data', () => {
     id: user.id,
     email: user.email,
     password: user.password,
-  }, process.env.JWT_SECRET);
+  }, <string>process.env.JWT_SECRET);
   const article = {
     slug: "a-slug",
     title: "A Title",

@@ -20,7 +20,7 @@ describe('POST /api/articles - no user', () => {
     id: 1,
     email: "username@example.com",
     password: "password",
-  }, process.env.JWT_SECRET);
+  }, <string>process.env.JWT_SECRET);
   const data = { article };
   let app: Application;
   let body: IError;

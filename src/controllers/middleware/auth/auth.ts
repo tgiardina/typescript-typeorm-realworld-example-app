@@ -51,33 +51,32 @@ function getMiddleware(
   }
 }
 
-function initLocals(req: Request): void {
-  req.locals = req.locals || {};
-}
-
 function validateToken(
   req: Request,
-  onError: (token: string) => void,
+  onError: (token: string | null) => void,
 ): void {
-  initLocals(req);
+  req.locals = req.locals || {};
   const token = getToken(req);
-  try {
-    const decodedToken = <any>verify(token, process.env.JWT_SECRET);
-    req.locals.user = decodedToken;
-  } catch (_err) {
-    onError(token);
+  if (!token) {
+    onError(null);
+  } else {
+    try {
+      req.locals.user = <any>verify(token, <string>process.env.JWT_SECRET)
+    } catch (_err) {
+      onError(token);
+    }
   }
 }
 
-function getToken(req: Request): string {
+function getToken(req: Request): string | null {
   const authorization = req.headers.authorization;
-  if (!authorization) return;
+  if (!authorization) return null;
   const authString = authorization.toString();
   const isToken = authString.split(' ')[0] === 'Token';
   const isBearer = authString.split(' ')[0] === 'Bearer';
   if (isToken || isBearer) {
     return authString.split(' ')[1];
   } else {
-    return;
+    return null;
   }
 }

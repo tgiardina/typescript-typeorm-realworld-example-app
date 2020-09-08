@@ -27,7 +27,6 @@ describe('ArticleService.create - success', () => {
     tag: "tag2",
   };
   const articleSeedIn = {
-    userId: user.id,
     slug: "url-slug",
     title: "Title",
     description: "I talk.",
@@ -67,7 +66,7 @@ describe('ArticleService.create - success', () => {
 
   describe('is passed an article seed', () => {
     it('should run without error', async () => {
-      result = service.create(articleSeedIn);
+      result = await service.createAndSave(user.id, articleSeedIn);
     })
 
     it('should have called userRepo.findOne correctly', async () => {

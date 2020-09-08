@@ -4,6 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -28,6 +30,9 @@ export class UserEntity extends BaseEntity implements IUserRo {
   username: string;
   @OneToMany(_type => ArticleEntity, article => article.author)
   articles: ArticleEntity[]
+  @ManyToMany(_type => ArticleEntity, article => article.fans)
+  @JoinTable()
+  favorites: ArticleEntity[];
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
@@ -41,7 +46,7 @@ export class UserEntity extends BaseEntity implements IUserRo {
 
   get token(): string {
     if (!this.cipher) {
-      return null;
+      throw new Error("Can't access token via unauthorized UserEntity.");
     } else {
       return this.cipher.tokenize({
         id: this.id,

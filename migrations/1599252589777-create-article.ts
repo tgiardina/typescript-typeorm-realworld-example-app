@@ -17,9 +17,19 @@ export class createArticle1599252589777 implements MigrationInterface {
            UNIQUE(slug)\n\
        );`
     );
+    await queryRunner.query(
+      `CREATE TABLE user_favorites_article (\n\
+           userId    INT NOT NULL,\n\
+           articleId INT NOT NULL,\n\
+           PRIMARY KEY(userId, articleId),\n\
+           FOREIGN KEY(userId) REFERENCES user(id),\n\
+           FOREIGN KEY(articleId) REFERENCES article(id)\n\
+       );`
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DROP TABLE article;`);
+    await queryRunner.query(`DROP TABLE user_favorites_article;`);
   }
 }

@@ -1,4 +1,4 @@
 export interface ITagRo {
-  id: number;
+  id?: number;
   tag: string;
 }

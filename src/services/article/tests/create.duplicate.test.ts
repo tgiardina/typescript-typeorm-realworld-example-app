@@ -4,7 +4,6 @@ import { assert } from 'chai';
 import { stub } from 'sinon';
 
 import { ArticleService } from '../';
-import { IArticleRo } from '../interfaces';
 
 describe('ArticleService.create - success', () => {
   // Data
@@ -27,7 +26,6 @@ describe('ArticleService.create - success', () => {
     tag: "tag2",
   };
   const articleSeedIn = {
-    userId: user.id,
     slug: "url-slug",
     title: "Title",
     description: "I talk.",
@@ -55,7 +53,7 @@ describe('ArticleService.create - success', () => {
   describe('is passed an article seed', () => {
     it('should error', async () => {
       try {
-        service.create(articleSeedIn);
+        service.createAndSave(user.id, articleSeedIn);
         assert(false);
       } catch (err) {
         result = err;

@@ -1,5 +1,5 @@
 import { ITagRo } from './';
 
 export interface ITagRepository {
-  findOrCreate(tag: string): ITagRo;
+  findOrCreate(tag: ITagRo): Promise<ITagRo>;
 }

@@ -62,7 +62,7 @@ describe('POST /api/users - success', () => {
   it('should include valid token.', () => {
     const decodedToken = <IToken>verify(
       body.user.token,
-      process.env.JWT_SECRET,
+      <string>process.env.JWT_SECRET,
     );
     assert.equal(decodedToken.id, 1);
     assert.equal(decodedToken.email, user.email);
