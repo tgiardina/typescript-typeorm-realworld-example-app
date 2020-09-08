@@ -1,4 +1,4 @@
-import { IProfile } from '../../../interfaces';
+import { IProfileRo } from '../../../interfaces';
 
 export interface IArticleResponseBody {
   article: {
@@ -11,6 +11,6 @@ export interface IArticleResponseBody {
     updatedAt: Date;
     favorited: boolean;
     favoritesCount: number;
-    author: IProfile;
+    author: IProfileRo;
   }
 }

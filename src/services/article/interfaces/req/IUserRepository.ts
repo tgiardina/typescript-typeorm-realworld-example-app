@@ -1,5 +1,5 @@
-import { IProfile } from '../spec';
+import { IProfileRo } from '../spec';
 
 export interface IUserRepository {
-  findOne(id: number): IProfile;
+  findOne(id: number): IProfileRo;
 }

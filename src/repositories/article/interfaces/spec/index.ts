@@ -1,1 +1,5 @@
-export { IArticleRepository, IArticleRo } from '../../../../services';
+export {
+  IArticleRepository,
+  IArticleRo,
+  IArticleSeed,
+} from '../../../../services';

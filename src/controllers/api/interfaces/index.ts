@@ -1,1 +1,1 @@
-export { IProfile } from './spec';
+export { IProfileRo } from './spec';

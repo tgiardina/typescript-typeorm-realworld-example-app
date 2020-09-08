@@ -1,8 +1,8 @@
 export {
   IArticleRepository,
   IArticleRo,
-  ITag,
+  ITagRo,
   ITagRepository,
   IUserRepository,
 } from './req';
-export { IArticleService, IProfile } from './spec';
+export { IArticleSeed, IArticleService, IProfileRo } from './spec';

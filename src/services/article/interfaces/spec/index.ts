@@ -1,1 +1,6 @@
-export { IArticleRo, IArticleService, IProfileRo } from '../../../../controllers';
+export {
+  IArticleRo,
+  IArticleSeed,
+  IArticleService,
+  IProfileRo,
+} from '../../../../controllers';
