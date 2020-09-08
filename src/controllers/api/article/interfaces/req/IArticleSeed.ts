@@ -3,5 +3,5 @@ export interface IArticleSeed {
   title: string;
   description: string;
   body: string;
-  tagList: string[];
+  tagList?: string[];
 }

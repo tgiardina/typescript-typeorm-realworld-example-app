@@ -1,3 +1,5 @@
+import { IArticleRo, IArticleSeed } from '../spec';
+
 export interface IArticleRepository {
-  findOne(id: number): IProfile;
+  createAndSave(seed: IArticleSeed): IArticleRo;
 }

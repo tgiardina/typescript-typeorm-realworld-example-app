@@ -34,24 +34,11 @@ describe('ArticleService.create - success', () => {
     body: "Hello, my name is John.",
     tagList: [tag1.tag, tag2.tag],
   };
-  const articleSeedOut = {
-    ...articleSeedIn,
-    tagList: null,
-    tags: [tag1.id, tag2.id],
-  };
-  const article = {
-    ...articleSeedIn,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    favorited: false,
-    favoritesCount: 0,
-    author: user,
-  }
-  let result: IArticleRo;
+  const error = { code: `ER_DUP_ENTRY` };
+  let result: { code: string };
   // Stubs
-  const articleStub = stub().returns(article);
   const articleRepo = {
-    createAndSave: articleStub,
+    createAndSave: stub().throws(error),
   };
   const userStub = stub().returns(user);
   const tagStub = stub();
@@ -66,8 +53,13 @@ describe('ArticleService.create - success', () => {
   const service = new ArticleService(articleRepo, tagRepo, userRepo);
 
   describe('is passed an article seed', () => {
-    it('should run without error', async () => {
-      result = service.create(articleSeedIn);
+    it('should error', async () => {
+      try {
+        service.create(articleSeedIn);
+        assert(false);
+      } catch (err) {
+        result = err;
+      }
     })
 
     it('should have called userRepo.findOne correctly', async () => {
@@ -79,12 +71,8 @@ describe('ArticleService.create - success', () => {
       assert.equal(tagStub.getCall(1).args[0], tag2);
     });
 
-    it('should have called articleRepo.createAndSave correctly', async () => {
-      assert.equal(articleStub.getCall(0).args[0], articleSeedOut);
-    });
-
     it('should have correct result', async () => {
-      assert.equal(result, article);
+      assert.equal(result, error);
     });
   });
 }) 

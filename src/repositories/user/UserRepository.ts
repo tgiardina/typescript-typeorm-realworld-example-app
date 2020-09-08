@@ -11,7 +11,7 @@ import {
 
 @injectable()
 export class UserRepository
-  implements IUserRepoViaArticleServ, IUserRepoViaUserCont {
+  implements IUserRepoViaUserCont {
   private repository: Repository<UserEntity>;
 
   constructor(@inject(TYPES.JwtCipher) private cipher: IJwtCipher) {
