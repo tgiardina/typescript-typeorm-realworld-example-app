@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
+import { getManager } from "typeorm";
 
 import { HttpUnauthorizedError } from '../../errors';
+import { IDecodedToken } from '../../interfaces';
 
 export const auth = {
   /**
@@ -36,35 +38,25 @@ export const auth = {
 function getMiddleware(
   isRequired: boolean
 ): (req: Request, res: Response, next: NextFunction) => void {
-  if (isRequired) {
-    return (req: Request, _res: Response, next: NextFunction) => {
-      validateToken(req, (token) => {
-        throw new HttpUnauthorizedError();
-      });
-      next();
+  return async (req: Request, _res: Response, next: NextFunction) => {
+    const token = getToken(req);
+    if (!token) {
+      if (isRequired) {
+        return next(new HttpUnauthorizedError());
+      } else {
+        return next();
+      }
     }
-  } else {
-    return (req: Request, _res: Response, next: NextFunction) => {
-      validateToken(req, (_token) => { });
-      next();
+    const user = <IDecodedToken>verify(token, <string>process.env.JWT_SECRET);
+    const userExists = Object.values((await getManager().query(
+      `SELECT EXISTS(SELECT 1 FROM user WHERE id = ${user.id});`
+    ))[0])[0] == "1";
+    if (!userExists) {
+      return next(new HttpUnauthorizedError());
     }
-  }
-}
-
-function validateToken(
-  req: Request,
-  onError: (token: string | null) => void,
-): void {
-  req.locals = req.locals || {};
-  const token = getToken(req);
-  if (!token) {
-    onError(null);
-  } else {
-    try {
-      req.locals.user = <any>verify(token, <string>process.env.JWT_SECRET)
-    } catch (_err) {
-      onError(token);
-    }
+    req.locals = req.locals || {};
+    req.locals.user = user;
+    return next();
   }
 }
 

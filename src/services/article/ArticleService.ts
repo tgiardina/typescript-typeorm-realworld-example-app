@@ -1,7 +1,6 @@
 import { inject, injectable } from 'inversify';
 
 import { TYPES } from '../../constants';
-import { ServiceError } from '../errors';
 import {
   IArticleRepository,
   IArticleRo,
@@ -33,7 +32,6 @@ export class ArticleService implements IArticleService {
       <Promise<IProfileRo>>this.userRepository.findOne(userId),
       this.getTags(articleSeed.tagList),
     ]);
-    if (!author) throw new ServiceError("ER_INVALID_TOKEN");
     const articleDbSeed = {
       ...articleSeed,
       author,

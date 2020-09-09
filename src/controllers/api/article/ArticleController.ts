@@ -19,13 +19,13 @@ export class ArticleController implements interfaces.Controller {
 
   @httpPost(
     '',
-    auth.required,
     body('article.slug').matches("[a-z\-]+"),
     body('article.title').isString(),
     body('article.description').isString(),
     body('article.body').isString(),
     body('article.tagList').isArray().optional(),
     validate,
+    auth.required,
   )
   public async create(req: Request, res: Response) {
     const article = await this.service.createAndSave(req.body.userId, {
