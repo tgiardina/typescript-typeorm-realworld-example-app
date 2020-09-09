@@ -16,11 +16,7 @@ describe('POST /api/articles - no user', () => {
     body: "A discussion about something.",
     tagList: ["tag1", "tag2"],
   };
-  const token = sign({
-    id: 1,
-    email: "username@example.com",
-    password: "password",
-  }, <string>process.env.JWT_SECRET);
+  const token = sign({ id: 1 }, <string>process.env.JWT_SECRET);
   const data = { article };
   let app: Application;
   let connection: Connection;

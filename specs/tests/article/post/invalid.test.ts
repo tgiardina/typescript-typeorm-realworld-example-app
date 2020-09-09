@@ -20,11 +20,7 @@ describe('POST /api/articles - invalid data', () => {
     password: "password",
     username: "username",
   };
-  const token = sign({
-    id: user.id,
-    email: user.email,
-    password: user.password,
-  }, <string>process.env.JWT_SECRET);
+  const token = sign({ id: user.id }, <string>process.env.JWT_SECRET);
   const article = {
     slug: "a-slug",
     title: "A Title",

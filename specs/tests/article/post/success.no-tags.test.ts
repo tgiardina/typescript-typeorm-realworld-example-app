@@ -26,11 +26,7 @@ describe('POST /api/articles - success (no tags)', () => {
     image: "",
     following: false,
   };
-  const token = sign({
-    id: user.id,
-    email: user.email,
-    password: user.password,
-  }, <string>process.env.JWT_SECRET);
+  const token = sign({ id: user.id }, <string>process.env.JWT_SECRET);
   const article = {
     slug: "a-slug",
     title: "A Title",
