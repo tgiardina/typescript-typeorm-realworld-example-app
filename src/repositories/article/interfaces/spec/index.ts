@@ -1,5 +1,5 @@
 export {
-  IArticleDbSeed as IArticleSeed,
+  IArticleEntity,
   IArticleRepository,
-  IArticleRo,
-} from '../../../../services';
+  IArticleDbSeed as IArticleSeed,
+} from '../../../../services/article';

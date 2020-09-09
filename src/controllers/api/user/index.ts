@@ -1,2 +1,2 @@
-export { IUserRepository, IUserRo } from './interfaces/req';
+export * from './interfaces/req';
 export { UserController } from './UserController';

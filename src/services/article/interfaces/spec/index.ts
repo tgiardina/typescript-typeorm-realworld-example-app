@@ -2,5 +2,5 @@ export {
   IArticleRo,
   IArticleSeed,
   IArticleService,
-  IProfileRo,
+  IProfile,
 } from '../../../../controllers';

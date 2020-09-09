@@ -1,1 +1,5 @@
-export { ITagRepository, ITagRo } from '../../../../services';
+export {
+  ITagEntity,
+  ITagRepository,
+  ITagDbSeed as ITagSeed
+} from '../../../../services/article';

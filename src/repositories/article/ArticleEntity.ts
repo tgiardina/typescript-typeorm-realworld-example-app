@@ -10,12 +10,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { IArticleRo } from './interfaces';
+import { IArticleEntity } from './interfaces';
 import { TagEntity } from '../tag';
 import { UserEntity } from '../user';
 
 @Entity("article")
-export class ArticleEntity extends BaseEntity implements IArticleRo {
+export class ArticleEntity extends BaseEntity implements IArticleEntity {
   // Columns
   @PrimaryGeneratedColumn()
   id: number;

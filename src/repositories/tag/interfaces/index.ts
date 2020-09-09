@@ -1,1 +1,1 @@
-export { ITagRepository, ITagRo } from './spec';;
+export { ITagEntity, ITagRepository, ITagSeed } from './spec';;

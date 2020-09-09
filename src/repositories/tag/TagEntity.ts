@@ -8,11 +8,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { ITagRo } from './interfaces';
+import { ITagEntity } from './interfaces';
 import { ArticleEntity } from '../article';
 
 @Entity("tag")
-export class TagEntity extends BaseEntity implements ITagRo {
+export class TagEntity extends BaseEntity implements ITagEntity {
   @PrimaryGeneratedColumn()
   id: number;
   @Column({ nullable: false, unique: true })

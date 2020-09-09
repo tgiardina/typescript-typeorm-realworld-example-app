@@ -1,1 +1,1 @@
-export { IArticleRepository, IArticleRo, IArticleSeed } from './spec';
+export { IArticleEntity, IArticleRepository, IArticleSeed } from './spec';

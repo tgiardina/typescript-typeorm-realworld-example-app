@@ -1,8 +1,12 @@
+// Article
 export { IArticleDbSeed } from './IArticleDbSeed';
+export { IArticleEntity } from './IArticleEntity';
 export { IArticleRepository } from './IArticleRepository';
-export { IArticleDbRo } from './IArticleDbRo';
-export { IProfileRo, IArticleSeed } from '../spec';
-export { ITagRo } from './ITagRo';
+// Tag
+export { ITagDbSeed } from './ITagDbSeed';
+export { ITagEntity } from './ITagEntity';
 export { ITagRepository } from './ITagRepository';
-export { IUser } from './IUser';
+// User
+export { IUserEntity } from './IUserEntity';
 export { IUserRepository } from './IUserRepository';
+

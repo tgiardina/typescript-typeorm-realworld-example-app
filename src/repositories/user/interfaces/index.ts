@@ -1,7 +1,7 @@
 export { IJwtCipher } from './req';
 export {
   IProfileRo,
-  IUserRepoViaArticleServ,
-  IUserRepoViaUserCont,
+  IUserRepository,
   IUserRo,
+  IUserSeed,
 } from './spec';

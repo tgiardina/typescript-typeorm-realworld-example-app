@@ -1,4 +1,4 @@
-export interface ITagRo {
+export interface ITagEntity {
   id?: number;
   tag: string;
 }
