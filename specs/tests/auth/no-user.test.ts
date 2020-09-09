@@ -3,12 +3,11 @@ import { Application } from 'express';
 import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
-import '../../../loaders';
-import initApp from '../../../../src/app';
-import { IError } from '../../interfaces';
-import { initConnection } from '../../../utils';
+import '../../loaders';
+import initApp from '../../../src/app';
+import { initConnection } from '../../utils';
 
-describe('POST /api/articles - no user', () => {
+describe('Auth Middleware (POST /api/articles) - no user', () => {
   const article = {
     slug: "a-slug",
     title: "A Title",

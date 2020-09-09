@@ -120,7 +120,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
     const dbTagNames = dbTags.map(dbTag => dbTag.tag).sort();
     const tagNames = [...article.tagList].sort();
     assert.equal(dbTagNames.length, tagNames.length);
-    while (dbTagNames.length === 0) {
+    while (dbTagNames.length > 0) {
       assert.equal(dbTagNames.pop(), tagNames.pop());
     }
   });
@@ -132,7 +132,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
     const dbTagIds = dbJoins.map(dbJoin => dbJoin.tagId).sort();
     const tagIds = [1, 2];
     assert.equal(dbJoins.length, tagIds.length);
-    while (dbJoins.length === 0) {
+    while (dbJoins.length > 0) {
       const currJoin = dbJoins.pop()!;
       assert(tagIds.includes(currJoin.tagId));
       assert.equal(dbTagIds.pop(), tagIds.pop());

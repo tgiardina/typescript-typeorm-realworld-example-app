@@ -53,8 +53,7 @@ describe('ArticleService.create - duplicate', () => {
   describe('is passed a duplicate article seed', () => {
     it('should error', async () => {
       try {
-        await service.createAndSave(user.id, articleSeedIn);
-        assert(false);
+        assert.ifError(await service.createAndSave(user.id, articleSeedIn));
       } catch (err) {
         result = err;
       }

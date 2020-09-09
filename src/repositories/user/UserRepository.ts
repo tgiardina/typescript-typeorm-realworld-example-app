@@ -18,10 +18,6 @@ export class UserRepository
     this.repository = getRepository(UserEntity);
   }
 
-  create(data: UserEntity): UserEntity {
-    return this.repository.create(data);
-  }
-
   async createAndSaveAuth(data: UserEntity): Promise<UserEntity> {
     const user = this.repository.create(data);
     return this.authorize(await this.repository.save(user));
@@ -29,16 +25,6 @@ export class UserRepository
 
   async findOne(id: number): Promise<UserEntity | undefined> {
     return this.repository.findOne(id);
-  }
-
-  async findOneAuth(id: number): Promise<UserEntity | undefined> {
-    const user = await this.repository.findOne(id);
-    if (user) {
-      return this.authorize(user);
-    } else {
-      return user;
-    }
-
   }
 
   ////////////////////////////////////////////////////////////////////////////
