@@ -1,3 +1,2 @@
-export * from './interfaces';
-export * from './article';
-export * from './user';
+export { ArticleController } from './article';
+export { UserController } from './user';

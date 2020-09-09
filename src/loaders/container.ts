@@ -7,13 +7,13 @@ import { TYPES } from '../constants';
 import { IArticleService } from '../controllers/api/article'
 import { IUserRepository } from '../controllers/api/user'
 import {
-  IJwtCipher,
   ArticleRepository,
   TagRepository,
   UserRepository,
 } from '../repositories';
+import { IJwtCipher } from '../repositories/user';
+import { ArticleService } from '../services';
 import {
-  ArticleService,
   IArticleRepository,
   ITagRepository,
 } from '../services/article'

@@ -4,6 +4,7 @@ import { Application } from 'express';
 import { InversifyExpressServer } from 'inversify-express-utils';
 
 import { handleError } from './controllers';
+// Note: This ^^ also loads controllers via inversify-express-utils.
 import {
   loadContainer,
   loadDatabase,

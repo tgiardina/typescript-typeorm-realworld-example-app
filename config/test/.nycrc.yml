@@ -1,4 +1,8 @@
-exclude: ["migrations/*", "src/controllers/api/**/index.ts"]
+exclude: [
+  "migrations/*",
+  "src/controllers/api/index.ts",
+  "src/controllers/api/**/index.ts",
+]
 check-coverage: true
 branches: 100
 functions: 100
