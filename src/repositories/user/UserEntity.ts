@@ -45,14 +45,10 @@ export class UserEntity extends BaseEntity implements IUserRo {
   }
 
   get token(): string {
-    if (!this.cipher) {
-      throw new Error("Can't access token via unauthorized UserEntity.");
-    } else {
-      return this.cipher.tokenize({
-        id: this.id,
-        email: this.email,
-        password: this.password,
-      });
-    }
+    return this.cipher.tokenize({
+      id: this.id,
+      email: this.email,
+      password: this.password,
+    });
   }
 }

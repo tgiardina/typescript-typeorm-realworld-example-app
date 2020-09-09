@@ -41,6 +41,7 @@ function getMiddleware(
   return async (req: Request, _res: Response, next: NextFunction) => {
     const token = getToken(req);
     if (!token) {
+      /* istanbul ignore next */
       if (isRequired) {
         return next(new HttpUnauthorizedError());
       } else {
