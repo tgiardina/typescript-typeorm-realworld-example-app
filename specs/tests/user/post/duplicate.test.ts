@@ -1,4 +1,4 @@
-import { assert, request } from 'chai';
+import { assert, expect, request } from 'chai';
 import { Application } from 'express';
 import { Connection } from 'typeorm';
 
@@ -17,6 +17,7 @@ describe('POST /api/users - duplicate', () => {
   let app: Application;
   let body: IError;
   let connection: Connection;
+  let response: any;
   let status: number;
 
   before(async () => {
@@ -46,10 +47,15 @@ describe('POST /api/users - duplicate', () => {
       .type('json')
       .send(data)
       .end((_err, res) => {
+        response = res;
         body = res.body;
         status = res.status;
         done();
       });
+  });
+
+  it('should match OpenApi spec', () => {
+    expect(response).to.satisfyApiSpec;
   });
 
   it('should have a 422 status', () => {

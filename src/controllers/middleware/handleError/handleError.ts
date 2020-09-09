@@ -33,7 +33,7 @@ export function handleError(
   } else {
     console.log(err);
     const httpError = new HttpUncaughtError();
-    res.status(httpError.status).json(httpError.toDto());
+    res.status(httpError.status).send();
   }
 }
 

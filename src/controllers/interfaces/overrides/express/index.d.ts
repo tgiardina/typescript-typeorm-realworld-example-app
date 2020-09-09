@@ -3,8 +3,6 @@ declare namespace Express {
     locals?: {
       user?: {
         id: number;
-        email: string;
-        password: string;
       };
     };
   }

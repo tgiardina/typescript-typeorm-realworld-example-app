@@ -3,11 +3,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { IJwtCipher, IUserRo } from './interfaces';
+import { ArticleEntity } from '../article';
 
 @Entity("user")
 export class UserEntity extends BaseEntity implements IUserRo {
@@ -24,6 +28,11 @@ export class UserEntity extends BaseEntity implements IUserRo {
   password: string;
   @Column({ nullable: false, unique: true })
   username: string;
+  @OneToMany(_type => ArticleEntity, article => article.author)
+  articles: ArticleEntity[]
+  @ManyToMany(_type => ArticleEntity, article => article.fans)
+  @JoinTable()
+  favorites: ArticleEntity[];
   @CreateDateColumn()
   createdAt: Date;
   @UpdateDateColumn()
@@ -37,7 +46,7 @@ export class UserEntity extends BaseEntity implements IUserRo {
 
   get token(): string {
     if (!this.cipher) {
-      return null;
+      throw new Error("Can't access token via unauthorized UserEntity.");
     } else {
       return this.cipher.tokenize({
         id: this.id,

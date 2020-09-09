@@ -32,9 +32,9 @@ export class UserController implements interfaces.Controller {
     });
     res.status(201).json({
       user: {
-        bio: user.bio || null,
+        bio: user.bio || "",
         email: user.email,
-        image: user.image || null,
+        image: user.image || "", // As specified by swagger.json
         token: user.token,
         username: user.username,
       },

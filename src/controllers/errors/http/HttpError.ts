@@ -12,10 +12,14 @@ export class HttpError extends Error {
     this.body.push(message);
   }
 
-  toDto(): { errors: Errors } {
+  toDto(): { errors: Errors } | null {
     // I don't like this error structure. It's almost pointedly
-    //   un-machine-readable. But it's specified by RealWorld: https://github.com/gothinkster/realworld/tree/master/api#errors-and-status-codes    
-    return { errors: { body: this.body } };
+    //   un-machine-readable. But it's specified by RealWorld: https://github.com/gothinkster/realworld/tree/master/api#errors-and-status-codes
+    if (this.body.length) {
+      return { errors: { body: this.body } };
+    } else {
+      return null;
+    }
   }
 }
 

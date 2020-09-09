@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
+import { getManager } from "typeorm";
 
 import { HttpUnauthorizedError } from '../../errors';
+import { IDecodedToken } from '../../interfaces';
 
 export const auth = {
   /**
@@ -36,48 +38,37 @@ export const auth = {
 function getMiddleware(
   isRequired: boolean
 ): (req: Request, res: Response, next: NextFunction) => void {
-  if (isRequired) {
-    return (req: Request, _res: Response, next: NextFunction) => {
-      validateToken(req, (token) => {
-        throw new HttpUnauthorizedError(token);
-      });
-      next();
+  return async (req: Request, _res: Response, next: NextFunction) => {
+    const token = getToken(req);
+    if (!token) {
+      if (isRequired) {
+        return next(new HttpUnauthorizedError());
+      } else {
+        return next();
+      }
     }
-  } else {
-    return (req: Request, _res: Response, next: NextFunction) => {
-      validateToken(req, (_token) => { });
-      next();
+    const user = <IDecodedToken>verify(token, <string>process.env.JWT_SECRET);
+    const userExists = Object.values((await getManager().query(
+      `SELECT EXISTS(SELECT 1 FROM user WHERE id = ${user.id});`
+    ))[0])[0] == "1";
+    if (!userExists) {
+      return next(new HttpUnauthorizedError());
     }
+    req.locals = req.locals || {};
+    req.locals.user = user;
+    return next();
   }
 }
 
-function initLocals(req: Request): void {
-  req.locals = req.locals || {};
-}
-
-function validateToken(
-  req: Request,
-  onError: (token: string) => void,
-): void {
-  initLocals(req);
-  const token = getToken(req);
-  try {
-    const decodedToken = <any>verify(token, process.env.JWT_SECRET);
-    req.locals.user = decodedToken;
-  } catch (_err) {
-    onError(token);
-  }
-}
-
-function getToken(req: Request): string {
+function getToken(req: Request): string | null {
   const authorization = req.headers.authorization;
-  if (!authorization) return;
+  if (!authorization) return null;
   const authString = authorization.toString();
   const isToken = authString.split(' ')[0] === 'Token';
   const isBearer = authString.split(' ')[0] === 'Bearer';
   if (isToken || isBearer) {
     return authString.split(' ')[1];
   } else {
-    return;
+    return null;
   }
 }

@@ -3,18 +3,19 @@ import { getRepository, Repository } from "typeorm";
 import { UserEntity } from "./UserEntity";
 
 import { TYPES } from '../../constants';
-import { IJwtCipher, IUserRepository } from './interfaces';
+import {
+  IJwtCipher,
+  IUserRepoViaArticleServ,
+  IUserRepoViaUserCont,
+} from './interfaces';
 
 @injectable()
-export class UserRepository implements IUserRepository {
+export class UserRepository
+  implements IUserRepoViaArticleServ, IUserRepoViaUserCont {
   private repository: Repository<UserEntity>;
 
   constructor(@inject(TYPES.JwtCipher) private cipher: IJwtCipher) {
     this.repository = getRepository(UserEntity);
-  }
-
-  create(data: UserEntity): UserEntity {
-    return this.repository.create(data);
   }
 
   async createAndSaveAuth(data: UserEntity): Promise<UserEntity> {
@@ -22,8 +23,8 @@ export class UserRepository implements IUserRepository {
     return this.authorize(await this.repository.save(user));
   }
 
-  async findOneAuth(id: number): Promise<UserEntity> {
-    return this.authorize(await this.repository.findOne(id));
+  async findOne(id: number): Promise<UserEntity | undefined> {
+    return this.repository.findOne(id);
   }
 
   ////////////////////////////////////////////////////////////////////////////

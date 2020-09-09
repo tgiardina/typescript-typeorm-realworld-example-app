@@ -1,4 +1,4 @@
-import { assert, request } from 'chai';
+import { assert, expect, request } from 'chai';
 import { Application } from 'express';
 import { Connection } from 'typeorm';
 
@@ -14,15 +14,14 @@ describe('POST /api/users - invalid data', () => {
     username: "username",
   };
   let app: Application;
-  let bodies: { [key: string]: IError };
+  let bodies: { [key: string]: IError } = {}
   let connection: Connection;
-  let statuses: { [key: string]: number };
+  let responses = {}
+  let statuses: { [key: string]: number } = {};
 
   before(async () => {
     app = await initApp();
-    bodies = {};
     connection = await initConnection();
-    statuses = {};
   });
 
   after(async () => {
@@ -40,12 +39,19 @@ describe('POST /api/users - invalid data', () => {
           .type('json')
           .send(data)
           .end((_err, res) => {
+            responses[key] = res;
             bodies[key] = res.body;
             statuses[key] = res.status;
             done();
           });
       });
     }));
+  });
+
+  it('should match OpenApi spec', () => {
+    for (const response of Object.values(responses)) {
+      expect(response).to.satisfyApiSpec;
+    }
   });
 
   it('should have a 422 status.', () => {

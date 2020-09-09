@@ -1,0 +1,1 @@
+export { IProfileRo } from './spec';

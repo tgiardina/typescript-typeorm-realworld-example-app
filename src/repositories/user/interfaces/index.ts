@@ -1,2 +1,7 @@
 export { IJwtCipher } from './req';
-export { IUserRepository, IUserRo } from './spec';
+export {
+  IProfileRo,
+  IUserRepoViaArticleServ,
+  IUserRepoViaUserCont,
+  IUserRo,
+} from './spec';

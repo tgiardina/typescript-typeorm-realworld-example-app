@@ -8,6 +8,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "sourceMap": true,
+    "strictNullChecks": true,
     "typeRoots": ["./src/controllers/interfaces/overrides"],
     "types": ["mocha"]    
   },

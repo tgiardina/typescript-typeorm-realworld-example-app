@@ -1,4 +1,4 @@
-import { assert, request } from 'chai';
+import { assert, expect, request } from 'chai';
 import { Application } from 'express';
 import { verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
@@ -18,6 +18,7 @@ describe('POST /api/users - success', () => {
   let app: Application;
   let body: IUser;
   let connection: Connection;
+  let response: any;
   let status: number;
 
   before(async () => {
@@ -35,10 +36,15 @@ describe('POST /api/users - success', () => {
       .type('json')
       .send(data)
       .end((_err, res) => {
+        response = res;
         body = res.body;
         status = res.status;
         done();
       });
+  });
+
+  it('should match OpenApi spec', () => {
+    expect(response).to.satisfyApiSpec;
   });
 
   it('should have a 201 status', () => {
@@ -46,9 +52,9 @@ describe('POST /api/users - success', () => {
   });
 
   it('should include properties.', () => {
-    assert.equal(body.user.bio, null);
+    assert.equal(body.user.bio, "");
     assert.equal(body.user.email, user.email);
-    assert.equal(body.user.image, null);
+    assert.equal(body.user.image, "");
     assert.equal(body.user.token.substring(0, 3), "eyJ");
     assert.equal(body.user.username, user.username);
   })
@@ -56,7 +62,7 @@ describe('POST /api/users - success', () => {
   it('should include valid token.', () => {
     const decodedToken = <IToken>verify(
       body.user.token,
-      process.env.JWT_SECRET,
+      <string>process.env.JWT_SECRET,
     );
     assert.equal(decodedToken.id, 1);
     assert.equal(decodedToken.email, user.email);
@@ -64,13 +70,13 @@ describe('POST /api/users - success', () => {
   });
 
   it('should have saved in the database.', async () => {
-    const user = <IUserDbSchema>(await connection.manager.query(
+    const dbUser = <IUserDbSchema>(await connection.manager.query(
       'SELECT * FROM user;'
     ))[0];
-    assert.equal(user.bio, null);
-    assert.equal(user.email, user.email);
-    assert.equal(user.image, null);
-    assert.equal(user.password, user.password);
-    assert.equal(user.username, user.username);
+    assert.equal(dbUser.bio, null);
+    assert.equal(dbUser.email, user.email);
+    assert.equal(dbUser.image, null);
+    assert.equal(dbUser.password, user.password);
+    assert.equal(dbUser.username, user.username);
   });
 })  
