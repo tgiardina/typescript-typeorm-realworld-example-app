@@ -31,7 +31,8 @@ export function handleError(
     const httpError = parseDuplicateError(err);
     res.status(httpError.status).json(httpError.toDto());
   } else {
-    console.log(err);
+    /* istanbul ignore next */
+    process.env.NODE_ENV !== "test" && console.log(err);
     const httpError = new HttpUncaughtError();
     res.status(httpError.status).send();
   }
