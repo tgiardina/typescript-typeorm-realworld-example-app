@@ -1,6 +1,5 @@
-import { IUser } from './';
-import { IProfileRo } from '../spec';
+import { IUserEntity } from './';
 
 export interface IUserRepository {
-  findOne(id: number): Promise<IUser | undefined>;
+  findOne(id: number): Promise<IUserEntity | undefined>;
 }

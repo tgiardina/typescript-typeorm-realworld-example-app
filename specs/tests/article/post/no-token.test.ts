@@ -4,7 +4,6 @@ import { Connection } from 'typeorm';
 
 import '../../../loaders';
 import initApp from '../../../../src/app';
-import { IError } from '../../interfaces';
 import { initConnection } from '../../../utils';
 
 describe('POST /api/articles - no token', () => {
@@ -17,7 +16,7 @@ describe('POST /api/articles - no token', () => {
   };
   const data = { article };
   let app: Application;
-  let body: IError;
+  let body: unknown;
   let connection: Connection;
   let response: any;
   let status: number;
@@ -50,5 +49,9 @@ describe('POST /api/articles - no token', () => {
 
   it('should have a 401 status', () => {
     assert.equal(status, 401);
+  });
+
+  it('should not have body', () => {
+    assert.equal(body, null);
   });
 })

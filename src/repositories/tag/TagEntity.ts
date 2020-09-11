@@ -17,7 +17,7 @@ export class TagEntity extends BaseEntity implements ITagEntity {
   id: number;
   @Column({ nullable: false, unique: true })
   tag: string;
-  @ManyToMany(_type => ArticleEntity, article => article.tags)
+  @ManyToMany(() => ArticleEntity, article => article.tags)
   articles: ArticleEntity[];
   @CreateDateColumn()
   createdAt: Date;

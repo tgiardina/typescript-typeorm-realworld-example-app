@@ -10,10 +10,10 @@ import { initConnection } from '../../../utils';
 
 describe('POST /api/articles - invalid data', () => {
   let app: Application;
-  let bodies: { [key: string]: IError } = {}
   let connection: Connection;
-  let responses = {}
-  let statuses: { [key: string]: number } = {};
+  const bodies: { [key: string]: IError } = {}
+  const responses = {}
+  const statuses: { [key: string]: number } = {};
   const user = {
     id: 1,
     email: "username@example.com",

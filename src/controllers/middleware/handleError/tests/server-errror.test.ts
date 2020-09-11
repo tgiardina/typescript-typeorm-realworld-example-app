@@ -13,7 +13,7 @@ describe('handleError Middleware - malformed string', () => {
   statusStub.returns(res);
 
   it('should run.', () => {
-    handleError(new Error("Test"), <any>{}, <any>res, <any>{});
+    handleError(new Error("Test"), <any>null, <any>res, <any>null);
   });
 
   it('should have called status with 500', async () => {

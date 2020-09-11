@@ -24,7 +24,7 @@ export class UserController implements interfaces.Controller {
     body('user.username').isString(),
     validate,
   )
-  public async create(req: Request, res: Response) {
+  public async create(req: Request, res: Response): Promise<void> {
     const user = await this.repository.createAndSaveAuth({
       email: req.body.user.email,
       password: req.body.user.password,

@@ -13,11 +13,11 @@ describe('POST /api/users - invalid data', () => {
     password: "password",
     username: "username",
   };
+  const bodies: { [key: string]: IError } = {}
+  const responses = {}
+  const statuses: { [key: string]: number } = {};
   let app: Application;
-  let bodies: { [key: string]: IError } = {}
   let connection: Connection;
-  let responses = {}
-  let statuses: { [key: string]: number } = {};
 
   before(async () => {
     app = await initApp();

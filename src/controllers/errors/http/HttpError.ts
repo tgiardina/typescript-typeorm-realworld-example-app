@@ -8,7 +8,7 @@ export class HttpError extends Error {
     this.body = [];
   }
 
-  append(message: string) {
+  append(message: string): void {
     this.body.push(message);
   }
 

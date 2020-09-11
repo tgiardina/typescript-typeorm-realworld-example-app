@@ -27,11 +27,11 @@ export class ArticleEntity extends BaseEntity implements IArticleEntity {
   slug: string;
   @Column({ nullable: false })
   title: string;
-  @ManyToOne(_type => UserEntity, user => user.articles)
+  @ManyToOne(() => UserEntity, user => user.articles)
   author: UserEntity;
-  @ManyToMany(_type => UserEntity, user => user.favorites)
+  @ManyToMany(() => UserEntity, user => user.favorites)
   fans: UserEntity[];
-  @ManyToMany(_type => TagEntity, tag => tag.articles)
+  @ManyToMany(() => TagEntity, tag => tag.articles)
   @JoinTable()
   tags: TagEntity[];
   @CreateDateColumn()

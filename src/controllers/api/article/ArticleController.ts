@@ -19,7 +19,7 @@ export class ArticleController implements interfaces.Controller {
 
   @httpPost(
     '',
-    body('article.slug').matches("[a-z\-]+"),
+    body('article.slug').matches("[a-z-]+"),
     body('article.title').isString(),
     body('article.description').isString(),
     body('article.body').isString(),
@@ -27,7 +27,7 @@ export class ArticleController implements interfaces.Controller {
     validate,
     auth.required,
   )
-  public async create(req: Request, res: Response) {
+  public async create(req: Request, res: Response): Promise<void> {
     const article = await this.service.createAndSave(req.body.userId, {
       slug: req.body.article.slug,
       title: req.body.article.title,

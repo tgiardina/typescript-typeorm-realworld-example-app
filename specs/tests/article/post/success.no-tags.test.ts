@@ -8,8 +8,6 @@ import initApp from '../../../../src/app';
 import {
   IArticle,
   IArticleDbSchema,
-  IArticleTagJoinDbSchema,
-  ITagDbSchema,
 } from '../interfaces';
 import { initConnection } from '../../../utils';
 

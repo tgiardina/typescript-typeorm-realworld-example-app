@@ -28,9 +28,9 @@ export class UserEntity extends BaseEntity implements IUserRo {
   password: string;
   @Column({ nullable: false, unique: true })
   username: string;
-  @OneToMany(_type => ArticleEntity, article => article.author)
+  @OneToMany(() => ArticleEntity, article => article.author)
   articles: ArticleEntity[]
-  @ManyToMany(_type => ArticleEntity, article => article.fans)
+  @ManyToMany(() => ArticleEntity, article => article.fans)
   @JoinTable()
   favorites: ArticleEntity[];
   @CreateDateColumn()
@@ -40,7 +40,7 @@ export class UserEntity extends BaseEntity implements IUserRo {
   // Dependencies
   private cipher: IJwtCipher
 
-  authorize(cipher: IJwtCipher) {
+  authorize(cipher: IJwtCipher): void {
     this.cipher = cipher;
   }
 
