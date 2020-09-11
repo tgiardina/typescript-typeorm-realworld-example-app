@@ -1,5 +1,5 @@
 import { assert, expect, request } from 'chai';
-import { Application } from 'express';
+import { Application, Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
@@ -38,7 +38,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
   let app: Application;
   let body: IArticle;
   let connection: Connection;
-  let response: any;
+  let response: Response;
   let status: number;
 
   before(async () => {
@@ -133,6 +133,7 @@ describe('POST /api/articles - success w/ preexisting tags', () => {
     const tagIds = [1, 2];
     assert.equal(dbJoins.length, tagIds.length);
     while (dbJoins.length > 0) {
+      // eslint-disable-next-line      
       const currJoin = dbJoins.pop()!;
       assert(tagIds.includes(currJoin.tagId));
       assert.equal(dbTagIds.pop(), tagIds.pop());

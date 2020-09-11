@@ -13,6 +13,7 @@ describe('handleError Middleware - malformed string', () => {
   statusStub.returns(res);
 
   it('should run.', () => {
+    // eslint-disable-next-line    
     handleError(new Error("Test"), <any>null, <any>res, <any>null);
   });
 

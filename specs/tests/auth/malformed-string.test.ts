@@ -1,5 +1,5 @@
 import { assert, expect, request } from 'chai';
-import { Application } from 'express';
+import { Application, Response } from 'express';
 import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
@@ -25,7 +25,7 @@ describe('Auth Middleware (POST /api/articles) - malformed string', () => {
   const data = { article };
   let app: Application;
   let connection: Connection;
-  let response: any;
+  let response: Response;
   let status: number;
 
   before(async () => {

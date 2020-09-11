@@ -1,5 +1,5 @@
 import { assert, expect, request } from 'chai';
-import { Application } from 'express';
+import { Application, Response } from 'express';
 import { Connection } from 'typeorm';
 
 import '../../../loaders';
@@ -18,7 +18,7 @@ describe('POST /api/articles - no token', () => {
   let app: Application;
   let body: unknown;
   let connection: Connection;
-  let response: any;
+  let response: Response;
   let status: number;
 
   before(async () => {

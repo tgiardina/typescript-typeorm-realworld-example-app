@@ -42,6 +42,7 @@ export function loadContainer(): Container {
   container
     .bind<IJwtCipher>(TYPES.JwtCipher)
     .toConstantValue({
+      // eslint-disable-next-line
       tokenize: (data: string | object) => {
         return sign(data, <string>process.env.JWT_SECRET);
       },

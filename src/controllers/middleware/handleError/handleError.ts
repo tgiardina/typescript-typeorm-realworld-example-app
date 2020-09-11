@@ -21,11 +21,12 @@ export function handleError(
   err: Error,
   _req: Request,
   res: Response,
-  // @ts-ignore
+  // eslint-disable-next-line
   _next: NextFunction,
 ): void {
   if (err instanceof HttpError) {
     res.status(err.status).json(err.toDto());
+    // @ts-ignore
   } else if (err instanceof QueryFailedError && err.code === "ER_DUP_ENTRY") {
     const httpError = parseDuplicateError(err);
     res.status(httpError.status).json(httpError.toDto());

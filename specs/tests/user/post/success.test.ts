@@ -1,5 +1,5 @@
 import { assert, expect, request } from 'chai';
-import { Application } from 'express';
+import { Application, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
 
@@ -18,7 +18,7 @@ describe('POST /api/users - success', () => {
   let app: Application;
   let body: IUser;
   let connection: Connection;
-  let response: any;
+  let response: Response;
   let status: number;
 
   before(async () => {
