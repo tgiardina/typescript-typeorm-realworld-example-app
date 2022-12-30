@@ -39,7 +39,7 @@
     "chai-openapi-response-validator": "^0.9.4",
     "eslint": "^7.5.0",
     "eslint-plugin-import": "^2.22.0",
-    "mocha": "^8.1.1",
+    "mocha": "^8.4.0",
     "nodemon": "^2.0.4",
     "nyc": "^15.1.0",
     "sinon": "^9.0.2",
